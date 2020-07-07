@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, CardHeader, CardContent, CardActions, Typography, Avatar, IconButton } from '@material-ui/core'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
+import Moment from 'moment'
 
 interface Props {
   id: string
@@ -23,7 +24,7 @@ export const Post: React.FC<Props> = ({ author, createdAt, body }) => {
             </Avatar>
           }
           title={author.username}
-          subheader={createdAt}
+          subheader={Moment(createdAt).fromNow()}
           action={
             <IconButton aria-label="settings">
               <MoreVertIcon />
