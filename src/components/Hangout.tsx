@@ -1,6 +1,6 @@
 import React from 'react'
-import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
+import { Container, Grid } from '@material-ui/core'
+import { Post } from './index'
 
 export const Hangout: React.FC = () => {
   return (
