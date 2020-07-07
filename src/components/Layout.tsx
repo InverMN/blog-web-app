@@ -1,5 +1,10 @@
 import React from 'react'
+import { Hangout } from './index'
 
 export const Layout: React.FC = () => {
-  return <div></div>
+  return (
+    <div>
+      <Hangout />
+    </div>
+  )
 }
