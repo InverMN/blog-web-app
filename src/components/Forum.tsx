@@ -13,7 +13,7 @@ interface PostData {
   body: string
 }
 
-export class Hangout extends Component {
+export class Forum extends Component {
   state: {
     posts: PostData[]
   } = {
