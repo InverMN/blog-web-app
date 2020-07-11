@@ -48,6 +48,12 @@ export class API {
     }
   }
 
+  async logout(): Promise<any> {
+    this.auth.clear()
+    console.log(this.auth)
+    Axios.delete(`${APIURL}/logout`, { withCredentials: true })
+  }
+
   async ensureCredentials(): Promise<boolean> {
     if (this.auth.expiresIn === undefined || !this.auth.isAuthenticated) return false
 
