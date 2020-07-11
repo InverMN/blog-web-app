@@ -26,6 +26,17 @@ export class API {
     }
   }
 
+  async register(email: string, username: string, password: string): Promise<any> {
+    try {
+      const res = await Axios.post(`${APIURL}/register`, { email, username, password }, { withCredentials: true })
+      this.auth.set(res.data)
+      return res.data
+    } catch (err) {
+      console.log(err)
+      return err
+    }
+  }
+
   async refresh(): Promise<boolean> {
     try {
       const res = await Axios.post(`${APIURL}/refresh`, null, { withCredentials: true })
