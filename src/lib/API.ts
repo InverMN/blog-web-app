@@ -8,6 +8,10 @@ export class API {
     this.auth = new Auth()
   }
 
+  get isAuthenticated(): boolean {
+    return this.auth.isAuthenticated
+  }
+
   async login(email: string, password: string): Promise<any> {
     try {
       const res = await Axios.post('http://localhost:5500/api/v1/login', { email, password }, { withCredentials: true })
