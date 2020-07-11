@@ -11,4 +11,10 @@ export class Auth {
     this.expiresIn = Date.now() + minute * 15
     this.isAuthenticated = true
   }
+
+  clear() {
+    this.isAuthenticated = false
+    this.accessToken = undefined
+    this.expiresIn = undefined
+  }
 }
