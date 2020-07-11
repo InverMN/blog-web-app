@@ -12,7 +12,7 @@ export class Auth {
     this.isAuthenticated = true
   }
 
-  clear() {
+  clear(): void {
     this.isAuthenticated = false
     this.accessToken = undefined
     this.expiresIn = undefined
