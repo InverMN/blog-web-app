@@ -33,4 +33,23 @@ export class API {
       return false
     }
   }
+
+  async ensureCredentials(): Promise<boolean> {
+    if (this.auth.expiresIn === undefined || !this.auth.isAuthenticated) return false
+
+    if (this.auth.expiresIn + minute > Date.now() && this.auth.isAuthenticated) return true
+    else if (this.auth.isAuthenticated) {
+      return await this.refresh()
+    } else return false
+  }
+
+  async get(path: string): Promise<AxiosResponse<any>> {
+    await this.ensureCredentials()
+    const config: AxiosRequestConfig = {
+      headers: {
+        authorization: `Bearer ${this.auth.accessToken}`,
+      },
+    }
+    return await Axios.get(`${APIURL}/${path}`, config)
+  }
 }
