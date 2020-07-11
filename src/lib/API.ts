@@ -1,5 +1,8 @@
 import { Auth } from './Auth'
-import Axios from 'axios'
+import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+
+const minute = 1000 * 60
+const APIURL = 'http://localhost:5500/api/v1'
 
 export class API {
   private auth: Auth
