@@ -17,7 +17,7 @@ export class API {
 
   async login(email: string, password: string): Promise<any> {
     try {
-      const res = await Axios.post('http://localhost:5500/api/v1/login', { email, password }, { withCredentials: true })
+      const res = await Axios.post(`${APIURL}/login`, { email, password }, { withCredentials: true })
       this.auth.set(res.data)
       return res.data
     } catch (err) {
@@ -28,7 +28,7 @@ export class API {
 
   async refresh(): Promise<boolean> {
     try {
-      const res = await Axios.post('http://localhost:5500/api/v1/refresh', null, { withCredentials: true })
+      const res = await Axios.post(`${APIURL}/refresh`, null, { withCredentials: true })
       this.auth.set(res.data)
       return true
     } catch (err) {
