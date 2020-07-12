@@ -61,7 +61,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
         </DialogActions>
       </Dialog>
       <Backdrop style={{ zIndex: 1000000 }} open={wait}>
-        <CircularProgress color="inherit" />
+        <CircularProgress color="primary" />
       </Backdrop>
     </div>
   )
