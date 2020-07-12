@@ -103,3 +103,9 @@ export class API {
     return await Axios.delete(`${APIURL}/${path}`, config)
   }
 }
+
+const api = new API()
+
+export function useAPI(): API {
+  return api
+}
