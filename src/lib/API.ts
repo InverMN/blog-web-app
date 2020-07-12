@@ -72,4 +72,34 @@ export class API {
     }
     return await Axios.get(`${APIURL}/${path}`, config)
   }
+
+  async post(path: string, payload: any): Promise<AxiosResponse<any>> {
+    await this.ensureCredentials()
+    const config: AxiosRequestConfig = {
+      headers: {
+        authorization: `Bearer ${this.auth.accessToken}`,
+      },
+    }
+    return await Axios.post(`${APIURL}/${path}`, payload, config)
+  }
+
+  async patch(path: string, payload: any): Promise<AxiosResponse<any>> {
+    await this.ensureCredentials()
+    const config: AxiosRequestConfig = {
+      headers: {
+        authorization: `Bearer ${this.auth.accessToken}`,
+      },
+    }
+    return await Axios.patch(`${APIURL}/${path}`, payload, config)
+  }
+
+  async delete(path: string): Promise<AxiosResponse<any>> {
+    await this.ensureCredentials()
+    const config: AxiosRequestConfig = {
+      headers: {
+        authorization: `Bearer ${this.auth.accessToken}`,
+      },
+    }
+    return await Axios.delete(`${APIURL}/${path}`, config)
+  }
 }
