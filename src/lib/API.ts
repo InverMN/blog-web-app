@@ -21,8 +21,7 @@ export class API {
       this.auth.set(res.data)
       return res.data
     } catch (err) {
-      console.log(err)
-      return err
+      throw err
     }
   }
 
@@ -32,8 +31,7 @@ export class API {
       this.auth.set(res.data)
       return res.data
     } catch (err) {
-      console.log(err)
-      return err
+      throw err
     }
   }
 
