@@ -12,13 +12,21 @@ import {
   TextField,
   Backdrop,
   CircularProgress,
+  Typography,
 } from '@material-ui/core'
 import { Formik } from 'formik'
+import * as Yup from 'yup'
+import { boolean } from 'yup'
 
 export interface LoginDialogProps {
   open: boolean
   onClose: () => void
 }
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email().required(),
+  password: Yup.string().required().min(3).max(200),
+})
 
 export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps) => {
   const { open, onClose } = props
@@ -45,26 +53,29 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
     onClose()
   }
 
-  const handleLogin = (values: { email: string; password: string }) => {
+  const handleLogin = (
+    values: { email: string; password: string },
+    submit: { setSubmitting: (state: boolean) => void },
+  ) => {
     const { email, password } = values
-    console.log('values:', values)
-    api.login(email, password).then((res) => {
-      // console.log(res)
-      // if (res.data.error) {
-      //   if (setUser !== null) setUser(res.data)
-      //   console.log('set up user co tu sie dzieje:', user)
-      // } else {
-      //   console.log('error', res.data.error)
-      // }
-      onClose()
-    })
+    const { setSubmitting } = submit
+
+    api
+      .login(email, password)
+      .then((res) => {
+        if (res.accessToken) onClose()
+      })
+      .catch((error) => {
+        console.log('error:', error.response.data.error)
+        setSubmitting(false)
+      })
   }
 
   return (
     <div>
       <Dialog fullScreen={fullscreen} open={open}>
         <DialogTitle>Log in</DialogTitle>
-        <Formik initialValues={initialValues} validate={validate} onSubmit={handleLogin}>
+        <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleLogin}>
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
             <div>
               <DialogContent>
@@ -80,7 +91,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                     onBlur={handleBlur}
                     value={values.email}
                   ></TextField>
-                  {errors.email && touched.email && errors.email}
+                  <Typography color="error">{errors.email && touched.email && errors.email}</Typography>
                   <TextField
                     fullWidth
                     name="password"
@@ -92,7 +103,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                     onBlur={handleBlur}
                     value={values.password}
                   ></TextField>
-                  {errors.password && touched.password && errors.password}
+                  <Typography color="error"> {errors.password && touched.password && errors.password}</Typography>
                 </form>
               </DialogContent>
               <DialogActions>
