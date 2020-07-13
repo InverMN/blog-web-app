@@ -13,6 +13,7 @@ import {
   Backdrop,
   CircularProgress,
 } from '@material-ui/core'
+import { Formik } from 'formik'
 
 export interface LoginDialogProps {
   open: boolean
@@ -21,22 +22,40 @@ export interface LoginDialogProps {
 
 export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps) => {
   const { open, onClose } = props
-  const [wait, setWait] = useState(false)
   const theme = useTheme()
   const fullscreen = useMediaQuery(theme.breakpoints.down('xs'))
   const api = useAPI()
   const { user, setUser } = useContext(UserContext)
 
+  const initialValues = {
+    email: '',
+    password: '',
+  }
+
+  const validate = (values: { email: string; password: string }) => {
+    const errors: { email?: string } = {}
+
+    if (!values.email) errors.email = 'Required'
+    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) errors.email = 'Invalid email address'
+
+    return errors
+  }
+
   const handleClose = () => {
     onClose()
   }
 
-  const handleLogin = () => {
-    setWait(true)
-    api.login('jankowskipawelxd@gmail.com', 'qwaszx').then((res) => {
-      if (setUser !== null) setUser(res.data)
-      console.log('set up user:', user)
-      setWait(false)
+  const handleLogin = (values: { email: string; password: string }) => {
+    const { email, password } = values
+    console.log('values:', values)
+    api.login(email, password).then((res) => {
+      // console.log(res)
+      // if (res.data.error) {
+      //   if (setUser !== null) setUser(res.data)
+      //   console.log('set up user co tu sie dzieje:', user)
+      // } else {
+      //   console.log('error', res.data.error)
+      // }
       onClose()
     })
   }
@@ -45,24 +64,60 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
     <div>
       <Dialog fullScreen={fullscreen} open={open}>
         <DialogTitle>Log in</DialogTitle>
-        <DialogContent>
-          <form noValidate>
-            <TextField fullWidth type="email" id="email" label="E-mail" variant="outlined"></TextField>
-            <TextField fullWidth type="password" id="password" label="Password" variant="outlined"></TextField>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} style={{ float: 'left' }} color="primary" autoFocus>
-            Close
-          </Button>
-          <Button disableElevation onClick={handleLogin} color="primary" variant="contained" autoFocus>
-            Login
-          </Button>
-        </DialogActions>
+        <Formik initialValues={initialValues} validate={validate} onSubmit={handleLogin}>
+          {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+            <div>
+              <DialogContent>
+                <form noValidate>
+                  <TextField
+                    fullWidth
+                    name="email"
+                    type="email"
+                    id="email"
+                    label="E-mail"
+                    variant="outlined"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                  ></TextField>
+                  {errors.email && touched.email && errors.email}
+                  <TextField
+                    fullWidth
+                    name="password"
+                    type="password"
+                    id="password"
+                    label="Password"
+                    variant="outlined"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                  ></TextField>
+                  {errors.password && touched.password && errors.password}
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} style={{ float: 'left' }} color="primary" autoFocus>
+                  Close
+                </Button>
+                <Button
+                  disableElevation
+                  onClick={() => {
+                    handleSubmit()
+                  }}
+                  color="primary"
+                  variant="contained"
+                  autoFocus
+                >
+                  Login
+                </Button>
+              </DialogActions>
+              <Backdrop style={{ zIndex: 1000000 }} open={isSubmitting}>
+                <CircularProgress variant="indeterminate" color="primary" />
+              </Backdrop>
+            </div>
+          )}
+        </Formik>
       </Dialog>
-      <Backdrop style={{ zIndex: 1000000 }} open={wait}>
-        <CircularProgress disableShrink variant="indeterminate" color="primary" />
-      </Backdrop>
     </div>
   )
 }
