@@ -103,7 +103,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                           ></TextField>
                         </Grid>
                         <Grid item>
-                          <Typography color="error">{errors.email && touched.email && errors.email}</Typography>
+                          <Typography color="error">{errors.email && touched.email ? errors.email : '⠀'}</Typography>
                         </Grid>
                         <Grid item className={classes.fullWide}>
                           <TextField
@@ -120,7 +120,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                         </Grid>
                         <Grid item>
                           <Typography color="error">
-                            {errors.password && touched.password && errors.password}
+                            {errors.password && touched.password ? errors.password : '⠀'}
                           </Typography>
                         </Grid>
                       </Grid>
