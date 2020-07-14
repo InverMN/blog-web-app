@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { UserContext } from '../../contexts/index'
 import { useAPI, APIError } from '../../lib/index'
 import {
@@ -19,14 +19,16 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { makeStyles } from '@material-ui/core/styles'
 
-export interface LoginDialogProps {
+export interface RegisterDialogProps {
   open: boolean
   onClose: () => void
 }
 
-const LoginSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
   email: Yup.string().email().required(),
-  password: Yup.string().required().min(3).max(200),
+  password: Yup.string().required().min(6).max(200),
+  retryPassword: Yup.string().required().min(6).max(200),
+  username: Yup.string().required().min(2).max(16),
 })
 
 const useStyles = makeStyles({
@@ -35,7 +37,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps) => {
+export const RegisterDialog: React.FC<RegisterDialogProps> = (props: RegisterDialogProps) => {
   const { open, onClose } = props
   const theme = useTheme()
   const fullscreen = useMediaQuery(theme.breakpoints.down('xs'))
@@ -46,24 +48,33 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
   const initialValues = {
     email: '',
     password: '',
+    retryPassword: '',
+    username: '',
   }
 
   const handleClose = () => {
     onClose()
   }
 
-  const handleLogin = (
-    values: { email: string; password: string },
+  const handleRegister = (
+    values: { email: string; password: string; retryPassword: string; username: string },
     submit: { setSubmitting: (state: boolean) => void; setErrors: any },
   ) => {
-    const { email, password } = values
+    const { email, password, retryPassword, username } = values
     const { setSubmitting, setErrors } = submit
 
+    if (password !== retryPassword) {
+      setErrors({ retryPassword: 'Passwords do not match' })
+      setSubmitting(false)
+      return
+    }
+
     api
-      .login(email, password)
+      .register(email, username, password)
       .then((res) => {
         if (res.accessToken) {
           onClose()
+          console.log(api.isAuthenticated)
           api.get('users/me').then((res) => {
             if (setUser !== null) setUser(res.data)
           })
@@ -71,8 +82,9 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
       })
       .catch((error) => {
         const apiError: APIError = error.response.data.error
-        if (apiError?.source === 'email') setErrors({ email: "There's no account registered to this e-mail" })
-        else if (apiError?.source === 'password') setErrors({ password: 'Incorrect password' })
+        console.log('registering error:', apiError)
+        if (apiError?.source === 'email') setErrors({ email: 'This e-mail is already used' })
+        else if (apiError?.source === 'username') setErrors({ username: 'This username is already used' })
         setSubmitting(false)
       })
   }
@@ -82,10 +94,10 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
       <Dialog fullScreen={fullscreen} open={open} maxWidth="xs" fullWidth={true}>
         <Grid container direction="column" justify="center" alignItems="center" style={{ height: '100%' }}>
           <Grid item>
-            <DialogTitle>Log in</DialogTitle>
+            <DialogTitle>Sign in</DialogTitle>
           </Grid>
           <Grid item className={classes.fullWide}>
-            <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleLogin}>
+            <Formik initialValues={initialValues} validationSchema={RegisterSchema} onSubmit={handleRegister}>
               {({ values, errors, touched, dirty, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                 <div>
                   <DialogContent>
@@ -110,6 +122,24 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                         <Grid item className={classes.fullWide}>
                           <TextField
                             fullWidth
+                            name="username"
+                            type="text"
+                            id="username"
+                            label="Username"
+                            variant="outlined"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.username}
+                          ></TextField>
+                        </Grid>
+                        <Grid item>
+                          <Typography color="error">
+                            {errors.username && touched.username ? errors.username : '⠀'}
+                          </Typography>
+                        </Grid>
+                        <Grid item className={classes.fullWide}>
+                          <TextField
+                            fullWidth
                             name="password"
                             type="password"
                             id="password"
@@ -123,6 +153,24 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                         <Grid item>
                           <Typography color="error">
                             {errors.password && touched.password ? errors.password : '⠀'}
+                          </Typography>
+                        </Grid>
+                        <Grid item className={classes.fullWide}>
+                          <TextField
+                            fullWidth
+                            name="retryPassword"
+                            type="password"
+                            id="retryPassword"
+                            label="Retry Password"
+                            variant="outlined"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.retryPassword}
+                          ></TextField>
+                        </Grid>
+                        <Grid item>
+                          <Typography color="error">
+                            {errors.retryPassword && touched.retryPassword ? errors.retryPassword : '⠀'}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -140,9 +188,13 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                       color="primary"
                       variant="contained"
                       autoFocus
-                      disabled={!dirty || isSubmitting || Boolean(errors.email || errors.password)}
+                      disabled={
+                        !dirty ||
+                        isSubmitting ||
+                        Boolean(errors.email || errors.password || errors.username || errors.retryPassword)
+                      }
                     >
-                      Login
+                      Register
                     </Button>
                   </DialogActions>
                   <Backdrop style={{ zIndex: 1000000 }} open={isSubmitting}>
