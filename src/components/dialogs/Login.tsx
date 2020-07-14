@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../contexts/index'
-import { useAPI } from '../../lib/index'
+import { useAPI, APIError } from '../../lib/index'
 import {
   Dialog,
   DialogTitle,
@@ -54,10 +54,10 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
 
   const handleLogin = (
     values: { email: string; password: string },
-    submit: { setSubmitting: (state: boolean) => void },
+    submit: { setSubmitting: (state: boolean) => void; setErrors: any },
   ) => {
     const { email, password } = values
-    const { setSubmitting } = submit
+    const { setSubmitting, setErrors } = submit
 
     api
       .login(email, password)
@@ -70,7 +70,10 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
         }
       })
       .catch((error) => {
-        console.log('error:', error.response.data.error)
+        const apiError: APIError = error.response.data.error
+        setErrors({ password: 'test' })
+        if (apiError?.source === 'email') setErrors({ email: "There's no account registered to this e-mail" })
+        else if (apiError?.source === 'password') setErrors({ password: 'Incorrect password' })
         setSubmitting(false)
       })
   }
@@ -84,7 +87,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
           </Grid>
           <Grid item className={classes.fullWide}>
             <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleLogin}>
-              {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+              {({ values, errors, touched, dirty, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                 <div>
                   <DialogContent>
                     <form noValidate>
@@ -138,6 +141,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
                       color="primary"
                       variant="contained"
                       autoFocus
+                      disabled={!dirty || isSubmitting || Boolean(errors.email || errors.password)}
                     >
                       Login
                     </Button>
