@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { boolean } from 'yup'
 
 export interface LoginDialogProps {
   open: boolean
