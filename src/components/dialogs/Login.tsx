@@ -63,7 +63,12 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
     api
       .login(email, password)
       .then((res) => {
-        if (res.accessToken) onClose()
+        if (res.accessToken) {
+          onClose()
+          api.get('users/me').then((res) => {
+            if (setUser !== null) setUser(res.data)
+          })
+        }
       })
       .catch((error) => {
         console.log('error:', error.response.data.error)
