@@ -4,6 +4,13 @@ import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 const minute = 1000 * 60
 const APIURL = 'http://localhost:5500/api/v1'
 
+export interface APIError {
+  code: number
+  source: string
+  cause: 'short' | 'long' | 'forbidden' | 'missing' | 'invalid' | 'incorrect'
+  expected: number
+}
+
 export class API {
   private auth: Auth
 
