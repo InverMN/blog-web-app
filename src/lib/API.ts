@@ -6,9 +6,9 @@ const APIURL = 'http://localhost:5500/api/v1'
 
 export interface APIError {
   code: number
-  source: string
+  source?: string
   cause: 'short' | 'long' | 'forbidden' | 'missing' | 'invalid' | 'incorrect'
-  expected: number
+  expected?: number
 }
 
 export class API {
