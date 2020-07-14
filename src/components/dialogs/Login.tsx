@@ -39,15 +39,6 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
     password: '',
   }
 
-  const validate = (values: { email: string; password: string }) => {
-    const errors: { email?: string } = {}
-
-    if (!values.email) errors.email = 'Required'
-    else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) errors.email = 'Invalid email address'
-
-    return errors
-  }
-
   const handleClose = () => {
     onClose()
   }
