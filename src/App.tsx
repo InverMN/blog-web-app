@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Layout } from './components/Layout'
 import { useAPI } from './lib/index'
 import { UserContext } from './contexts/index'
@@ -6,9 +6,11 @@ import { UserContext } from './contexts/index'
 function App(): JSX.Element {
   const api = useAPI()
   const { user, setUser } = useContext(UserContext)
+  const [isInitial, setInitial] = useState(true)
 
   useEffect(() => {
-    if (user === null) {
+    if (isInitial) {
+      setInitial(false)
       api.refresh().then((res) => {
         if (res === true) {
           console.log('setting up user')

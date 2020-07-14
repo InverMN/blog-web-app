@@ -17,9 +17,9 @@ export const Forum: React.FC = () => {
   const [posts, setPosts] = useState<PostData[]>([])
 
   useEffect(() => {
-    Axios.get('http://localhost:5500/api/v1/posts').then((res) => {
-      setPosts(res.data as PostData[])
-    })
+    // Axios.get('http://localhost:5500/api/v1/posts').then((res) => {
+    //   setPosts(res.data as PostData[])
+    // })
   })
 
   return (
