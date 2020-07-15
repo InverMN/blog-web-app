@@ -37,7 +37,7 @@ export const AppNav: React.FC = () => {
               <Button color="inherit" onClick={handleLoginOpen}>
                 Login
               </Button>
-              <Button color="inherit" onClick={handleRegisterOpen}>
+              <Button variant="contained" disableElevation color="secondary" onClick={handleRegisterOpen}>
                 Register
               </Button>
             </div>
