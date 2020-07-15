@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { AppBar, Toolbar, IconButton, Typography, Button } from '@material-ui/core'
-import { Menu as MenuIcon } from '@material-ui/icons'
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
 import { LoginDialog, RegisterDialog } from '../dialogs/index'
 import { UserContext } from '../../contexts/index'
 import { AccountMenu } from './index'
@@ -30,10 +29,9 @@ export const AppNav: React.FC = () => {
     <div>
       <AppBar>
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6">Mikroblog</Typography>
+          <Typography style={{ flexGrow: 1 }} variant="h6">
+            <b>Micro</b>blog
+          </Typography>
           {user === null ? (
             <div>
               <Button color="inherit" onClick={handleLoginOpen}>
