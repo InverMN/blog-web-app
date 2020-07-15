@@ -28,8 +28,8 @@ export const AppNav: React.FC = () => {
   return (
     <div>
       <AppBar>
-        <Toolbar>
-          <Typography style={{ flexGrow: 1 }} variant="h6">
+        <Toolbar style={{ justifyContent: 'space-between' }}>
+          <Typography variant="h6">
             <b>Micro</b>blog
           </Typography>
           {user === null ? (
