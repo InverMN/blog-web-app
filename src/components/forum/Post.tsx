@@ -2,18 +2,11 @@ import React from 'react'
 import { Card, CardHeader, CardContent, CardActions, Typography, Avatar, IconButton } from '@material-ui/core'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import Moment from 'moment'
+import { PostData } from './index'
 
-interface Props {
-  id: string
-  author: {
-    id: string
-    username: string
-  }
-  createdAt: number
-  body: string
-}
+export const Post: React.FC<PostData> = (postData) => {
+  const { author, id, createdAt, body } = postData
 
-export const Post: React.FC<Props> = ({ author, createdAt, body }) => {
   return (
     <div>
       <Card variant="outlined">

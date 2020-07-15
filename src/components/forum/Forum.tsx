@@ -5,7 +5,7 @@ import { Post } from './index'
 import Axios from 'axios'
 import { UserContext, User } from '../../contexts/index'
 
-interface PostData {
+export interface PostData {
   id: string
   author: {
     id: string
