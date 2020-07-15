@@ -19,13 +19,13 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
       open={Boolean(anchorElement)}
       onClose={handleClose}
     >
-      {user === null ? (
-        <MenuItem>Report</MenuItem>
-      ) : (
+      {user !== null && user.id === post.author.id ? (
         <div>
           <MenuItem>Edit</MenuItem>
           <MenuItem>Delete</MenuItem>
         </div>
+      ) : (
+        <MenuItem>Report</MenuItem>
       )}
     </Menu>
   )

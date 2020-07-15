@@ -10,8 +10,8 @@ interface Props {
   user: User | null
 }
 
-export const Post: React.FC<PostData> = (postData, user) => {
-  const { author, id, createdAt, body } = postData
+export const Post: React.FC<Props> = ({ post, user }) => {
+  const { author, id, createdAt, body } = post
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
 
   const handleMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -38,7 +38,7 @@ export const Post: React.FC<PostData> = (postData, user) => {
               <IconButton aria-label="settings" onClick={handleMenuClick}>
                 <MoreVertIcon />
               </IconButton>
-              <PostMenu handleClose={handleMenuClose} anchorElement={anchorElement} post={postData} user={user} />
+              <PostMenu handleClose={handleMenuClose} anchorElement={anchorElement} post={post} user={user} />
             </div>
           }
         />

@@ -46,7 +46,7 @@ export const Forum: React.FC = () => {
             posts.map((post: PostData) => {
               return (
                 <Grid item key={post.id}>
-                  <Post {...post} />
+                  <Post post={post} user={user} />
                 </Grid>
               )
             })
