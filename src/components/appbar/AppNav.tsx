@@ -34,8 +34,8 @@ export const AppNav: React.FC = () => {
           </Typography>
           {user === null ? (
             <div>
-              <Button color="inherit" onClick={handleLoginOpen}>
-                Login
+              <Button variant="outlined" color="inherit" onClick={handleLoginOpen} style={{ marginRight: '14px' }}>
+                Log in
               </Button>
               <Button variant="contained" disableElevation color="secondary" onClick={handleRegisterOpen}>
                 Sign in
