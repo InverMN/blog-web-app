@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Container, Grid, Typography } from '@material-ui/core'
 import { Post } from './index'
 import Axios from 'axios'
+import { UserContext, User } from './../contexts/index'
 
 interface PostData {
   id: string
@@ -15,11 +16,16 @@ interface PostData {
 
 export const Forum: React.FC = () => {
   const [posts, setPosts] = useState<PostData[]>([])
+  const [previousUser, setPreviousUser] = useState<User | null | undefined>()
+  const { user, setUser } = useContext(UserContext)
 
   useEffect(() => {
-    // Axios.get('http://localhost:5500/api/v1/posts').then((res) => {
-    //   setPosts(res.data as PostData[])
-    // })
+    if (previousUser !== user) {
+      setPreviousUser(user)
+      Axios.get('http://localhost:5500/api/v1/posts').then((res) => {
+        setPosts(res.data as PostData[])
+      })
+    }
   })
 
   return (

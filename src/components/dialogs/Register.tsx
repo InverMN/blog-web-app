@@ -74,10 +74,12 @@ export const RegisterDialog: React.FC<RegisterDialogProps> = (props: RegisterDia
       .then((res) => {
         if (res.accessToken) {
           onClose()
-          console.log(api.isAuthenticated)
-          api.get('users/me').then((res) => {
-            if (setUser !== null) setUser(res.data)
-          })
+          api
+            .get('users/me')
+            .then((res) => {
+              if (setUser !== null) setUser(res.data)
+            })
+            .catch((error) => console.log('Registering error:', error.response.data))
         }
       })
       .catch((error) => {
