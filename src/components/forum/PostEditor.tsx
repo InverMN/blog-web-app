@@ -6,6 +6,7 @@ import { Add as AddIcon } from '@material-ui/icons'
 import { TransitionProps } from '@material-ui/core/transitions'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { useAPI } from '../../lib/index'
 
 const useStyles = makeStyles({
   floating: {
@@ -37,6 +38,7 @@ export const PostEditor: React.FC = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [body, setBody] = useState('<p>Type content of post here...</p>')
+  const api = useAPI()
 
   const handleOpen = () => {
     setOpen(true)
@@ -48,34 +50,38 @@ export const PostEditor: React.FC = () => {
 
   return (
     <div>
-      <Fab className={classes.floating} color="primary" aria-label="add post" onClick={handleOpen}>
-        <AddIcon />
-      </Fab>
-      <Dialog open={open} fullScreen TransitionComponent={Transition}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Create Post
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              publish
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Container maxWidth="sm" className={classes.noPadding}>
-          <CKEditor
-            className={classes.fullSized}
-            editor={ClassicEditor}
-            data={body}
-            onChange={(event: undefined, editor: { getData: () => string }) => {
-              setBody(editor.getData())
-            }}
-          />
-        </Container>
-      </Dialog>
+      {api.isAuthenticated ? (
+        <div>
+          <Fab className={classes.floating} color="primary" aria-label="add post" onClick={handleOpen}>
+            <AddIcon />
+          </Fab>
+          <Dialog open={open} fullScreen TransitionComponent={Transition}>
+            <AppBar position="static">
+              <Toolbar>
+                <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                  <CloseIcon />
+                </IconButton>
+                <Typography variant="h6" className={classes.title}>
+                  Create Post
+                </Typography>
+                <Button autoFocus color="inherit" onClick={handleClose}>
+                  publish
+                </Button>
+              </Toolbar>
+            </AppBar>
+            <Container maxWidth="sm" className={classes.noPadding}>
+              <CKEditor
+                className={classes.fullSized}
+                editor={ClassicEditor}
+                data={body}
+                onChange={(event: undefined, editor: { getData: () => string }) => {
+                  setBody(editor.getData())
+                }}
+              />
+            </Container>
+          </Dialog>
+        </div>
+      ) : null}
     </div>
   )
 }
