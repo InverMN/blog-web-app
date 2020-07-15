@@ -3,7 +3,7 @@ import { Container, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Post } from './index'
 import Axios from 'axios'
-import { UserContext, User } from './../contexts/index'
+import { UserContext, User } from '../../contexts/index'
 
 interface PostData {
   id: string

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Forum } from './index'
+import { Forum } from './forum/index'
 import { AppNav } from './appbar/index'
 
 export const Layout: React.FC = () => {
