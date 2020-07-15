@@ -18,6 +18,14 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
       keepMounted
       open={Boolean(anchorElement)}
       onClose={handleClose}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
     >
       {user !== null && user.id === post.author.id ? (
         <div>
