@@ -5,12 +5,12 @@ import { User } from '../../contexts/index'
 
 interface Props {
   post: PostData
-  // user: User | null
+  user: User | null
   anchorElement: HTMLElement | null
   handleClose: () => void
 }
 
-export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post }) => {
+export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, user }) => {
   return (
     <Menu
       id={`post-menu-${post.id}`}
@@ -19,7 +19,14 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post }) 
       open={Boolean(anchorElement)}
       onClose={handleClose}
     >
-      <MenuItem>Report</MenuItem>
+      {user === null ? (
+        <MenuItem>Report</MenuItem>
+      ) : (
+        <div>
+          <MenuItem>Edit</MenuItem>
+          <MenuItem>Delete</MenuItem>
+        </div>
+      )}
     </Menu>
   )
 }

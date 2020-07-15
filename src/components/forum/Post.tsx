@@ -3,8 +3,14 @@ import { Card, CardHeader, CardContent, CardActions, Typography, Avatar, IconBut
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import Moment from 'moment'
 import { PostData, PostMenu } from './index'
+import { User } from '../../contexts/index'
 
-export const Post: React.FC<PostData> = (postData) => {
+interface Props {
+  post: PostData
+  user: User | null
+}
+
+export const Post: React.FC<PostData> = (postData, user) => {
   const { author, id, createdAt, body } = postData
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
 
@@ -32,7 +38,7 @@ export const Post: React.FC<PostData> = (postData) => {
               <IconButton aria-label="settings" onClick={handleMenuClick}>
                 <MoreVertIcon />
               </IconButton>
-              <PostMenu handleClose={handleMenuClose} anchorElement={anchorElement} post={postData} />
+              <PostMenu handleClose={handleMenuClose} anchorElement={anchorElement} post={postData} user={user} />
             </div>
           }
         />
