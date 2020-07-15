@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Container, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Post } from './index'
+import { Post, PostEditor } from './index'
 import Axios from 'axios'
 import { UserContext, User } from '../../contexts/index'
 
@@ -52,6 +52,7 @@ export const Forum: React.FC = () => {
             })
           )}
         </Grid>
+        <PostEditor />
       </Container>
     </div>
   )
