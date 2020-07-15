@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Container, Grid, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import { Post } from './index'
 import Axios from 'axios'
 import { UserContext, User } from './../contexts/index'
@@ -14,10 +15,17 @@ interface PostData {
   body: string
 }
 
+const useStyles = makeStyles({
+  root: {
+    marginTop: '96px',
+  },
+})
+
 export const Forum: React.FC = () => {
   const [posts, setPosts] = useState<PostData[]>([])
   const [previousUser, setPreviousUser] = useState<User | null | undefined>()
   const { user, setUser } = useContext(UserContext)
+  const classes = useStyles()
 
   useEffect(() => {
     if (previousUser !== user) {
@@ -30,7 +38,7 @@ export const Forum: React.FC = () => {
 
   return (
     <div>
-      <Container maxWidth="xs">
+      <Container className={classes.root} maxWidth="xs">
         <Grid container direction="column" spacing={6}>
           {posts === [] ? (
             <Typography variant="h6">NO POST TO DISPLAY</Typography>
