@@ -28,7 +28,6 @@ export const ForumContext = createContext<{ forum: Forum; dispatch: React.Dispat
 
 export const ForumContextProvider: React.FC = ({ children }) => {
   const [forum, dispatch] = useReducer(ForumReducer, initialState)
-  // const [forum, setForum] = useState<Forum | null>(null)
   const { user } = useContext(UserContext)
   const api = useAPI()
 
