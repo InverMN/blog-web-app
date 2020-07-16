@@ -102,7 +102,7 @@ export const PostEditor: React.FC = () => {
                 <Typography variant="h6" className={classes.title}>
                   Create Post
                 </Typography>
-                <Button autoFocus color="inherit" onClick={publishPost}>
+                <Button autoFocus disabled={body === ''} color="inherit" onClick={publishPost}>
                   publish
                 </Button>
               </Toolbar>
