@@ -1,5 +1,17 @@
 import React, { useState, useContext } from 'react'
-import { Fab, Dialog, Slide, AppBar, Toolbar, IconButton, Typography, Button, Container, Grid } from '@material-ui/core'
+import {
+  Fab,
+  Dialog,
+  Slide,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+  Container,
+  Backdrop,
+  CircularProgress,
+} from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { Add as AddIcon, Edit as EditIcon } from '@material-ui/icons'
@@ -39,6 +51,7 @@ export const PostEditor: React.FC = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [body, setBody] = useState('')
+  const [openBackdrop, setOpenBackdrop] = useState(false)
   const { dispatch } = useContext(ForumContext)
   const api = useAPI()
 
@@ -51,6 +64,7 @@ export const PostEditor: React.FC = () => {
   }
 
   const publishPost = () => {
+    setOpenBackdrop(true)
     api
       .post('posts', {
         title: 'title is unseseccary',
@@ -60,6 +74,9 @@ export const PostEditor: React.FC = () => {
         dispatch({ type: 'ADD_POST', payload: res.data })
         setBody('')
         setOpen(false)
+      })
+      .finally(() => {
+        setOpenBackdrop(false)
       })
   }
 
@@ -101,6 +118,9 @@ export const PostEditor: React.FC = () => {
               />
             </Container>
           </Dialog>
+          <Backdrop style={{ zIndex: 1000000 }} open={openBackdrop}>
+            <CircularProgress color="primary" />
+          </Backdrop>
         </div>
       ) : null}
     </div>
