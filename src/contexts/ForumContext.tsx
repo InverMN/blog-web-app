@@ -1,6 +1,7 @@
-import React, { createContext, useState, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useReducer } from 'react'
 import { UserContext } from './index'
 import { useAPI } from '../lib/index'
+import { ForumReducer, ForumActionTypes } from '../reducers/index'
 
 export interface Forum {
   posts: Post[]
@@ -16,18 +17,26 @@ export interface Post {
   body: string
 }
 
-export const ForumContext = createContext<{ forum: Forum | null }>({ forum: null })
+const initialState: Forum = {
+  posts: [],
+}
+
+export const ForumContext = createContext<{ forum: Forum; dispatch: React.Dispatch<ForumActionTypes> }>({
+  forum: initialState,
+  dispatch: () => null,
+})
 
 export const ForumContextProvider: React.FC = ({ children }) => {
-  const [forum, setForum] = useState<Forum | null>(null)
+  const [forum, dispatch] = useReducer(ForumReducer, initialState)
+  // const [forum, setForum] = useState<Forum | null>(null)
   const { user } = useContext(UserContext)
   const api = useAPI()
 
   useEffect(() => {
     api.get('posts').then((res) => {
-      setForum({ posts: res.data })
+      dispatch({ type: 'LOAD_POSTS', payload: res.data })
     })
   }, [user])
 
-  return <ForumContext.Provider value={{ forum }}>{children}</ForumContext.Provider>
+  return <ForumContext.Provider value={{ forum, dispatch }}>{children}</ForumContext.Provider>
 }
