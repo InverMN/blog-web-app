@@ -15,7 +15,14 @@ interface AddPostAction {
   payload: Post
 }
 
-export type ForumActionTypes = LoadPostsAction | AddPostAction
+export const DELETE_POST = 'DELETE_POST'
+
+interface DeletePostAction {
+  type: typeof DELETE_POST
+  payload: Pick<Post, 'id'>
+}
+
+export type ForumActionTypes = LoadPostsAction | AddPostAction | DeletePostAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -23,5 +30,7 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
       return { posts: action.payload }
     case ADD_POST:
       return { posts: [action.payload, ...forum.posts] }
+    case DELETE_POST:
+      return { posts: forum.posts.filter((singlePost) => singlePost.id !== action.payload.id) }
   }
 }
