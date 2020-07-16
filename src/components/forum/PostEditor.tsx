@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Fab, Dialog, Slide, AppBar, Toolbar, IconButton, Typography, Button, Container, Grid } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { Add as AddIcon } from '@material-ui/icons'
+import { Add as AddIcon, Edit as EditIcon } from '@material-ui/icons'
 import { TransitionProps } from '@material-ui/core/transitions'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -38,7 +38,7 @@ const Transition = React.forwardRef(function Transition(
 export const PostEditor: React.FC = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-  const [body, setBody] = useState('<p>Type content of post here...</p>')
+  const [body, setBody] = useState('')
   const { dispatch } = useContext(ForumContext)
   const api = useAPI()
 
@@ -66,8 +66,14 @@ export const PostEditor: React.FC = () => {
     <div>
       {api.isAuthenticated ? (
         <div>
-          <Fab className={classes.floating} color="primary" aria-label="add post" onClick={handleOpen}>
-            <AddIcon />
+          <Fab
+            className={classes.floating}
+            style={{ backgroundColor: body === '' ? '#d500f9' : '#4caf50' }}
+            color="primary"
+            aria-label="add post"
+            onClick={handleOpen}
+          >
+            {body === '' ? <AddIcon /> : <EditIcon />}
           </Fab>
           <Dialog open={open} fullScreen TransitionComponent={Transition}>
             <AppBar position="static">
