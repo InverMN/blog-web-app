@@ -58,6 +58,7 @@ export const PostEditor: React.FC = () => {
       })
       .then((res) => {
         dispatch({ type: 'ADD_POST', payload: res.data })
+        setBody('')
         setOpen(false)
       })
   }
