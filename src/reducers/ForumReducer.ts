@@ -22,6 +22,6 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
     case LOAD_POSTS:
       return { posts: action.payload }
     case ADD_POST:
-      return { posts: [...forum.posts, action.payload] }
+      return { posts: [action.payload, ...forum.posts] }
   }
 }
