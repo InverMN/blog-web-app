@@ -2,8 +2,8 @@ import React, { useState, MouseEvent } from 'react'
 import { Card, CardHeader, CardContent, CardActions, Typography, Avatar, IconButton } from '@material-ui/core'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import Moment from 'moment'
-import { PostData, PostMenu } from './index'
-import { User } from '../../contexts/index'
+import { PostMenu } from './index'
+import { User, Post as PostData } from '../../contexts/index'
 
 interface Props {
   post: PostData

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
-import { PostData } from './index'
-import { User } from '../../contexts/index'
+import { User, Post as PostData } from '../../contexts/index'
 
 interface Props {
   post: PostData
