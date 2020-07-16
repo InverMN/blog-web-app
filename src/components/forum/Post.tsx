@@ -42,9 +42,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
             </div>
           }
         />
-        <CardContent>
-          <Typography>{body}</Typography>
-        </CardContent>
+        <CardContent dangerouslySetInnerHTML={{ __html: body }} />
         <CardActions></CardActions>
       </Card>
     </div>
