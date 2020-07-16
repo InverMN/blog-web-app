@@ -67,7 +67,6 @@ export const PostEditor: React.FC = () => {
     setOpenBackdrop(true)
     api
       .post('posts', {
-        title: 'title is unseseccary',
         body: body,
       })
       .then((res) => {
