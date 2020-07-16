@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Fab, Dialog, Slide, AppBar, Toolbar, IconButton, Typography, Button, Container, Grid } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
@@ -7,6 +7,7 @@ import { TransitionProps } from '@material-ui/core/transitions'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useAPI } from '../../lib/index'
+import { ForumContext } from '../../contexts/index'
 
 const useStyles = makeStyles({
   floating: {
@@ -38,6 +39,7 @@ export const PostEditor: React.FC = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [body, setBody] = useState('<p>Type content of post here...</p>')
+  const { dispatch } = useContext(ForumContext)
   const api = useAPI()
 
   const handleOpen = () => {
@@ -46,6 +48,18 @@ export const PostEditor: React.FC = () => {
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const publishPost = () => {
+    api
+      .post('posts', {
+        title: 'title is unseseccary',
+        body: body,
+      })
+      .then((res) => {
+        dispatch({ type: 'ADD_POST', payload: res.data })
+        setOpen(false)
+      })
   }
 
   return (
@@ -64,7 +78,7 @@ export const PostEditor: React.FC = () => {
                 <Typography variant="h6" className={classes.title}>
                   Create Post
                 </Typography>
-                <Button autoFocus color="inherit" onClick={handleClose}>
+                <Button autoFocus color="inherit" onClick={publishPost}>
                   publish
                 </Button>
               </Toolbar>
