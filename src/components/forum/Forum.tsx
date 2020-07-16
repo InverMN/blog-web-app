@@ -15,12 +15,6 @@ export const Forum: React.FC = () => {
   const { user } = useContext(UserContext)
   const classes = useStyles()
 
-  // useEffect(() => {
-  //   Axios.get('http://localhost:5500/api/v1/posts').then((res) => {
-  //     setPosts(res.data as PostData[])
-  //   })
-  // }, [user])
-
   const renderPosts = () => {
     return forum === null ? (
       <Typography variant="h6">NO POST TO DISPLAY</Typography>
