@@ -23,18 +23,14 @@ const useStyles = makeStyles({
 
 export const Forum: React.FC = () => {
   const [posts, setPosts] = useState<PostData[]>([])
-  const [previousUser, setPreviousUser] = useState<User | null | undefined>()
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
 
   useEffect(() => {
-    if (previousUser !== user) {
-      setPreviousUser(user)
-      Axios.get('http://localhost:5500/api/v1/posts').then((res) => {
-        setPosts(res.data as PostData[])
-      })
-    }
-  })
+    Axios.get('http://localhost:5500/api/v1/posts').then((res) => {
+      setPosts(res.data as PostData[])
+    })
+  }, [user])
 
   return (
     <div>
