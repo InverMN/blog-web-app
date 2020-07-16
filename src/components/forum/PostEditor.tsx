@@ -47,6 +47,26 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />
 })
 
+const editorConfig = {
+  toolbar: [
+    'heading',
+    '|',
+    'bold',
+    'italic',
+    '|',
+    'link',
+    'imageUpload',
+    'mediaEmbed',
+    'blockQuote',
+    '|',
+    'numberedList',
+    'bulletedList',
+    '|',
+    'undo',
+    'redo',
+  ],
+}
+
 export const PostEditor: React.FC = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -111,6 +131,7 @@ export const PostEditor: React.FC = () => {
                 className={classes.fullSized}
                 editor={ClassicEditor}
                 data={body}
+                config={editorConfig}
                 onChange={(event: undefined, editor: { getData: () => string }) => {
                   setBody(editor.getData())
                 }}
