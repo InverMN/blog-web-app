@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
-import { User, Post as PostData } from '../../contexts/index'
+import { User, Post as PostData, ForumContext } from '../../contexts/index'
+import { useAPI } from '../../lib/index'
 
 interface Props {
   post: PostData
@@ -10,6 +11,15 @@ interface Props {
 }
 
 export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, user }) => {
+  const { dispatch } = useContext(ForumContext)
+  const api = useAPI()
+
+  const deletePost = () => {
+    handleClose()
+    dispatch({ type: 'DELETE_POST', payload: { id: post.id } })
+    api.delete(`posts/${post.id}`)
+  }
+
   return (
     <Menu
       id={`post-menu-${post.id}`}
@@ -17,19 +27,11 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
       keepMounted
       open={Boolean(anchorElement)}
       onClose={handleClose}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
     >
       {user !== null && user.id === post.author.id ? (
         <div>
           <MenuItem>Edit</MenuItem>
-          <MenuItem>Delete</MenuItem>
+          <MenuItem onClick={deletePost}>Delete</MenuItem>
         </div>
       ) : (
         <MenuItem>Report</MenuItem>
