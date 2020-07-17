@@ -2,7 +2,7 @@ import React, { useState, MouseEvent } from 'react'
 import { Card, CardHeader, CardContent, CardActions, Typography, Avatar, IconButton } from '@material-ui/core'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import Moment from 'moment'
-import { PostMenu } from './index'
+import { PostMenu, Feedback } from './index'
 import { User, Post as PostData } from '../../contexts/index'
 
 interface Props {
@@ -52,7 +52,9 @@ export const Post: React.FC<Props> = ({ post, user }) => {
           }
         />
         <CardContent dangerouslySetInnerHTML={{ __html: body }} />
-        <CardActions></CardActions>
+        <CardActions>
+          <Feedback />
+        </CardActions>
       </Card>
     </div>
   )
