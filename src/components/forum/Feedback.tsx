@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Grid, Box, Button } from '@material-ui/core'
-import { Add as Like, Remove as Dislike, SentimentDissatisfiedRounded } from '@material-ui/icons'
+import { Add as Like, Remove as Dislike } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
