@@ -29,6 +29,11 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
     api.delete(`posts/${post.id}`)
   }
 
+  const editPost = () => {
+    handleClose()
+    dispatch({ type: 'SET_EDITED', payload: { ...post } })
+  }
+
   return (
     <Menu
       id={`post-menu-${post.id}`}
@@ -39,7 +44,7 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
     >
       {user !== null && user.id === post.author.id ? (
         <div>
-          <MenuItem>
+          <MenuItem onClick={editPost}>
             <EditIcon style={{ color: '#4caf50' }} className={classes.icon} />
             Edit
           </MenuItem>

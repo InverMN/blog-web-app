@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import {
   Fab,
   Dialog,
@@ -72,8 +72,15 @@ export const PostEditor: React.FC = () => {
   const [open, setOpen] = useState(false)
   const [body, setBody] = useState('')
   const [openBackdrop, setOpenBackdrop] = useState(false)
-  const { dispatch } = useContext(ForumContext)
+  const { dispatch, forum } = useContext(ForumContext)
   const api = useAPI()
+
+  useEffect(() => {
+    if (forum.edited !== undefined && open === false) {
+      setOpen(true)
+      setBody(forum.edited.body)
+    }
+  }, [forum.edited])
 
   const handleOpen = () => {
     setOpen(true)
@@ -99,6 +106,17 @@ export const PostEditor: React.FC = () => {
       })
   }
 
+  const editPost = () => {
+    if (forum !== undefined) {
+      api.patch(`posts/${forum.edited?.editedPostId}`, { body }).then()
+      // @ts-ignore
+      dispatch({ type: 'EDIT_POST', payload: { id: forum.edited.editedPostId, body } })
+      dispatch({ type: 'EMPTY_EDITED' })
+      setBody('')
+      setOpen(false)
+    }
+  }
+
   return (
     <div>
       {api.isAuthenticated ? (
@@ -119,10 +137,15 @@ export const PostEditor: React.FC = () => {
                   <CloseIcon />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                  Create Post
+                  {forum.edited === undefined ? 'Create Post' : 'Edit Post'}
                 </Typography>
-                <Button autoFocus disabled={body === ''} color="inherit" onClick={publishPost}>
-                  publish
+                <Button
+                  autoFocus
+                  disabled={body === ''}
+                  color="inherit"
+                  onClick={forum.edited === undefined ? publishPost : editPost}
+                >
+                  {forum.edited === undefined ? 'publish' : 'commit'}
                 </Button>
               </Toolbar>
             </AppBar>

@@ -5,6 +5,7 @@ import { ForumReducer, ForumActionTypes } from '../reducers/index'
 
 export interface Forum {
   posts: Post[]
+  edited?: EditedPost
 }
 
 export interface Post {
@@ -17,8 +18,14 @@ export interface Post {
   body: string
 }
 
+export interface EditedPost {
+  body: string
+  editedPostId: string
+}
+
 const initialState: Forum = {
   posts: [],
+  edited: undefined,
 }
 
 export const ForumContext = createContext<{ forum: Forum; dispatch: React.Dispatch<ForumActionTypes> }>({
