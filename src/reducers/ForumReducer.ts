@@ -67,7 +67,7 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
         ...forum,
         posts: forum.posts.map((singlePost) => {
           if (singlePost.id === action.payload.id) {
-            return { ...singlePost, body: action.payload.body }
+            return { ...singlePost, body: action.payload.body, editedAt: Date.now() }
           } else return singlePost
         }),
       }

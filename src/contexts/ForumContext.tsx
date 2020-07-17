@@ -15,6 +15,7 @@ export interface Post {
     username: string
   }
   createdAt: number
+  editedAt?: number
   body: string
 }
 
