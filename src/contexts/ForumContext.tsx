@@ -17,6 +17,9 @@ export interface Post {
   createdAt: number
   editedAt?: number
   body: string
+  popularity: {
+    sum: number
+  }
 }
 
 export interface EditedPost {
