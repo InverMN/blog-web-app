@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { Add as AddIcon, Edit as EditIcon } from '@material-ui/icons'
+import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { TransitionProps } from '@material-ui/core/transitions'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -117,6 +117,12 @@ export const PostEditor: React.FC = () => {
     }
   }
 
+  const discardEditing = () => {
+    setOpen(false)
+    setBody('')
+    dispatch({ type: 'EMPTY_EDITED' })
+  }
+
   return (
     <div>
       {api.isAuthenticated ? (
@@ -139,6 +145,10 @@ export const PostEditor: React.FC = () => {
                 <Typography variant="h6" className={classes.title}>
                   {forum.edited === undefined ? 'Create Post' : 'Edit Post'}
                 </Typography>
+                <Button disabled={body === ''} color="inherit" onClick={discardEditing}>
+                  <DeleteIcon color={body === '' ? 'action' : 'error'} />
+                  Discard
+                </Button>
                 <Button
                   autoFocus
                   disabled={body === ''}
