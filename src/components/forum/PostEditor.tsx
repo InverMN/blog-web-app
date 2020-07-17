@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
+import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon, Send as SendIcon } from '@material-ui/icons'
 import { TransitionProps } from '@material-ui/core/transitions'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -145,16 +145,19 @@ export const PostEditor: React.FC = () => {
                 <Typography variant="h6" className={classes.title}>
                   {forum.edited === undefined ? 'Create Post' : 'Edit Post'}
                 </Typography>
-                <Button disabled={body === ''} color="inherit" onClick={discardEditing}>
+                <Button disabled={body === ''} color="inherit" onClick={discardEditing} style={{ marginRight: '13px' }}>
                   <DeleteIcon color={body === '' ? 'action' : 'error'} />
                   Discard
                 </Button>
                 <Button
                   autoFocus
                   disabled={body === ''}
-                  color="inherit"
+                  variant="contained"
+                  color="secondary"
+                  disableElevation
                   onClick={forum.edited === undefined ? publishPost : editPost}
                 >
+                  <SendIcon />
                   {forum.edited === undefined ? 'publish' : 'commit'}
                 </Button>
               </Toolbar>
