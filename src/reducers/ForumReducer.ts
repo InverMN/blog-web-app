@@ -1,5 +1,4 @@
-import { Forum } from '../contexts/index'
-import { Post } from '../contexts/index'
+import { Forum, Post, FeedbackType } from '../contexts/index'
 
 export const LOAD_POSTS = 'LOAD_POSTS'
 
@@ -42,6 +41,16 @@ interface EditPostAction {
   payload: Pick<Post, 'id' | 'body'>
 }
 
+export const CHANGE_REACTION = 'CHANGE_REACTION'
+
+interface ChangeReactionAction {
+  type: typeof CHANGE_REACTION
+  payload: {
+    id: string
+    reactionType: FeedbackType
+  }
+}
+
 export type ForumActionTypes =
   | LoadPostsAction
   | AddPostAction
@@ -49,6 +58,7 @@ export type ForumActionTypes =
   | SetEditedAction
   | EmptyEditedAction
   | EditPostAction
+  | ChangeReactionAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -68,6 +78,15 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
         posts: forum.posts.map((singlePost) => {
           if (singlePost.id === action.payload.id) {
             return { ...singlePost, body: action.payload.body, editedAt: Date.now() }
+          } else return singlePost
+        }),
+      }
+    case CHANGE_REACTION:
+      return {
+        ...forum,
+        posts: forum.posts.map((singlePost) => {
+          if (singlePost.id === action.payload.id) {
+            return { ...singlePost, userReaction: action.payload.reactionType, editedAt: Date.now() }
           } else return singlePost
         }),
       }

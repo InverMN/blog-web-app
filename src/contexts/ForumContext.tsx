@@ -9,11 +9,11 @@ export interface Forum {
 }
 
 export interface Popularity {
-  popularity: {
-    sum: number
-    feedback: string
-  }
+  sum: number
+  feedback: string
 }
+
+export type FeedbackType = 'positive' | 'neutral' | 'negative'
 
 export interface Post {
   id: string
@@ -25,6 +25,7 @@ export interface Post {
   editedAt?: number
   body: string
   popularity: Popularity
+  userReaction?: FeedbackType
 }
 
 export interface EditedPost {
