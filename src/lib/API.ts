@@ -78,7 +78,7 @@ export class API {
     return await Axios.get(`${APIURL}/${path}`, config)
   }
 
-  async post(path: string, payload: any): Promise<AxiosResponse<any>> {
+  async post(path: string, payload?: any): Promise<AxiosResponse<any>> {
     await this.ensureCredentials()
     const config: AxiosRequestConfig = {
       headers: {
@@ -88,7 +88,7 @@ export class API {
     return await Axios.post(`${APIURL}/${path}`, payload, config)
   }
 
-  async patch(path: string, payload: any): Promise<AxiosResponse<any>> {
+  async patch(path: string, payload?: any): Promise<AxiosResponse<any>> {
     await this.ensureCredentials()
     const config: AxiosRequestConfig = {
       headers: {
