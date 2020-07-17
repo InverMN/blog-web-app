@@ -8,6 +8,13 @@ export interface Forum {
   edited?: EditedPost
 }
 
+export interface Popularity {
+  popularity: {
+    sum: number
+    feedback: string
+  }
+}
+
 export interface Post {
   id: string
   author: {
@@ -17,9 +24,7 @@ export interface Post {
   createdAt: number
   editedAt?: number
   body: string
-  popularity: {
-    sum: number
-  }
+  popularity: Popularity
 }
 
 export interface EditedPost {
