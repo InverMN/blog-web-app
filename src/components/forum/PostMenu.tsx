@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
 import { User, Post as PostData, ForumContext } from '../../contexts/index'
+import { Edit as EditIcon, Delete as DeleteIcon, Report as ReportIcon } from '@material-ui/icons'
+import { makeStyles } from '@material-ui/core/styles'
 import { useAPI } from '../../lib/index'
 
 interface Props {
@@ -10,9 +12,16 @@ interface Props {
   handleClose: () => void
 }
 
+const useStyles = makeStyles({
+  icon: {
+    marginRight: '5px',
+  },
+})
+
 export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, user }) => {
   const { dispatch } = useContext(ForumContext)
   const api = useAPI()
+  const classes = useStyles()
 
   const deletePost = () => {
     handleClose()
@@ -30,11 +39,20 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
     >
       {user !== null && user.id === post.author.id ? (
         <div>
-          <MenuItem>Edit</MenuItem>
-          <MenuItem onClick={deletePost}>Delete</MenuItem>
+          <MenuItem>
+            <EditIcon style={{ color: '#4caf50' }} className={classes.icon} />
+            Edit
+          </MenuItem>
+          <MenuItem onClick={deletePost}>
+            <DeleteIcon color="error" className={classes.icon} />
+            Delete
+          </MenuItem>
         </div>
       ) : (
-        <MenuItem>Report</MenuItem>
+        <MenuItem>
+          <ReportIcon color="error" className={classes.icon} />
+          Report
+        </MenuItem>
       )}
     </Menu>
   )
