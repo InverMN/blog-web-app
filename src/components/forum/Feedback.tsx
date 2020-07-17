@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Box, Button } from '@material-ui/core'
 import { Add as Like, Remove as Dislike } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
+import { Popularity } from '../../contexts/index'
 
 const useStyles = makeStyles({
   actionButton: {
@@ -24,7 +25,11 @@ const useStyles = makeStyles({
 
 export type FeedbackType = 'positive' | 'neutral' | 'negative'
 
-export const Feedback: React.FC = () => {
+interface Props {
+  popularity: Popularity
+}
+
+export const Feedback: React.FC<Props> = ({ popularity }) => {
   const classes = useStyles()
   const [feedbackType, setFeedbackType] = useState<FeedbackType>('neutral')
 
@@ -47,7 +52,7 @@ export const Feedback: React.FC = () => {
           </Button>
         </Grid>
         <Grid item className={classes.counter}>
-          0
+          {popularity.sum}
         </Grid>
         <Grid item>
           <Button

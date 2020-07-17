@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const Post: React.FC<Props> = ({ post, user }) => {
-  const { author, id, createdAt, body, editedAt } = post
+  const { author, id, createdAt, body, editedAt, popularity } = post
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
 
   const handleMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -53,7 +53,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
         />
         <CardContent dangerouslySetInnerHTML={{ __html: body }} />
         <CardActions>
-          <Feedback />
+          <Feedback popularity={popularity} />
         </CardActions>
       </Card>
     </div>
