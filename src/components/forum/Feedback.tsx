@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Grid, Box, Button } from '@material-ui/core'
 import { Add as Like, Remove as Dislike } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { Popularity } from '../../contexts/index'
+import { Popularity, FeedbackType } from '../../contexts/index'
+import { useAPI } from '../../lib/index'
+import { ForumContext } from '../../contexts/index'
 
 const useStyles = makeStyles({
   actionButton: {
@@ -23,18 +25,25 @@ const useStyles = makeStyles({
   },
 })
 
-export type FeedbackType = 'positive' | 'neutral' | 'negative'
-
 interface Props {
   popularity: Popularity
+  target: string
+  userReaction?: FeedbackType
 }
 
-export const Feedback: React.FC<Props> = ({ popularity }) => {
+export const Feedback: React.FC<Props> = ({ popularity, target, userReaction }) => {
   const classes = useStyles()
-  const [feedbackType, setFeedbackType] = useState<FeedbackType>('neutral')
+  const api = useAPI()
+  const { dispatch } = useContext(ForumContext)
 
   const sendFeedback = (sentFeedbackType: FeedbackType) => {
-    feedbackType === sentFeedbackType ? setFeedbackType('neutral') : setFeedbackType(sentFeedbackType)
+    if (userReaction === sentFeedbackType) {
+      api.post(`unlike/${target}`)
+      dispatch({ type: 'CHANGE_REACTION', payload: { id: target, reactionType: 'neutral' } })
+    } else {
+      sentFeedbackType === 'positive' ? api.post(`like/${target}`) : api.post(`dislike/${target}`)
+      dispatch({ type: 'CHANGE_REACTION', payload: { id: target, reactionType: sentFeedbackType } })
+    }
   }
 
   return (
@@ -43,9 +52,10 @@ export const Feedback: React.FC<Props> = ({ popularity }) => {
         <Grid item>
           <Button
             disableElevation
-            style={feedbackType === 'positive' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
+            disabled={userReaction === undefined}
+            style={userReaction === 'positive' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
             className={classes.actionButton}
-            variant={feedbackType === 'positive' ? 'contained' : 'outlined'}
+            variant={userReaction === 'positive' ? 'contained' : 'outlined'}
             onClick={() => sendFeedback('positive')}
           >
             <Like />
@@ -57,9 +67,10 @@ export const Feedback: React.FC<Props> = ({ popularity }) => {
         <Grid item>
           <Button
             disableElevation
-            style={feedbackType === 'negative' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
+            disabled={userReaction === undefined}
+            style={userReaction === 'negative' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
             className={classes.actionButton}
-            variant={feedbackType === 'negative' ? 'contained' : 'outlined'}
+            variant={userReaction === 'negative' ? 'contained' : 'outlined'}
             onClick={() => sendFeedback('negative')}
           >
             <Dislike />
