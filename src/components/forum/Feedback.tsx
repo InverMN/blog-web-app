@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     lineHeight: '30px',
     color: '#797979',
     fontWeight: 'bold',
-    minWidth: '20px',
+    minWidth: '30px',
     textAlign: 'center',
   },
 })
