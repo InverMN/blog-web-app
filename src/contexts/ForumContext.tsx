@@ -26,7 +26,11 @@ export interface Post {
   body: string
   popularity: Popularity
   userReaction?: FeedbackType
+  comments: Comment[]
 }
+
+export type Comment = Post & { subcomments: Subcomment[] }
+export type Subcomment = Post
 
 export interface EditedPost {
   body: string
