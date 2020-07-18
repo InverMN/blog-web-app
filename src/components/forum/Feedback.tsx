@@ -10,18 +10,32 @@ const useStyles = makeStyles({
   actionButton: {
     padding: '0',
     minWidth: '0',
-    width: '30px',
-    height: '30px',
+    minHeight: '0',
     color: '#696969',
-    lineHeight: '30px',
     borderRadius: '50%',
   },
   counter: {
-    lineHeight: '30px',
     color: '#797979',
     fontWeight: 'bold',
-    minWidth: '30px',
     textAlign: 'center',
+  },
+  mediumActionButton: {
+    width: '30px',
+    height: '30px',
+    lineHeight: '30px',
+  },
+  mediumCounter: {
+    lineHeight: '30px',
+    minWidth: '30px',
+  },
+  smallActionButton: {
+    width: '20px',
+    height: '20px',
+    lineHeight: '20px',
+  },
+  smallCounter: {
+    lineHeight: '23px',
+    minWidth: '20px',
   },
 })
 
@@ -29,9 +43,10 @@ interface Props {
   popularity: Popularity
   target: string
   userReaction?: FeedbackType
+  size?: 'medium' | 'small'
 }
 
-export const Feedback: React.FC<Props> = ({ popularity, target, userReaction }) => {
+export const Feedback: React.FC<Props> = ({ popularity, target, userReaction, size = 'medium' }) => {
   const classes = useStyles()
   const api = useAPI()
   const { dispatch } = useContext(ForumContext)
@@ -54,14 +69,20 @@ export const Feedback: React.FC<Props> = ({ popularity, target, userReaction }) 
             disableElevation
             disabled={userReaction === undefined}
             style={userReaction === 'positive' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
-            className={classes.actionButton}
+            className={`${classes.actionButton} ${
+              size === 'medium' ? classes.mediumActionButton : classes.smallActionButton
+            }`}
             variant={userReaction === 'positive' ? 'contained' : 'outlined'}
             onClick={() => sendFeedback('positive')}
           >
-            <Like />
+            <Like style={size === 'small' ? { fontSize: '12px' } : {}} />
           </Button>
         </Grid>
-        <Grid item className={classes.counter}>
+        <Grid
+          item
+          className={`${classes.counter} ${size === 'medium' ? classes.mediumCounter : classes.smallCounter}`}
+          style={size === 'small' ? { fontSize: '12px' } : {}}
+        >
           {popularity.sum}
         </Grid>
         <Grid item>
@@ -69,11 +90,13 @@ export const Feedback: React.FC<Props> = ({ popularity, target, userReaction }) 
             disableElevation
             disabled={userReaction === undefined}
             style={userReaction === 'negative' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
-            className={classes.actionButton}
+            className={`${classes.actionButton} ${
+              size === 'medium' ? classes.mediumActionButton : classes.smallActionButton
+            }`}
             variant={userReaction === 'negative' ? 'contained' : 'outlined'}
             onClick={() => sendFeedback('negative')}
           >
-            <Dislike />
+            <Dislike style={size === 'small' ? { fontSize: '12px' } : {}} />
           </Button>
         </Grid>
       </Grid>
