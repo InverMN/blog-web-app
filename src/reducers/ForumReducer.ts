@@ -123,7 +123,31 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
                   userReaction: action.payload.reactionType,
                   popularity: { ...singleComment.popularity, sum: newFeedbackSum },
                 }
-              } else return singleComment
+              } else {
+                singleComment.replies = singleComment.replies.map((singleSubcomment) => {
+                  if (singleSubcomment.id === action.payload.id) {
+                    const oldFeedback = singleSubcomment.userReaction
+                    const newFeedback = action.payload.reactionType
+                    let newFeedbackSum = singleSubcomment.popularity.sum
+
+                    if (singleSubcomment.userReaction !== undefined) {
+                      if (oldFeedback === 'positive') newFeedbackSum--
+                      else if (oldFeedback === 'negative') newFeedbackSum++
+
+                      if (newFeedback === 'positive') newFeedbackSum++
+                      else if (newFeedback === 'negative') newFeedbackSum--
+                    }
+
+                    return {
+                      ...singleSubcomment,
+                      userReaction: action.payload.reactionType,
+                      popularity: { ...singleSubcomment.popularity, sum: newFeedbackSum },
+                    }
+                  } else return singleSubcomment
+                })
+
+                return singleComment
+              }
             })
             return singlePost
           }
