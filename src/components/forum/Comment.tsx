@@ -13,10 +13,8 @@ const useStyles = makeStyles({
   },
 })
 
-export const Comment: React.FC<CommentData> = ({ body, author, createdAt, popularity, id, replies }) => {
+export const Comment: React.FC<CommentData> = ({ body, author, createdAt, popularity, id, replies, userReaction }) => {
   const classes = useStyles()
-
-  const userReaction = 'neutral'
 
   return (
     <div>
