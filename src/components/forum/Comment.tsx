@@ -3,6 +3,7 @@ import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/c
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { Feedback } from './Feedback'
+import { Comment as CommentData } from '../../contexts/index'
 import Moment from 'moment'
 
 const useStyles = makeStyles({
@@ -12,26 +13,13 @@ const useStyles = makeStyles({
   },
 })
 
-export const Comment: React.FC = () => {
-  const author = {
-    username: 'Inver',
-    id: '5f0498be13d62b4a4eea4a37',
-  }
-  const body = 'Lorem ispum cos tam askjda hs ashda sdsa kdha sdj asdh hsajd ashd sajd sa das hd jsad'
-  const createdAt = Date.now()
+export const Comment: React.FC<CommentData> = ({ body, author, createdAt, popularity, id }) => {
   const classes = useStyles()
 
-  const popularity = {
-    sum: 10,
-    feedback: 'asd',
-  }
-
-  const target = 'test'
-
-  const userReaction = 'positive'
+  const userReaction = 'neutral'
 
   return (
-    <Paper>
+    <Paper variant="outlined">
       <Box m={1}>
         <Grid container spacing={1} direction="row" style={{ flexWrap: 'nowrap' }}>
           <Grid item>
@@ -55,7 +43,7 @@ export const Comment: React.FC = () => {
                 </Typography>
               </Grid>
               <Grid item>
-                <Feedback popularity={popularity} userReaction={userReaction} target={target} size="small" />
+                <Feedback popularity={popularity} userReaction={userReaction} target={id} size="small" />
               </Grid>
               <Grid item>
                 <IconButton>

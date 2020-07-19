@@ -2,7 +2,7 @@ import React, { useState, MouseEvent } from 'react'
 import { Card, CardHeader, CardContent, CardActions, Typography, Avatar, IconButton } from '@material-ui/core'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import Moment from 'moment'
-import { PostMenu, Feedback } from './index'
+import { PostMenu, Feedback, CommentsSection } from './index'
 import { User, Post as PostData } from '../../contexts/index'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const Post: React.FC<Props> = ({ post, user }) => {
-  const { author, id, createdAt, body, editedAt, popularity, userReaction } = post
+  const { author, id, createdAt, body, editedAt, popularity, userReaction, replies } = post
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
 
   const handleMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -55,6 +55,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
         <CardActions>
           <Feedback popularity={popularity} target={id} userReaction={userReaction} />
         </CardActions>
+        <CommentsSection replies={replies} />
       </Card>
     </div>
   )
