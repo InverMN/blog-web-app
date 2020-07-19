@@ -5,10 +5,10 @@ import { Comment as CommentData } from '../../contexts/index'
 
 interface Props {
   replies: CommentData[]
-  m?: number
+  indent?: boolean
 }
 
-export const CommentsSection: React.FC<Props> = ({ replies, m }) => {
+export const CommentsSection: React.FC<Props> = ({ replies, indent }) => {
   const renderComments = () => {
     return replies.map((commentData) => {
       return (
@@ -20,7 +20,7 @@ export const CommentsSection: React.FC<Props> = ({ replies, m }) => {
   }
 
   return (
-    <Box m={m === undefined ? 1 : m}>
+    <Box m={1} style={indent ? { marginLeft: '0', marginRight: '0' } : {}}>
       <Grid container spacing={1}>
         {renderComments()}
       </Grid>
