@@ -65,7 +65,13 @@ export const CommentEditor: React.FC<Props> = ({ target, author, handleClose }) 
                 </Button>
               </Grid>
               <Grid item>
-                <Button size="small" onClick={publishReply} color="primary" startIcon={<SendIcon />}>
+                <Button
+                  disabled={body === ''}
+                  size="small"
+                  onClick={publishReply}
+                  color="primary"
+                  startIcon={<SendIcon />}
+                >
                   publish
                 </Button>
               </Grid>
