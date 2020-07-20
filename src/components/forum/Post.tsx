@@ -10,7 +10,7 @@ import {
   Grid,
   Button,
 } from '@material-ui/core'
-import { MoreVert as MoreVertIcon, Reply as ReplyIcon } from '@material-ui/icons'
+import { MoreVert as MoreVertIcon, Reply as ReplyIcon, Share as ShareIcon } from '@material-ui/icons'
 import Moment from 'moment'
 import { PostMenu, Feedback, CommentsSection } from './index'
 import { User, Post as PostData } from '../../contexts/index'
@@ -64,6 +64,11 @@ export const Post: React.FC<Props> = ({ post, user }) => {
         <CardContent dangerouslySetInnerHTML={{ __html: body }} />
         <CardActions>
           <Grid container justify="space-around">
+            <Grid item>
+              <Button style={{ color: '#999', margin: '4px 0' }} startIcon={<ShareIcon />}>
+                Share
+              </Button>
+            </Grid>
             <Grid item>
               <Button style={{ color: '#999', margin: '4px 0' }} startIcon={<ReplyIcon />}>
                 Reply
