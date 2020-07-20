@@ -51,7 +51,7 @@ export const Comment: React.FC<CommentData> = ({ body, author, createdAt, popula
                 </Grid>
               </Grid>
               <Grid item>
-                <Box>{body}</Box>
+                <Box dangerouslySetInnerHTML={{ __html: body }} />
               </Grid>
             </Grid>
           </Grid>
