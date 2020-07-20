@@ -1,4 +1,4 @@
-import { Forum, Post, FeedbackType } from '../contexts/index'
+import { Forum, Post, FeedbackType, Comment } from '../contexts/index'
 
 export const LOAD_POSTS = 'LOAD_POSTS'
 
@@ -51,6 +51,16 @@ interface ChangeReactionAction {
   }
 }
 
+export const CREATE_REPLY = 'CREATE_REPLY'
+
+interface CreateReplyAction {
+  type: typeof CREATE_REPLY
+  payload: {
+    reply: Comment
+    target: string
+  }
+}
+
 export type ForumActionTypes =
   | LoadPostsAction
   | AddPostAction
@@ -59,6 +69,7 @@ export type ForumActionTypes =
   | EmptyEditedAction
   | EditPostAction
   | ChangeReactionAction
+  | CreateReplyAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -151,6 +162,17 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
             })
             return singlePost
           }
+        }),
+      }
+    case CREATE_REPLY:
+      return {
+        ...forum,
+        posts: forum.posts.map((singlePost) => {
+          if (singlePost.id === action.payload.target)
+            singlePost.replies = [action.payload.reply, ...singlePost.replies]
+          else {
+          }
+          return singlePost
         }),
       }
   }

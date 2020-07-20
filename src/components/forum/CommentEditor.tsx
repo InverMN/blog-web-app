@@ -6,7 +6,7 @@ import { Send as SendIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useAPI } from '../../lib/index'
-import { UserContext } from '../../contexts/index'
+import { UserContext, ForumContext } from '../../contexts/index'
 
 const useStyles = makeStyles({
   mediumAvatar: {
@@ -26,9 +26,11 @@ export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
   const [body, setBody] = useState('')
   const api = useAPI()
   const { user } = useContext(UserContext)
+  const { dispatch } = useContext(ForumContext)
 
   const publishReply = () => {
     api.post(`comments/${target}`, { body }).then((res) => {
+      dispatch({ type: 'CREATE_REPLY', payload: { reply: res.data, target } })
       handleClose()
     })
   }
