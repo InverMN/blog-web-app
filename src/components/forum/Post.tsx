@@ -1,6 +1,16 @@
 import React, { useState, MouseEvent } from 'react'
-import { Card, CardHeader, CardContent, CardActions, Typography, Avatar, IconButton } from '@material-ui/core'
-import { MoreVert as MoreVertIcon } from '@material-ui/icons'
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Typography,
+  Avatar,
+  IconButton,
+  Grid,
+  Button,
+} from '@material-ui/core'
+import { MoreVert as MoreVertIcon, Reply as ReplyIcon } from '@material-ui/icons'
 import Moment from 'moment'
 import { PostMenu, Feedback, CommentsSection } from './index'
 import { User, Post as PostData } from '../../contexts/index'
@@ -53,7 +63,16 @@ export const Post: React.FC<Props> = ({ post, user }) => {
         />
         <CardContent dangerouslySetInnerHTML={{ __html: body }} />
         <CardActions>
-          <Feedback popularity={popularity} target={id} userReaction={userReaction} />
+          <Grid container justify="space-around">
+            <Grid item>
+              <Button style={{ color: '#999', margin: '4px 0' }} startIcon={<ReplyIcon />}>
+                Reply
+              </Button>
+            </Grid>
+            <Grid item>
+              <Feedback popularity={popularity} target={id} userReaction={userReaction} />
+            </Grid>
+          </Grid>
         </CardActions>
         <CommentsSection replies={replies} />
       </Card>
