@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import { MoreVert as MoreVertIcon, Reply as ReplyIcon, Share as ShareIcon } from '@material-ui/icons'
 import Moment from 'moment'
-import { PostMenu, Feedback, CommentsSection } from './index'
+import { PostMenu, Feedback, CommentsSection, CommentEditor } from './index'
 import { User, Post as PostData } from '../../contexts/index'
 
 interface Props {
@@ -23,6 +23,7 @@ interface Props {
 export const Post: React.FC<Props> = ({ post, user }) => {
   const { author, id, createdAt, body, editedAt, popularity, userReaction, replies } = post
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
+  const [openCommentEditor, setOpenCommentEditor] = useState(false)
 
   const handleMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorElement(event.currentTarget)
@@ -70,7 +71,12 @@ export const Post: React.FC<Props> = ({ post, user }) => {
               </Button>
             </Grid>
             <Grid item>
-              <Button style={{ color: '#999', margin: '4px 0' }} startIcon={<ReplyIcon />}>
+              <Button
+                disabled={user === null || openCommentEditor}
+                onClick={() => setOpenCommentEditor(true)}
+                style={{ color: '#999', margin: '4px 0' }}
+                startIcon={<ReplyIcon />}
+              >
                 Reply
               </Button>
             </Grid>
@@ -79,7 +85,13 @@ export const Post: React.FC<Props> = ({ post, user }) => {
             </Grid>
           </Grid>
         </CardActions>
-        <CommentsSection replies={replies} />
+        <CommentsSection
+          replies={replies}
+          showEditorTop={openCommentEditor}
+          author={author}
+          target={id}
+          handleCloseTop={() => setOpenCommentEditor(false)}
+        />
       </Card>
     </div>
   )
