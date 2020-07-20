@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Grid, Avatar, Paper, Box, Button, Typography } from '@material-ui/core'
+import { Grid, Avatar, Paper, Box, Button, Typography, Backdrop, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Comment as CommentData } from '../../contexts/index'
 import { Send as SendIcon, Delete as DeleteIcon } from '@material-ui/icons'
@@ -27,12 +27,19 @@ export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
   const api = useAPI()
   const { user } = useContext(UserContext)
   const { dispatch } = useContext(ForumContext)
+  const [openBackdrop, setOpenBackdrop] = useState(false)
 
   const publishReply = () => {
-    api.post(`comments/${target}`, { body }).then((res) => {
-      dispatch({ type: 'CREATE_REPLY', payload: { reply: res.data, target } })
-      handleClose()
-    })
+    setOpenBackdrop(true)
+    api
+      .post(`comments/${target}`, { body })
+      .then((res) => {
+        dispatch({ type: 'CREATE_REPLY', payload: { reply: res.data, target } })
+        handleClose()
+      })
+      .finally(() => {
+        setOpenBackdrop(false)
+      })
   }
 
   return (
@@ -85,6 +92,9 @@ export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
           </Grid>
         </Box>
       </Paper>
+      <Backdrop style={{ zIndex: 1000000 }} open={openBackdrop}>
+        <CircularProgress color="primary" />
+      </Backdrop>
     </div>
   )
 }
