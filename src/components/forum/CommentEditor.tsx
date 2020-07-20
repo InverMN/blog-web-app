@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, Avatar, Paper, Box, Button } from '@material-ui/core'
+import { Grid, Avatar, Paper, Box, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Comment as CommentData } from '../../contexts/index'
 import { Send as SendIcon, Delete as DeleteIcon } from '@material-ui/icons'
@@ -36,27 +36,29 @@ export const CommentEditor: React.FC<Props> = ({ target, author, handleClose }) 
       <Paper variant="outlined">
         <Box m={1}>
           <Grid container spacing={1}>
-            <Grid container item spacing={1} direction="row" style={{ flexWrap: 'nowrap' }}>
+            <Grid item container spacing={2} alignItems="center">
               <Grid item>
                 <Avatar
                   alt={author.username}
                   src={`http://localhost:5500/static/avatars/${author.id}.png`}
                   className={classes.mediumAvatar}
-                  style={{ marginTop: '8px' }}
                 >
                   {author.username}
                 </Avatar>
               </Grid>
-              <Grid item style={{ flexGrow: 1 }}>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={body}
-                  config={editorConfig}
-                  onChange={(event: undefined, editor: { getData: () => string }) => {
-                    setBody(editor.getData())
-                  }}
-                />
+              <Grid item>
+                <Typography>Write a comment...</Typography>
               </Grid>
+            </Grid>
+            <Grid item style={{ flexGrow: 1 }}>
+              <CKEditor
+                editor={ClassicEditor}
+                data={body}
+                config={editorConfig}
+                onChange={(event: undefined, editor: { getData: () => string }) => {
+                  setBody(editor.getData())
+                }}
+              />
             </Grid>
             <Grid container item justify="space-evenly">
               <Grid item>
