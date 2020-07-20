@@ -29,8 +29,8 @@ export interface Post {
   replies: Comment[]
 }
 
-export type Comment = Post & { subcomments: Subcomment[] }
-export type Subcomment = Post
+export type Comment = Post & { replies: Subcomment[] }
+export type Subcomment = Omit<Post, 'replies'>
 
 export interface EditedPost {
   body: string
