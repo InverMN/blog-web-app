@@ -10,7 +10,6 @@ interface Props {
   handleCloseTop?: () => void
   showEditorBottom?: boolean
   handleCloseBottom?: () => void
-  author?: { id: string; username: string }
   target?: string
 }
 
@@ -21,7 +20,6 @@ export const CommentsSection: React.FC<Props> = ({
   handleCloseTop,
   showEditorBottom,
   handleCloseBottom,
-  author,
   target,
 }) => {
   const renderComments = () => {
@@ -37,9 +35,9 @@ export const CommentsSection: React.FC<Props> = ({
   return (
     <Box m={1} style={indent ? { marginLeft: '0', marginRight: '0' } : {}}>
       <Grid container spacing={1}>
-        {showEditorTop && author && target && handleCloseTop ? (
+        {showEditorTop && target && handleCloseTop ? (
           <Grid item style={{ flexGrow: 1 }}>
-            <CommentEditor handleClose={handleCloseTop} author={author} target={target} />
+            <CommentEditor handleClose={handleCloseTop} target={target} />
           </Grid>
         ) : null}
 

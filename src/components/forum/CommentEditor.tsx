@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Grid, Avatar, Paper, Box, Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Comment as CommentData } from '../../contexts/index'
@@ -6,6 +6,7 @@ import { Send as SendIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { useAPI } from '../../lib/index'
+import { UserContext } from '../../contexts/index'
 
 const useStyles = makeStyles({
   mediumAvatar: {
@@ -18,12 +19,13 @@ const editorConfig = {
   toolbar: ['bold', 'italic', '|', 'link', 'imageUpload', 'mediaEmbed', 'blockQuote'],
 }
 
-type Props = Pick<CommentData, 'author'> & { target: string; handleClose: () => void }
+type Props = { target: string; handleClose: () => void }
 
-export const CommentEditor: React.FC<Props> = ({ target, author, handleClose }) => {
+export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
   const classes = useStyles()
   const [body, setBody] = useState('')
   const api = useAPI()
+  const { user } = useContext(UserContext)
 
   const publishReply = () => {
     api.post(`comments/${target}`, { body }).then((res) => {
@@ -39,11 +41,11 @@ export const CommentEditor: React.FC<Props> = ({ target, author, handleClose }) 
             <Grid item container spacing={2} alignItems="center">
               <Grid item>
                 <Avatar
-                  alt={author.username}
-                  src={`http://localhost:5500/static/avatars/${author.id}.png`}
+                  alt={user!.username}
+                  src={`http://localhost:5500/static/avatars/${user!.id}.png`}
                   className={classes.mediumAvatar}
                 >
-                  {author.username}
+                  {user!.username}
                 </Avatar>
               </Grid>
               <Grid item>

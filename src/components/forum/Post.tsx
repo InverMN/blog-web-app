@@ -88,7 +88,6 @@ export const Post: React.FC<Props> = ({ post, user }) => {
         <CommentsSection
           replies={replies}
           showEditorTop={openCommentEditor}
-          author={author}
           target={id}
           handleCloseTop={() => setOpenCommentEditor(false)}
         />
