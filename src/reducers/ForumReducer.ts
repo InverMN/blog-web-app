@@ -61,6 +61,15 @@ interface CreateReplyAction {
   }
 }
 
+export const DELETE_REPLY = 'DELETE_REPLY'
+
+interface DeleteReplyAction {
+  type: typeof DELETE_REPLY
+  payload: {
+    id: string
+  }
+}
+
 export type ForumActionTypes =
   | LoadPostsAction
   | AddPostAction
@@ -70,6 +79,7 @@ export type ForumActionTypes =
   | EditPostAction
   | ChangeReactionAction
   | CreateReplyAction
+  | DeleteReplyAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -172,6 +182,20 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
             singlePost.replies = [action.payload.reply, ...singlePost.replies]
           else {
           }
+          return singlePost
+        }),
+      }
+    case DELETE_REPLY:
+      return {
+        ...forum,
+        posts: forum.posts.map((singlePost) => {
+          singlePost.replies = singlePost.replies.filter((singleComment) => {
+            if (singleComment.id === action.payload.id) return false
+            else {
+              return true
+            }
+          })
+
           return singlePost
         }),
       }

@@ -25,8 +25,8 @@ export const CommentMenu: React.FC<Props> = ({ anchorElement, handleClose, comme
 
   const deleteComment = () => {
     handleClose()
-    // dispatch({ type: 'DELETE_POST', payload: { id: comment.id } })
-    // api.delete(`posts/${post.id}`)
+    dispatch({ type: 'DELETE_REPLY', payload: { id: comment.id } })
+    api.delete(`comments/${comment.id}`)
   }
 
   const editComment = () => {
