@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
-import { Feedback, CommentsSection } from './index'
+import { Feedback, CommentsSection, CommentMenu } from './index'
 import { Comment as CommentData } from '../../contexts/index'
 import Moment from 'moment'
 
@@ -13,8 +13,19 @@ const useStyles = makeStyles({
   },
 })
 
-export const Comment: React.FC<CommentData> = ({ body, author, createdAt, popularity, id, replies, userReaction }) => {
+export const Comment: React.FC<CommentData> = (comment) => {
+  const { body, author, createdAt, popularity, id, replies, userReaction } = comment
   const classes = useStyles()
+  const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
+  const [openCommentEditor, setOpenCommentEditor] = useState(false)
+
+  const handleMenuClick = (event: any) => {
+    setAnchorElement(event.currentTarget)
+  }
+
+  const handleMenuClose = () => {
+    setAnchorElement(null)
+  }
 
   return (
     <div>
@@ -45,9 +56,10 @@ export const Comment: React.FC<CommentData> = ({ body, author, createdAt, popula
                   <Feedback popularity={popularity} userReaction={userReaction} target={id} size="small" />
                 </Grid>
                 <Grid item>
-                  <IconButton>
+                  <IconButton onClick={handleMenuClick}>
                     <MoreVertIcon color="action" style={{ fontSize: '20px' }} />
                   </IconButton>
+                  <CommentMenu handleClose={handleMenuClose} anchorElement={anchorElement} comment={comment} />
                 </Grid>
               </Grid>
               <Grid item>
