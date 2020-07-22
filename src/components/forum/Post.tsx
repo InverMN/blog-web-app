@@ -12,7 +12,8 @@ import {
 } from '@material-ui/core'
 import { MoreVert as MoreVertIcon, Reply as ReplyIcon, Share as ShareIcon } from '@material-ui/icons'
 import Moment from 'moment'
-import { PostMenu, Feedback, CommentsSection, CommentEditor } from './index'
+import { PostMenu, Feedback } from './index'
+import { CommentsSection } from './comments/index'
 import { User, Post as PostData } from '../../contexts/index'
 
 interface Props {

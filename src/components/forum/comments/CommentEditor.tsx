@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { Grid, Avatar, Paper, Box, Button, Typography, Backdrop, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Comment as CommentData } from '../../contexts/index'
 import { Send as SendIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { useAPI } from '../../lib/index'
-import { UserContext, ForumContext } from '../../contexts/index'
+import { useAPI } from '../../../lib/index'
+import { UserContext, ForumContext } from '../../../contexts/index'
 
 const useStyles = makeStyles({
   mediumAvatar: {

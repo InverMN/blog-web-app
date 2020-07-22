@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
-import { Feedback, CommentsSection, CommentMenu } from './index'
-import { Comment as CommentData } from '../../contexts/index'
+import { CommentMenu } from './index'
+import { Comment as CommentData } from '../../../contexts/index'
+import { Feedback } from '../Feedback'
 import Moment from 'moment'
 
 const useStyles = makeStyles({
@@ -13,8 +14,13 @@ const useStyles = makeStyles({
   },
 })
 
-export const Comment: React.FC<CommentData> = (comment) => {
+interface Props {
+  comment: CommentData
+}
+
+export const Comment: React.FC<Props> = ({ comment }) => {
   const { body, author, createdAt, popularity, id, replies, userReaction } = comment
+
   const classes = useStyles()
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
   const [openCommentEditor, setOpenCommentEditor] = useState(false)
@@ -28,7 +34,6 @@ export const Comment: React.FC<CommentData> = (comment) => {
   }
 
   const handleOpenEditor = () => {
-    console.log('openning editor')
     setOpenCommentEditor(true)
   }
 
@@ -81,13 +86,12 @@ export const Comment: React.FC<CommentData> = (comment) => {
       </Paper>
       {replies === [] ? null : (
         <div style={{ paddingLeft: '20px' }}>
-          <CommentsSection
-            indent
+          {/* <CommentsSection
             replies={replies}
             showEditorTop={openCommentEditor}
             target={id}
             handleCloseTop={() => setOpenCommentEditor(false)}
-          />
+          /> */}
         </div>
       )}
     </div>

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
-import { ForumContext, UserContext, Comment as CommentData } from '../../contexts/index'
+import { ForumContext, UserContext, Comment as CommentData } from '../../../contexts/index'
 import { Edit as EditIcon, Delete as DeleteIcon, Report as ReportIcon, Reply as ReplyIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { useAPI } from '../../lib/index'
+import { useAPI } from '../../../lib/index'
 
 interface Props {
   comment: CommentData
