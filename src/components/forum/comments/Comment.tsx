@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
-import { CommentMenu } from './index'
+import { CommentMenu, SubcommentsSection } from './index'
 import { Comment as CommentData } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
 import Moment from 'moment'
@@ -86,12 +86,12 @@ export const Comment: React.FC<Props> = ({ comment }) => {
       </Paper>
       {replies === [] ? null : (
         <div style={{ paddingLeft: '20px' }}>
-          {/* <CommentsSection
-            replies={replies}
-            showEditorTop={openCommentEditor}
+          <SubcommentsSection
+            subcomments={replies}
+            showEditor={openCommentEditor}
             target={id}
-            handleCloseTop={() => setOpenCommentEditor(false)}
-          /> */}
+            handleClose={() => setOpenCommentEditor(false)}
+          />
         </div>
       )}
     </div>
