@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
 import { ForumContext, UserContext, Comment as CommentData } from '../../contexts/index'
-import { Edit as EditIcon, Delete as DeleteIcon, Report as ReportIcon } from '@material-ui/icons'
+import { Edit as EditIcon, Delete as DeleteIcon, Report as ReportIcon, Reply as ReplyIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAPI } from '../../lib/index'
 
@@ -9,6 +9,7 @@ interface Props {
   comment: CommentData
   anchorElement: HTMLElement | null
   handleClose: () => void
+  handleOpenEditor: () => void
 }
 
 const useStyles = makeStyles({
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const CommentMenu: React.FC<Props> = ({ anchorElement, handleClose, comment }) => {
+export const CommentMenu: React.FC<Props> = ({ anchorElement, handleClose, comment, handleOpenEditor }) => {
   const { dispatch } = useContext(ForumContext)
   const { user } = useContext(UserContext)
   const api = useAPI()
@@ -34,15 +35,14 @@ export const CommentMenu: React.FC<Props> = ({ anchorElement, handleClose, comme
     dispatch({ type: 'SET_EDITED', payload: { ...comment } })
   }
 
-  return (
-    <Menu
-      id={`post-menu-${comment.id}`}
-      anchorEl={anchorElement}
-      keepMounted
-      open={Boolean(anchorElement)}
-      onClose={handleClose}
-    >
-      {user !== null && user.id === comment.author.id ? (
+  const openEditor = () => {
+    handleClose()
+    handleOpenEditor()
+  }
+
+  const renderOptions = () => {
+    if (user !== null && user.id === comment.author.id) {
+      return (
         <div>
           <MenuItem onClick={editComment}>
             <EditIcon style={{ color: '#4caf50' }} className={classes.icon} />
@@ -52,13 +52,44 @@ export const CommentMenu: React.FC<Props> = ({ anchorElement, handleClose, comme
             <DeleteIcon color="error" className={classes.icon} />
             Delete
           </MenuItem>
+          <MenuItem onClick={openEditor}>
+            <ReplyIcon color="primary" className={classes.icon} />
+            Reply
+          </MenuItem>
         </div>
-      ) : (
+      )
+    } else if (user !== null && user.id !== comment.author.id) {
+      return (
+        <div>
+          <MenuItem onClick={openEditor}>
+            <ReplyIcon color="primary" className={classes.icon} />
+            Reply
+          </MenuItem>
+          <MenuItem>
+            <ReportIcon color="error" className={classes.icon} />
+            Report
+          </MenuItem>
+        </div>
+      )
+    } else {
+      return (
         <MenuItem>
           <ReportIcon color="error" className={classes.icon} />
           Report
         </MenuItem>
-      )}
+      )
+    }
+  }
+
+  return (
+    <Menu
+      id={`post-menu-${comment.id}`}
+      anchorEl={anchorElement}
+      keepMounted
+      open={Boolean(anchorElement)}
+      onClose={handleClose}
+    >
+      {renderOptions()}
     </Menu>
   )
 }

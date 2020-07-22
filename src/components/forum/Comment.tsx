@@ -27,6 +27,11 @@ export const Comment: React.FC<CommentData> = (comment) => {
     setAnchorElement(null)
   }
 
+  const handleOpenEditor = () => {
+    console.log('openning editor')
+    setOpenCommentEditor(true)
+  }
+
   return (
     <div>
       <Paper variant="outlined">
@@ -59,7 +64,12 @@ export const Comment: React.FC<CommentData> = (comment) => {
                   <IconButton onClick={handleMenuClick}>
                     <MoreVertIcon color="action" style={{ fontSize: '20px' }} />
                   </IconButton>
-                  <CommentMenu handleClose={handleMenuClose} anchorElement={anchorElement} comment={comment} />
+                  <CommentMenu
+                    handleClose={handleMenuClose}
+                    anchorElement={anchorElement}
+                    comment={comment}
+                    handleOpenEditor={handleOpenEditor}
+                  />
                 </Grid>
               </Grid>
               <Grid item>
@@ -71,7 +81,13 @@ export const Comment: React.FC<CommentData> = (comment) => {
       </Paper>
       {replies === [] ? null : (
         <div style={{ paddingLeft: '20px' }}>
-          <CommentsSection indent replies={replies} />
+          <CommentsSection
+            indent
+            replies={replies}
+            showEditorTop={openCommentEditor}
+            target={id}
+            handleCloseTop={() => setOpenCommentEditor(false)}
+          />
         </div>
       )}
     </div>
