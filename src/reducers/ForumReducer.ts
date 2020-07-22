@@ -181,6 +181,12 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
           if (singlePost.id === action.payload.target)
             singlePost.replies = [action.payload.reply, ...singlePost.replies]
           else {
+            singlePost.replies.map((singleComment) => {
+              if ((singleComment.id = action.payload.target)) {
+                singleComment.replies.push(action.payload.reply)
+                return singleComment
+              } else return singleComment
+            })
           }
           return singlePost
         }),
