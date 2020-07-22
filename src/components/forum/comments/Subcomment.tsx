@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
-import { CommentMenu } from './index'
+import { ReplyMenu } from './index'
 import { Subcomment as SubcommentData } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
 import Moment from 'moment'
@@ -16,9 +16,10 @@ const useStyles = makeStyles({
 
 interface Props {
   subcomment: SubcommentData
+  handleOpenEditor: () => void
 }
 
-export const Subcomment: React.FC<Props> = ({ subcomment }) => {
+export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor }) => {
   const { body, author, createdAt, popularity, id, userReaction } = subcomment
 
   const classes = useStyles()
@@ -63,12 +64,12 @@ export const Subcomment: React.FC<Props> = ({ subcomment }) => {
                 <IconButton onClick={handleMenuClick}>
                   <MoreVertIcon color="action" style={{ fontSize: '20px' }} />
                 </IconButton>
-                {/* <CommentMenu
+                <ReplyMenu
                   handleClose={handleMenuClose}
                   anchorElement={anchorElement}
-                  // comment={subcomment}
-                  // handleOpenEditor={handleOpenEditor}
-                /> */}
+                  comment={subcomment}
+                  handleOpenEditor={handleOpenEditor}
+                />
               </Grid>
             </Grid>
             <Grid item>

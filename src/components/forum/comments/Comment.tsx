@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
-import { CommentMenu, SubcommentsSection } from './index'
+import { ReplyMenu, SubcommentsSection } from './index'
 import { Comment as CommentData } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
 import Moment from 'moment'
@@ -20,10 +20,10 @@ interface Props {
 
 export const Comment: React.FC<Props> = ({ comment }) => {
   const { body, author, createdAt, popularity, id, replies, userReaction } = comment
-
+  const [openCommentEditor, setOpenCommentEditor] = useState(false)
   const classes = useStyles()
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
-  const [openCommentEditor, setOpenCommentEditor] = useState(false)
+  const [openSubcommentEditor, setOpenSubcommentEditor] = useState(false)
 
   const handleMenuClick = (event: any) => {
     setAnchorElement(event.currentTarget)
@@ -69,11 +69,11 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                   <IconButton onClick={handleMenuClick}>
                     <MoreVertIcon color="action" style={{ fontSize: '20px' }} />
                   </IconButton>
-                  <CommentMenu
+                  <ReplyMenu
                     handleClose={handleMenuClose}
                     anchorElement={anchorElement}
                     comment={comment}
-                    handleOpenEditor={handleOpenEditor}
+                    handleOpenEditor={() => setOpenSubcommentEditor(true)}
                   />
                 </Grid>
               </Grid>
@@ -88,9 +88,10 @@ export const Comment: React.FC<Props> = ({ comment }) => {
         <div style={{ paddingLeft: '20px' }}>
           <SubcommentsSection
             subcomments={replies}
-            showEditor={openCommentEditor}
             target={id}
-            handleClose={() => setOpenCommentEditor(false)}
+            handleOpenEditor={() => setOpenSubcommentEditor(true)}
+            handleCloseEditor={() => setOpenSubcommentEditor(false)}
+            openEditor={openSubcommentEditor}
           />
         </div>
       )}

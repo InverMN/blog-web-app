@@ -1,6 +1,6 @@
 export * from './CommentSection'
 export * from './Comment'
 export * from './CommentEditor'
-export * from './CommentMenu'
+export * from './ReplyMenu'
 export * from './SubcommentsSection'
 export * from './Subcomment'

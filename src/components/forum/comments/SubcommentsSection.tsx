@@ -1,21 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { Subcomment, CommentEditor } from './index'
 import { Subcomment as SubcommentData } from '../../../contexts/index'
 
 interface Props {
   subcomments: SubcommentData[]
-  showEditor: boolean
-  handleClose: () => void
   target: string
+  handleOpenEditor: () => void
+  handleCloseEditor: () => void
+  openEditor: boolean
 }
 
-export const SubcommentsSection: React.FC<Props> = ({ subcomments, showEditor, handleClose, target }) => {
+export const SubcommentsSection: React.FC<Props> = ({
+  subcomments,
+  target,
+  handleOpenEditor,
+  handleCloseEditor,
+  openEditor,
+}) => {
   const renderSubcomments = () => {
     return subcomments.map((subcommentData) => {
       return (
         <Grid style={{ flexGrow: 1 }} item key={subcommentData.id}>
-          <Subcomment subcomment={subcommentData} />
+          <Subcomment handleOpenEditor={handleOpenEditor} subcomment={subcommentData} />
         </Grid>
       )
     })
@@ -24,13 +31,13 @@ export const SubcommentsSection: React.FC<Props> = ({ subcomments, showEditor, h
   return (
     <Box m={1}>
       <Grid container spacing={1}>
-        {showEditor ? (
+        {renderSubcomments()}
+
+        {openEditor ? (
           <Grid item style={{ flexGrow: 1 }}>
-            <CommentEditor handleClose={handleClose} target={target} />
+            <CommentEditor handleClose={handleCloseEditor} target={target} />
           </Grid>
         ) : null}
-
-        {renderSubcomments()}
       </Grid>
     </Box>
   )
