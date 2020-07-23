@@ -18,9 +18,19 @@ const editorConfig = {
   toolbar: ['bold', 'italic', '|', 'link', 'imageUpload', 'mediaEmbed', 'blockQuote'],
 }
 
-type Props = { target: string; handleClose: () => void }
+interface Props {
+  target: string
+  handleClose: () => void
+  editingExistingComment?: boolean
+  existingCommentBody?: string
+}
 
-export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
+export const CommentEditor: React.FC<Props> = ({
+  target,
+  handleClose,
+  editingExistingComment,
+  existingCommentBody,
+}) => {
   const classes = useStyles()
   const [body, setBody] = useState('')
   const api = useAPI()
@@ -41,6 +51,11 @@ export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
       })
   }
 
+  const editReply = () => {
+    api.patch(`comments/${target}`, { body: existingCommentBody })
+    handleClose()
+  }
+
   return (
     <div>
       <Paper variant="outlined">
@@ -57,13 +72,13 @@ export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
                 </Avatar>
               </Grid>
               <Grid item>
-                <Typography>Write a comment...</Typography>
+                <Typography>{editingExistingComment ? 'Edit' : 'Write'} a comment...</Typography>
               </Grid>
             </Grid>
             <Grid item style={{ flexGrow: 1 }}>
               <CKEditor
                 editor={ClassicEditor}
-                data={body}
+                data={existingCommentBody !== undefined ? existingCommentBody : body}
                 config={editorConfig}
                 onChange={(event: undefined, editor: { getData: () => string }) => {
                   setBody(editor.getData())
@@ -80,11 +95,11 @@ export const CommentEditor: React.FC<Props> = ({ target, handleClose }) => {
                 <Button
                   disabled={body === ''}
                   size="small"
-                  onClick={publishReply}
+                  onClick={editingExistingComment ? editReply : publishReply}
                   color="primary"
                   startIcon={<SendIcon />}
                 >
-                  publish
+                  {editingExistingComment ? 'edit' : 'publish'}
                 </Button>
               </Grid>
             </Grid>

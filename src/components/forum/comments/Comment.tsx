@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
-import { ReplyMenu, SubcommentsSection } from './index'
+import { ReplyMenu, SubcommentsSection, CommentEditor } from './index'
 import { Comment as CommentData } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
 import Moment from 'moment'
@@ -21,6 +21,7 @@ interface Props {
 export const Comment: React.FC<Props> = ({ comment }) => {
   const { body, author, createdAt, popularity, id, replies, userReaction } = comment
   const [openCommentEditor, setOpenCommentEditor] = useState(false)
+  const [isEdited, setIsEdited] = useState(false)
   const classes = useStyles()
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
   const [openSubcommentEditor, setOpenSubcommentEditor] = useState(false)
@@ -37,8 +38,8 @@ export const Comment: React.FC<Props> = ({ comment }) => {
     setOpenCommentEditor(true)
   }
 
-  return (
-    <div>
+  const renderStaticComment = () => {
+    return (
       <Paper variant="outlined">
         <Box m={1}>
           <Grid container spacing={1} direction="row" style={{ flexWrap: 'nowrap' }}>
@@ -73,6 +74,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                     handleClose={handleMenuClose}
                     anchorElement={anchorElement}
                     comment={comment}
+                    handleBodyEditor={() => setIsEdited(true)}
                     handleOpenEditor={() => setOpenSubcommentEditor(true)}
                   />
                 </Grid>
@@ -84,6 +86,21 @@ export const Comment: React.FC<Props> = ({ comment }) => {
           </Grid>
         </Box>
       </Paper>
+    )
+  }
+
+  return (
+    <div>
+      {isEdited ? (
+        <CommentEditor
+          target={comment.id}
+          handleClose={() => setIsEdited(false)}
+          editingExistingComment={true}
+          existingCommentBody={comment.body}
+        />
+      ) : (
+        renderStaticComment()
+      )}
       {replies === [] ? null : (
         <div style={{ paddingLeft: '20px' }}>
           <SubcommentsSection

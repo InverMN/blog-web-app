@@ -15,6 +15,7 @@ interface Props {
   anchorElement: HTMLElement | null
   handleClose: () => void
   handleOpenEditor: () => void
+  handleBodyEditor: () => void
 }
 
 const useStyles = makeStyles({
@@ -23,7 +24,13 @@ const useStyles = makeStyles({
   },
 })
 
-export const ReplyMenu: React.FC<Props> = ({ anchorElement, handleClose, comment, handleOpenEditor }) => {
+export const ReplyMenu: React.FC<Props> = ({
+  anchorElement,
+  handleClose,
+  comment,
+  handleOpenEditor,
+  handleBodyEditor,
+}) => {
   const { dispatch } = useContext(ForumContext)
   const { user } = useContext(UserContext)
   const api = useAPI()
@@ -37,7 +44,7 @@ export const ReplyMenu: React.FC<Props> = ({ anchorElement, handleClose, comment
 
   const editComment = () => {
     handleClose()
-    dispatch({ type: 'SET_EDITED', payload: { ...comment } })
+    handleBodyEditor()
   }
 
   const openEditor = () => {
