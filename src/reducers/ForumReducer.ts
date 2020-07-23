@@ -70,6 +70,13 @@ interface DeleteReplyAction {
   }
 }
 
+export const EDIT_REPLY = 'EDIT_REPLY'
+
+interface EditReplyAction {
+  type: typeof EDIT_REPLY
+  payload: Pick<Comment, 'id' | 'body'>
+}
+
 export type ForumActionTypes =
   | LoadPostsAction
   | AddPostAction
@@ -80,6 +87,7 @@ export type ForumActionTypes =
   | ChangeReactionAction
   | CreateReplyAction
   | DeleteReplyAction
+  | EditReplyAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -220,6 +228,23 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
             })
           }
 
+          return singlePost
+        }),
+      }
+    case EDIT_REPLY:
+      return {
+        ...forum,
+        posts: forum.posts.map((singlePost) => {
+          singlePost.replies = singlePost.replies.map((singleComment) => {
+            if (singleComment.id === action.payload.id) singleComment.body = action.payload.body
+            else {
+              singleComment.replies = singleComment.replies.map((singleSubcomment) => {
+                if (singleSubcomment.id === action.payload.id) singleSubcomment.body = action.payload.body
+                return singleSubcomment
+              })
+            }
+            return singleComment
+          })
           return singlePost
         }),
       }

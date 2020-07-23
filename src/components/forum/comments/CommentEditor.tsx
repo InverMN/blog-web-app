@@ -52,7 +52,8 @@ export const CommentEditor: React.FC<Props> = ({
   }
 
   const editReply = () => {
-    api.patch(`comments/${target}`, { body: existingCommentBody })
+    api.patch(`comments/${target}`, { body: body })
+    dispatch({ type: 'EDIT_REPLY', payload: { id: target, body } })
     handleClose()
   }
 
