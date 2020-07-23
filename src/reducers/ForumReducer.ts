@@ -195,12 +195,30 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
       return {
         ...forum,
         posts: forum.posts.map((singlePost) => {
+          let deletedComment = false
           singlePost.replies = singlePost.replies.filter((singleComment) => {
-            if (singleComment.id === action.payload.id) return false
-            else {
+            if (singleComment.id === action.payload.id) {
+              deletedComment = true
+              return false
+            } else {
               return true
             }
           })
+
+          if (deletedComment === false) {
+            singlePost.replies.map((singleComment) => {
+              singleComment.replies = singleComment.replies.filter((singleSubcomment) => {
+                if (singleSubcomment.id === action.payload.id) {
+                  deletedComment = true
+                  return false
+                } else {
+                  return true
+                }
+              })
+
+              return singleComment
+            })
+          }
 
           return singlePost
         }),
