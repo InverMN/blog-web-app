@@ -66,13 +66,13 @@ export const ReplyMenu: React.FC<Props> = ({ anchorElement, handleClose, comment
     } else if (user !== null && user.id !== comment.author.id) {
       return (
         <div>
-          <MenuItem onClick={openEditor}>
-            <ReplyIcon color="primary" className={classes.icon} />
-            Reply
-          </MenuItem>
           <MenuItem>
             <ReportIcon color="error" className={classes.icon} />
             Report
+          </MenuItem>
+          <MenuItem onClick={openEditor}>
+            <ReplyIcon color="primary" className={classes.icon} />
+            Reply
           </MenuItem>
         </div>
       )
