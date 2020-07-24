@@ -84,6 +84,7 @@ export const CommentEditor: React.FC<Props> = ({
                 onChange={(event: undefined, editor: { getData: () => string }) => {
                   setBody(editor.getData())
                 }}
+                style={{ zIndex: 1000000000000 }}
               />
             </Grid>
             <Grid container item justify="space-evenly">
