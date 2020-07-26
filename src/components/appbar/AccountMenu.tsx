@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Popover, Box, Avatar, Typography, Grid, Paper } from '@material-ui/core'
-import { ExitToApp as ExitToAppIcon } from '@material-ui/icons'
+import { ExitToApp as ExitToAppIcon, CameraAlt as CameraAltIcon } from '@material-ui/icons'
 import { UserContext } from '../../contexts/index'
 import { useAPI } from '../../lib/index'
 import { makeStyles } from '@material-ui/core/styles'
@@ -14,9 +14,19 @@ const useStyles = makeStyles({
   changeAvatarButton: {
     width: '76px',
     height: '76px',
+    cursor: 'pointer',
   },
   hiddenInput: {
     display: 'none',
+  },
+  cameraIcon: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: '2em',
+    cursor: 'pointer',
   },
 })
 
@@ -83,7 +93,7 @@ export const AccountMenu: React.FC = () => {
         <Box m={2}>
           <Grid container>
             <Grid item container direction="row" justify="center" alignItems="center">
-              <Grid item>
+              <Grid item style={{ position: 'relative' }}>
                 <form encType="multipart/form-data">
                   <label>
                     <Avatar
@@ -91,6 +101,7 @@ export const AccountMenu: React.FC = () => {
                       alt={user?.username}
                       src={`http://localhost:5500/static/avatars/${user?.id}.png`}
                     />
+                    <CameraAltIcon className={classes.cameraIcon} />
                     <input
                       type="file"
                       name="photo"
