@@ -3,11 +3,21 @@ import { Popover, Box, Avatar, Typography, Grid, Paper } from '@material-ui/core
 import { ExitToApp as ExitToAppIcon } from '@material-ui/icons'
 import { UserContext } from '../../contexts/index'
 import { useAPI } from '../../lib/index'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles({
+  profileButton: {
+    borderRadius: '100px',
+    padding: '0 14px 0 10px',
+    boxShadow: 'none',
+  },
+})
 
 export const AccountMenu: React.FC = () => {
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
   const { user, setUser } = useContext(UserContext)
   const api = useAPI()
+  const classes = useStyles()
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElement(event.currentTarget)
@@ -26,11 +36,10 @@ export const AccountMenu: React.FC = () => {
 
   const open = Boolean(anchorElement)
   const id = open ? 'account-popover' : undefined
-  console.log(user)
 
   return (
     <div>
-      <Paper onClick={handleClick}>
+      <Paper onClick={handleClick} className={classes.profileButton}>
         <Grid container spacing={1} direction="row" justify="center" alignItems="center">
           <Grid item>
             <Avatar alt={user?.username} src={`http://localhost:5500/static/avatars/${user?.id}.png`} />
