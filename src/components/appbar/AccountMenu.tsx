@@ -48,7 +48,9 @@ export const AccountMenu: React.FC = () => {
     if (target.files !== null && target.files[0] !== undefined) {
       const file = target.files[0]
       if (file.type.startsWith('image')) {
-        api.post('users/avatars', { file })
+        const formData = new FormData()
+        formData.append('file', file)
+        api.post('users/avatars', formData)
       }
     }
   }
