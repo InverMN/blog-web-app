@@ -11,6 +11,10 @@ const useStyles = makeStyles({
     padding: '0 14px 0 10px',
     boxShadow: 'none',
   },
+  changeAvatarButton: {
+    width: '76px',
+    height: '76px',
+  },
 })
 
 export const AccountMenu: React.FC = () => {
@@ -64,12 +68,23 @@ export const AccountMenu: React.FC = () => {
         }}
       >
         <Box m={2}>
-          <Grid container direction="row" justify="center" alignItems="center" onClick={logout}>
-            <Grid item>
-              <ExitToAppIcon color="error" />
+          <Grid container>
+            <Grid item container direction="row" justify="center" alignItems="center">
+              <Grid item>
+                <Avatar
+                  className={classes.changeAvatarButton}
+                  alt={user?.username}
+                  src={`http://localhost:5500/static/avatars/${user?.id}.png`}
+                />
+              </Grid>
             </Grid>
-            <Grid item>
-              <Typography>Log out</Typography>
+            <Grid item container direction="row" justify="center" alignItems="center" onClick={logout}>
+              <Grid item>
+                <ExitToAppIcon color="error" />
+              </Grid>
+              <Grid item>
+                <Typography>Log out</Typography>
+              </Grid>
             </Grid>
           </Grid>
         </Box>
