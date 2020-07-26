@@ -47,11 +47,10 @@ export const AccountMenu: React.FC = () => {
   const selectedImage = (target: HTMLInputElement) => {
     if (target.files !== null && target.files[0] !== undefined) {
       const file = target.files[0]
-      if (file.type.startsWith('image')) {
-        const formData = new FormData()
-        formData.append('file', file)
-        api.post('users/avatars', formData)
-      }
+      const formData = new FormData()
+      formData.append('file', file)
+      window.location = window.location
+      api.post('avatars', formData)
     }
   }
 
@@ -98,7 +97,6 @@ export const AccountMenu: React.FC = () => {
                       id="photo"
                       className={classes.hiddenInput}
                       onChange={(e) => selectedImage(e.target)}
-                      accept="image/*"
                     />
                   </label>
                 </form>
