@@ -83,7 +83,7 @@ export const AccountMenu: React.FC = () => {
           <Grid container>
             <Grid item container direction="row" justify="center" alignItems="center">
               <Grid item>
-                <form>
+                <form encType="multipart/form-data">
                   <label>
                     <Avatar
                       className={classes.changeAvatarButton}
