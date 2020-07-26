@@ -15,6 +15,9 @@ const useStyles = makeStyles({
     width: '76px',
     height: '76px',
   },
+  hiddenInput: {
+    display: 'none',
+  },
 })
 
 export const AccountMenu: React.FC = () => {
@@ -40,6 +43,15 @@ export const AccountMenu: React.FC = () => {
 
   const open = Boolean(anchorElement)
   const id = open ? 'account-popover' : undefined
+
+  const selectedImage = (target: HTMLInputElement) => {
+    if (target.files !== null && target.files[0] !== undefined) {
+      const file = target.files[0]
+      if (file.type.startsWith('image')) {
+        api.post('users/avatars', { file })
+      }
+    }
+  }
 
   return (
     <div>
@@ -71,11 +83,23 @@ export const AccountMenu: React.FC = () => {
           <Grid container>
             <Grid item container direction="row" justify="center" alignItems="center">
               <Grid item>
-                <Avatar
-                  className={classes.changeAvatarButton}
-                  alt={user?.username}
-                  src={`http://localhost:5500/static/avatars/${user?.id}.png`}
-                />
+                <form>
+                  <label>
+                    <Avatar
+                      className={classes.changeAvatarButton}
+                      alt={user?.username}
+                      src={`http://localhost:5500/static/avatars/${user?.id}.png`}
+                    />
+                    <input
+                      type="file"
+                      name="photo"
+                      id="photo"
+                      className={classes.hiddenInput}
+                      onChange={(e) => selectedImage(e.target)}
+                      accept="image/*"
+                    />
+                  </label>
+                </form>
               </Grid>
             </Grid>
             <Grid item container direction="row" justify="center" alignItems="center" onClick={logout}>
