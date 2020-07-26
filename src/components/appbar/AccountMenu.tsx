@@ -60,8 +60,8 @@ export const AccountMenu: React.FC = () => {
       const file = target.files[0]
       const formData = new FormData()
       formData.append('file', file)
-      window.location = window.location
       api.post('avatars', formData)
+      window.location = window.location
     }
   }
 
