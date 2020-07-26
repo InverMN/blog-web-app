@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     borderRadius: '100px',
     padding: '0 14px 0 10px',
     boxShadow: 'none',
+    cursor: 'pointer',
   },
   changeAvatarButton: {
     width: '76px',
