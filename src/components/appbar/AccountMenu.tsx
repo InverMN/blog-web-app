@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Popover, Box, Avatar, Typography, Grid, Paper } from '@material-ui/core'
+import { Popover, Box, Avatar, Typography, Grid, Paper, Button } from '@material-ui/core'
 import { ExitToApp as ExitToAppIcon, CameraAlt as CameraAltIcon } from '@material-ui/icons'
 import { UserContext } from '../../contexts/index'
 import { useAPI } from '../../lib/index'
@@ -116,10 +116,7 @@ export const AccountMenu: React.FC = () => {
             </Grid>
             <Grid item container direction="row" justify="center" alignItems="center" onClick={logout}>
               <Grid item>
-                <ExitToAppIcon color="error" />
-              </Grid>
-              <Grid item>
-                <Typography>Log out</Typography>
+                <Button startIcon={<ExitToAppIcon />}>Log out</Button>
               </Grid>
             </Grid>
           </Grid>
