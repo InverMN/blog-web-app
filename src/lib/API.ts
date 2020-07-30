@@ -1,5 +1,6 @@
 import { Auth } from './Auth'
 import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import { connect as connectSocket } from '../socket/index'
 
 const minute = 1000 * 60
 const APIURL = 'http://localhost:5500/api/v1'
@@ -26,6 +27,7 @@ export class API {
     try {
       const res = await Axios.post(`${APIURL}/login`, { email, password }, { withCredentials: true })
       this.auth.set(res.data)
+      connectSocket(res.data.accessToken)
       return res.data
     } catch (err) {
       throw err
@@ -46,6 +48,7 @@ export class API {
     try {
       const res = await Axios.post(`${APIURL}/refresh`, null, { withCredentials: true })
       this.auth.set(res.data)
+      connectSocket(res.data.accessToken)
       return true
     } catch (err) {
       console.log(err)
