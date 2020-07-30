@@ -7,3 +7,7 @@ export function connect(accessToken: string): void {
     else console.log('failed to log to socket')
   })
 }
+
+export function disconnect(): void {
+  socket.emit('logout')
+}

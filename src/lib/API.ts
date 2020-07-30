@@ -1,6 +1,6 @@
 import { Auth } from './Auth'
 import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
-import { connect as connectSocket } from '../socket/index'
+import { connect as connectSocket, disconnect as disconnectSocket } from '../socket/index'
 
 const minute = 1000 * 60
 const APIURL = 'http://localhost:5500/api/v1'
@@ -58,7 +58,7 @@ export class API {
 
   async logout(): Promise<any> {
     this.auth.clear()
-    console.log(this.auth)
+    disconnectSocket()
     Axios.delete(`${APIURL}/logout`, { withCredentials: true })
   }
 
