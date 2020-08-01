@@ -13,7 +13,7 @@ export const NotificationItem: React.FC<Props> = ({
   return (
     <ListItem button>
       <ListItemAvatar>
-        <Avatar src={`http://localhost:5500/static/avatars/${id}.png`} />
+        <Avatar src={`http://localhost:5500/static/avatars/${sender.id}.png`} />
       </ListItemAvatar>
       <ListItemText primary={data} secondary={Moment(createdAt).fromNow()} />
     </ListItem>
