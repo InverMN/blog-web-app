@@ -1,5 +1,7 @@
 import React from 'react'
-import { Popover } from '@material-ui/core'
+import { Popover, List, ListSubheader } from '@material-ui/core'
+import { NotificationsContext } from '../../../contexts/NotificationsContext'
+import { NotificationItem } from './index'
 
 interface Props {
   anchorElement: HTMLElement | null
@@ -7,6 +9,11 @@ interface Props {
 }
 
 export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose }) => {
+  const { notifications, dispatch } = React.useContext(NotificationsContext)
+
+  const generateNotificationItems = () =>
+    notifications.map((notification) => <NotificationItem key={notification.id} data={notification} />)
+
   return (
     <Popover
       open={Boolean(anchorElement)}
@@ -20,6 +27,8 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
         horizontal: 'center',
       }}
       onClose={handleClose}
-    ></Popover>
+    >
+      <List subheader={<ListSubheader>Notifications</ListSubheader>}>{generateNotificationItems()}</List>
+    </Popover>
   )
 }
