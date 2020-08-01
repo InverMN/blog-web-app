@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Button, Grid } from '@material-ui/core'
 import { LoginDialog, RegisterDialog } from '../dialogs/index'
 import { UserContext } from '../../contexts/index'
 import { AccountMenu } from './index'
+import { NotificationsButton } from './notifications/NotificationsButton'
 
 export const AppNav: React.FC = () => {
   const [loginOpen, setLoginOpen] = useState(false)
@@ -43,7 +44,14 @@ export const AppNav: React.FC = () => {
             </div>
           ) : (
             <div>
-              <AccountMenu />
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item>
+                  <NotificationsButton />
+                </Grid>
+                <Grid item>
+                  <AccountMenu />
+                </Grid>
+              </Grid>
             </div>
           )}
         </Toolbar>
