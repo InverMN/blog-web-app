@@ -6,7 +6,7 @@ interface User {
   username: string
 }
 
-type NotificationSubject = 'replied_post' | 'replied_comment'
+export type NotificationSubject = 'REPLIED_COMMENT' | 'REPLIED_POST'
 
 export interface Notification {
   id: string
