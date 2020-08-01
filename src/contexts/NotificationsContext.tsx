@@ -1,5 +1,5 @@
 import React from 'react'
-import useState from 'react'
+import { NotificationsReducer, NotificationsActionTypes } from '../reducers/index'
 
 interface User {
   id: string
@@ -18,12 +18,18 @@ export interface Notification {
   createdAt: number
 }
 
-const initialState: Notification[] = []
+const initialState = {
+  notifications: Array<Notification>(),
+  dispatch: () => null,
+}
 
-export const NotificationsContext = React.createContext(initialState)
+export const NotificationsContext = React.createContext<{
+  notifications: Notification[]
+  dispatch: React.Dispatch<NotificationsActionTypes>
+}>(initialState)
 
 export const NotificationsContextProvider: React.FC = ({ children }) => {
-  const [notifications] = React.useState(initialState)
+  const [notifications, dispatch] = React.useReducer(NotificationsReducer, [])
 
-  return <NotificationsContext.Provider value={notifications}>{children}</NotificationsContext.Provider>
+  return <NotificationsContext.Provider value={{ notifications, dispatch }}>{children}</NotificationsContext.Provider>
 }
