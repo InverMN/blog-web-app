@@ -1,5 +1,7 @@
 import React from 'react'
 import { NotificationsReducer, NotificationsActionTypes } from '../reducers/index'
+import { UserContext } from './UserContext'
+import { useAPI } from '../lib/API'
 
 interface User {
   id: string
@@ -30,6 +32,15 @@ export const NotificationsContext = React.createContext<{
 
 export const NotificationsContextProvider: React.FC = ({ children }) => {
   const [notifications, dispatch] = React.useReducer(NotificationsReducer, [])
+  const { user } = React.useContext(UserContext)
+  const api = useAPI()
+
+  React.useEffect(() => {
+    api
+      .get('notifications')
+      .then((res) => dispatch({ type: 'LOAD_NOTIFICATIONS', payload: res.data }))
+      .catch(() => dispatch({ type: 'CLEAR_ALL_NOTIFICATIONS' }))
+  }, [user])
 
   return <NotificationsContext.Provider value={{ notifications, dispatch }}>{children}</NotificationsContext.Provider>
 }
