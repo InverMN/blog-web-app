@@ -2,7 +2,7 @@ import React from 'react'
 import { Popover } from '@material-ui/core'
 
 interface Props {
-  anchorElement: HTMLElement
+  anchorElement: HTMLElement | null
   handleClose: () => void
 }
 
