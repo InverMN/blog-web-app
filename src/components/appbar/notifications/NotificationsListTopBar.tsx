@@ -5,7 +5,7 @@ import { ClearAll as ClearAllIcon } from '@material-ui/icons'
 export const NotificationsListTopBar: React.FC = () => {
   return (
     <ListSubheader>
-      <Grid container>
+      <Grid container justify="space-between">
         <Grid item>Notifications</Grid>
         <Grid item>
           <Button size="small" style={{ color: ' rgba(0, 0, 0, 0.54)' }} endIcon={<ClearAllIcon />}>
