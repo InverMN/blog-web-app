@@ -24,13 +24,14 @@ export const NotificationItem: React.FC<Props> = ({
 }) => {
   const classes = useStyles()
 
-  let message
-  switch (subject) {
-    case 'REPLIED_POST':
-      message = `${sender.username} replied your post`
-    case 'REPLIED_COMMENT':
-      message = `${sender.username} replied your comment`
-  }
+  const message = (() => {
+    switch (subject) {
+      case 'REPLIED_POST':
+        return `${sender.username} replied your post`
+      case 'REPLIED_COMMENT':
+        return `${sender.username} replied your comment`
+    }
+  })()
 
   return (
     <ListItem button className={checked ? '' : classes.unchecked} onMouseEnter={setChecked}>
