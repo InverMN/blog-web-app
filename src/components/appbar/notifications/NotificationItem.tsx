@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 interface Props {
   data: NotificationData
   setChecked: () => void
+  handleDelete: () => void
 }
 
 const useStyles = makeStyles({
@@ -19,6 +20,7 @@ const useStyles = makeStyles({
 export const NotificationItem: React.FC<Props> = ({
   data: { id, sender, receiver, subject, data, checked, createdAt },
   setChecked,
+  handleDelete,
 }) => {
   const classes = useStyles()
 
@@ -37,7 +39,7 @@ export const NotificationItem: React.FC<Props> = ({
       </ListItemAvatar>
       <ListItemText primary={message} secondary={Moment(createdAt).fromNow()} />
       <ListItemSecondaryAction>
-        <IconButton edge="end">
+        <IconButton edge="end" onClick={handleDelete}>
           <CancelIcon />
         </IconButton>
       </ListItemSecondaryAction>

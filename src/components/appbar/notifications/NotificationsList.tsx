@@ -24,6 +24,10 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
             dispatch({ type: 'CHECKOUT_NOTIFICATION', payload: { id: notification.id } })
           }
         }}
+        handleDelete={() => {
+          api.delete(`notifications/${notification.id}`)
+          dispatch({ type: 'DELETE_NOTIFICATION', payload: { id: notification.id } })
+        }}
       />
     ))
 
