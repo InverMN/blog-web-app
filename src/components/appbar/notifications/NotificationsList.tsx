@@ -3,15 +3,23 @@ import { Popover, List } from '@material-ui/core'
 import { NotificationsContext } from '../../../contexts/NotificationsContext'
 import { NotificationsListTopBar, NotificationItem } from './index'
 import { useAPI } from '../../../lib/API'
+import { makeStyles } from '@material-ui/core/styles'
 
 interface Props {
   anchorElement: HTMLElement | null
   handleClose: () => void
 }
 
+const useStyles = makeStyles({
+  list: {
+    minWidth: '375px',
+  },
+})
+
 export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose }) => {
   const { notifications, dispatch } = React.useContext(NotificationsContext)
   const api = useAPI()
+  const classes = useStyles()
 
   const generateNotificationItems = () =>
     notifications.map((notification) => (
@@ -50,7 +58,7 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
       }}
       onClose={handleClose}
     >
-      <List subheader={<NotificationsListTopBar clearAll={clearAllNotifications} />}>
+      <List className={classes.list} subheader={<NotificationsListTopBar clearAll={clearAllNotifications} />}>
         {generateNotificationItems()}
       </List>
     </Popover>
