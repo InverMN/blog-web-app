@@ -1,7 +1,7 @@
 import React from 'react'
-import { Popover, List, ListSubheader } from '@material-ui/core'
+import { Popover, List } from '@material-ui/core'
 import { NotificationsContext } from '../../../contexts/NotificationsContext'
-import { NotificationItem } from './index'
+import { NotificationsListTopBar, NotificationItem } from './index'
 import { useAPI } from '../../../lib/API'
 
 interface Props {
@@ -45,7 +45,7 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
       }}
       onClose={handleClose}
     >
-      <List subheader={<ListSubheader>Notifications</ListSubheader>}>{generateNotificationItems()}</List>
+      <List subheader={<NotificationsListTopBar />}>{generateNotificationItems()}</List>
     </Popover>
   )
 }
