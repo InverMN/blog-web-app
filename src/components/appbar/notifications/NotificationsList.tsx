@@ -13,6 +13,7 @@ interface Props {
 const useStyles = makeStyles({
   list: {
     minWidth: '375px',
+    minHeight: '300px',
   },
 })
 
