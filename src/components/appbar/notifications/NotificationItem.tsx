@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 interface Props {
   data: NotificationData
+  setChecked: () => void
 }
 
 const useStyles = makeStyles({
@@ -16,6 +17,7 @@ const useStyles = makeStyles({
 
 export const NotificationItem: React.FC<Props> = ({
   data: { id, sender, receiver, subject, data, checked, createdAt },
+  setChecked,
 }) => {
   const classes = useStyles()
 
@@ -28,7 +30,7 @@ export const NotificationItem: React.FC<Props> = ({
   }
 
   return (
-    <ListItem button className={checked ? '' : classes.unchecked}>
+    <ListItem button className={checked ? '' : classes.unchecked} onMouseEnter={setChecked}>
       <ListItemAvatar>
         <Avatar src={`http://localhost:5500/static/avatars/${sender.id}.png`} />
       </ListItemAvatar>

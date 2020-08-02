@@ -2,6 +2,7 @@ import React from 'react'
 import { Popover, List, ListSubheader } from '@material-ui/core'
 import { NotificationsContext } from '../../../contexts/NotificationsContext'
 import { NotificationItem } from './index'
+import { useAPI } from '../../../lib/API'
 
 interface Props {
   anchorElement: HTMLElement | null
@@ -10,9 +11,21 @@ interface Props {
 
 export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose }) => {
   const { notifications, dispatch } = React.useContext(NotificationsContext)
+  const api = useAPI()
 
   const generateNotificationItems = () =>
-    notifications.map((notification) => <NotificationItem key={notification.id} data={notification} />)
+    notifications.map((notification) => (
+      <NotificationItem
+        key={notification.id}
+        data={notification}
+        setChecked={() => {
+          if (notification.checked === false) {
+            api.patch(`notifications/${notification.id}`)
+            dispatch({ type: 'CHECKOUT_NOTIFICATION', payload: { id: notification.id } })
+          }
+        }}
+      />
+    ))
 
   return (
     <Popover
