@@ -57,6 +57,6 @@ export const NotificationsReducer = (
     case CLEAR_ALL_NOTIFICATIONS:
       return []
     case PUSH_NOTIFICATION:
-      return [...notifications, action.payload]
+      return [action.payload, ...notifications]
   }
 }
