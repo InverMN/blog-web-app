@@ -31,6 +31,11 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
       />
     ))
 
+  const clearAllNotifications = () => {
+    api.delete('notifications')
+    dispatch({ type: 'CLEAR_ALL_NOTIFICATIONS' })
+  }
+
   return (
     <Popover
       open={Boolean(anchorElement)}
@@ -45,7 +50,9 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
       }}
       onClose={handleClose}
     >
-      <List subheader={<NotificationsListTopBar />}>{generateNotificationItems()}</List>
+      <List subheader={<NotificationsListTopBar clearAll={clearAllNotifications} />}>
+        {generateNotificationItems()}
+      </List>
     </Popover>
   )
 }
