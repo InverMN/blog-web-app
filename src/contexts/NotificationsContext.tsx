@@ -2,6 +2,7 @@ import React from 'react'
 import { NotificationsReducer, NotificationsActionTypes } from '../reducers/index'
 import { UserContext } from './UserContext'
 import { useAPI } from '../lib/API'
+import { socket } from '../socket/index'
 
 interface User {
   id: string
@@ -34,6 +35,12 @@ export const NotificationsContextProvider: React.FC = ({ children }) => {
   const [notifications, dispatch] = React.useReducer(NotificationsReducer, [])
   const { user } = React.useContext(UserContext)
   const api = useAPI()
+
+  React.useEffect(() => {
+    socket.on('notification', (notificationData: Notification) =>
+      dispatch({ type: 'PUSH_NOTIFICATION', payload: notificationData }),
+    )
+  }, [])
 
   React.useEffect(() => {
     api
