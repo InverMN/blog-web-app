@@ -8,7 +8,7 @@ interface Props {
 
 export const NotificationsListTopBar: React.FC<Props> = ({ clearAll }) => {
   return (
-    <ListSubheader>
+    <ListSubheader style={{ backgroundColor: 'white' }}>
       <Grid container justify="space-between">
         <Grid item>Notifications</Grid>
         <Grid item>
