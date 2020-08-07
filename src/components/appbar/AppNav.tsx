@@ -4,6 +4,7 @@ import { LoginDialog, RegisterDialog } from '../dialogs/index'
 import { UserContext } from '../../contexts/index'
 import { AccountMenu } from './index'
 import { NotificationsButton } from './notifications/NotificationsButton'
+import { NavLink } from 'react-router-dom'
 
 export const AppNav: React.FC = () => {
   const [loginOpen, setLoginOpen] = useState(false)
@@ -30,9 +31,11 @@ export const AppNav: React.FC = () => {
     <div>
       <AppBar>
         <Toolbar style={{ justifyContent: 'space-between' }}>
-          <Typography variant="h6">
-            <b>Micro</b>blog
-          </Typography>
+          <NavLink to="/">
+            <Typography variant="h6">
+              <b>Micro</b>blog
+            </Typography>
+          </NavLink>
           {user === null ? (
             <div>
               <Button variant="outlined" color="inherit" onClick={handleLoginOpen} style={{ marginRight: '14px' }}>
