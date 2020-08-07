@@ -59,7 +59,10 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
       }}
       onClose={handleClose}
     >
-      <List className={classes.list} subheader={<NotificationsListTopBar clearAll={clearAllNotifications} />}>
+      <List
+        className={classes.list}
+        subheader={<NotificationsListTopBar isEmpty={notifications.length === 0} clearAll={clearAllNotifications} />}
+      >
         {generateNotificationItems()}
       </List>
     </Popover>
