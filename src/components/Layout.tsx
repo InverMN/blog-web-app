@@ -1,14 +1,14 @@
 import React from 'react'
-import { Forum } from './forum/index'
 import { AppNav } from './appbar/index'
 import { ForumContextProvider } from '../contexts/index'
+import { PageWrapper } from './pages/PageWrapper'
 
 export const Layout: React.FC = () => {
   return (
     <div>
       <AppNav />
       <ForumContextProvider>
-        <Forum />
+        <PageWrapper />
       </ForumContextProvider>
     </div>
   )
