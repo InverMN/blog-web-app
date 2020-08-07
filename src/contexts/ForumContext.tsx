@@ -52,11 +52,5 @@ export const ForumContextProvider: React.FC = ({ children }) => {
   const { user } = useContext(UserContext)
   const api = useAPI()
 
-  useEffect(() => {
-    api.get('posts').then((res) => {
-      dispatch({ type: 'LOAD_POSTS', payload: res.data })
-    })
-  }, [user])
-
   return <ForumContext.Provider value={{ forum, dispatch }}>{children}</ForumContext.Provider>
 }
