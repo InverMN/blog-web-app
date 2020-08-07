@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   floating: {
     position: 'fixed',
     bottom: '65px',
-    right: '70px',
+    left: 'calc(100vw - 130px)',
   },
   title: {
     flexGrow: 1,
