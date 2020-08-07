@@ -77,6 +77,12 @@ interface EditReplyAction {
   payload: Pick<Comment, 'id' | 'body'>
 }
 
+export const CLEAR_ALL_POSTS = 'CLEAR_ALL_POSTS'
+
+interface ClearAllPostsAction {
+  type: typeof CLEAR_ALL_POSTS
+}
+
 export type ForumActionTypes =
   | LoadPostsAction
   | AddPostAction
@@ -88,6 +94,7 @@ export type ForumActionTypes =
   | CreateReplyAction
   | DeleteReplyAction
   | EditReplyAction
+  | ClearAllPostsAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -247,6 +254,11 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
           })
           return singlePost
         }),
+      }
+    case CLEAR_ALL_POSTS:
+      return {
+        ...forum,
+        posts: [],
       }
   }
 }
