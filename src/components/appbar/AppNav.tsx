@@ -31,7 +31,7 @@ export const AppNav: React.FC = () => {
     <div>
       <AppBar>
         <Toolbar style={{ justifyContent: 'space-between' }}>
-          <NavLink to="/">
+          <NavLink to="/" style={{ color: 'white', textDecoration: 'none' }}>
             <Typography variant="h6">
               <b>Micro</b>blog
             </Typography>
