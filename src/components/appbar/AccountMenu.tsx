@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles({
   profileButton: {
     borderRadius: '100px',
-    padding: '0 14px 0 10px',
+    padding: '0 9px 0 6px',
     boxShadow: 'none',
     cursor: 'pointer',
   },
