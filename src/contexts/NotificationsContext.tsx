@@ -16,7 +16,7 @@ export interface Notification {
   sender: User
   receiver: User
   subject: NotificationSubject
-  data: NotificationSubject
+  data: any
   checked: boolean
   createdAt: number
 }
