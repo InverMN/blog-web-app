@@ -21,6 +21,9 @@ export const SinglePost: React.FC<Props> = ({ match }) => {
 
   React.useEffect(() => {
     dispatch({ type: 'CLEAR_ALL_POSTS' })
+  }, [])
+
+  React.useEffect(() => {
     api
       // @ts-ignore
       .get(`posts/${match.params.postId}`)

@@ -11,6 +11,9 @@ export const Home: React.FC = () => {
 
   React.useEffect(() => {
     dispatch({ type: 'CLEAR_ALL_POSTS' })
+  }, [])
+
+  React.useEffect(() => {
     api.get('posts').then((res) => {
       dispatch({ type: 'LOAD_POSTS', payload: res.data })
     })
