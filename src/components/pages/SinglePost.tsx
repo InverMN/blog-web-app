@@ -31,5 +31,18 @@ export const SinglePost: React.FC<Props> = ({ match }) => {
       })
   }, [user])
 
+  const scrollToTargetReply = () => {
+    setTimeout(() => {
+      //@ts-ignore
+      const replyId = match.params.replyId
+      if (replyId !== undefined) {
+        const targetReplyElement = document.querySelector(`#reply-${replyId}`)
+        targetReplyElement?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }, 2000)
+  }
+
+  React.useEffect(scrollToTargetReply, [])
+
   return <Forum />
 }
