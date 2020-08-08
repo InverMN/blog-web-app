@@ -10,6 +10,7 @@ interface Props {
   data: NotificationData
   setChecked: () => void
   handleDelete: () => void
+  handleNotificationsListClose: () => void
 }
 
 const useStyles = makeStyles({
@@ -22,6 +23,7 @@ export const NotificationItem: React.FC<Props> = ({
   data: { id, sender, receiver, subject, data, checked, createdAt },
   setChecked,
   handleDelete,
+  handleNotificationsListClose,
 }) => {
   const classes = useStyles()
   const history = useHistory()
@@ -39,6 +41,7 @@ export const NotificationItem: React.FC<Props> = ({
   const notificationLink = replyId && postId ? `/post/${postId}/${replyId}` : ''
 
   const handleClick = () => {
+    handleNotificationsListClose()
     history.push(notificationLink)
   }
 
