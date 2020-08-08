@@ -10,6 +10,7 @@ export const Home: React.FC = () => {
   const { user } = React.useContext(UserContext)
 
   React.useEffect(() => {
+    dispatch({ type: 'CLEAR_ALL_POSTS' })
     api.get('posts').then((res) => {
       dispatch({ type: 'LOAD_POSTS', payload: res.data })
     })
