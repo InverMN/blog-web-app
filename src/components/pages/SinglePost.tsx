@@ -43,10 +43,13 @@ export const SinglePost: React.FC<Props> = ({ match }) => {
         const targetReplyElement = document.querySelector(`#reply-${replyId}`)
         targetReplyElement?.scrollIntoView({ behavior: 'smooth' })
       }
-    }, 2000)
+    }, 250)
   }
 
-  React.useEffect(scrollToTargetReply, [])
-
-  return <Forum />
+  return (
+    <div>
+      <Forum />
+      {scrollToTargetReply()}
+    </div>
+  )
 }
