@@ -40,7 +40,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
 
   const renderStaticComment = () => {
     return (
-      <Paper variant="outlined">
+      <Paper variant="outlined" id={`reply-${comment.id}`}>
         <Box m={1}>
           <Grid container spacing={1} direction="row" style={{ flexWrap: 'nowrap' }}>
             <Grid item>

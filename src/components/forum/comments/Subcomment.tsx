@@ -36,7 +36,7 @@ export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor }) =>
 
   const renderStaticComment = () => {
     return (
-      <Paper variant="outlined">
+      <Paper variant="outlined" id={`reply-${subcomment.id}`}>
         <Box m={1}>
           <Grid container spacing={1} direction="row" style={{ flexWrap: 'nowrap' }}>
             <Grid item>
