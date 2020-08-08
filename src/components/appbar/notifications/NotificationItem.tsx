@@ -4,7 +4,7 @@ import { Notification as NotificationData } from '../../../contexts/index'
 import { Cancel as CancelIcon } from '@material-ui/icons'
 import Moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   data: NotificationData
@@ -24,6 +24,7 @@ export const NotificationItem: React.FC<Props> = ({
   handleDelete,
 }) => {
   const classes = useStyles()
+  const history = useHistory()
 
   const message = (() => {
     switch (subject) {
@@ -37,19 +38,21 @@ export const NotificationItem: React.FC<Props> = ({
   const { replyId, postId } = data
   const notificationLink = replyId && postId ? `/post/${postId}/${replyId}` : ''
 
+  const handleClick = () => {
+    history.push(notificationLink)
+  }
+
   return (
-    <Link to={notificationLink} style={{ textDecoration: 'none', color: 'black' }}>
-      <ListItem button className={checked ? '' : classes.unchecked} onMouseEnter={setChecked}>
-        <ListItemAvatar>
-          <Avatar src={`http://localhost:5500/static/avatars/${sender.id}.png`} />
-        </ListItemAvatar>
-        <ListItemText primary={message} secondary={Moment(createdAt).fromNow()} />
-        <ListItemSecondaryAction>
-          <IconButton edge="end" onClick={handleDelete}>
-            <CancelIcon />
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
-    </Link>
+    <ListItem button className={checked ? '' : classes.unchecked} onMouseEnter={setChecked} onClick={handleClick}>
+      <ListItemAvatar>
+        <Avatar src={`http://localhost:5500/static/avatars/${sender.id}.png`} />
+      </ListItemAvatar>
+      <ListItemText primary={message} secondary={Moment(createdAt).fromNow()} />
+      <ListItemSecondaryAction>
+        <IconButton edge="end" onClick={handleDelete}>
+          <CancelIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
   )
 }
