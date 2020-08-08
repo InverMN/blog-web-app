@@ -7,7 +7,7 @@ export const PageWrapper: React.FC = () => {
   return (
     <div>
       <Route exact path="/" component={Home} />
-      <Route path="/post/:postId" component={SinglePost} />
+      <Route path="/post/:postId/:replyId?" component={SinglePost} />
     </div>
   )
 }

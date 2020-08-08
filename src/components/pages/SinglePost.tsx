@@ -7,7 +7,7 @@ import { UserContext } from '../../contexts/UserContext'
 
 interface RouteProps {
   postId?: string
-  commentId?: string
+  replyId?: string
 }
 
 interface Props {
