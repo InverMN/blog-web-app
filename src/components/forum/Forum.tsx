@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Container, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import { Post, PostEditor } from './index'
+import { Post, PostEditor, PostSkeleton } from './index'
 import { UserContext, Post as PostData, ForumContext } from '../../contexts/index'
 
 const useStyles = makeStyles({
@@ -16,17 +16,19 @@ export const Forum: React.FC = () => {
   const classes = useStyles()
 
   const renderPosts = () => {
-    return forum === null ? (
-      <Typography variant="h6">NO POST TO DISPLAY</Typography>
-    ) : (
-      forum.posts.map((post: PostData) => {
-        return (
-          <Grid item key={post.id}>
-            <Post post={post} user={user} />
+    return forum.posts.length === 0
+      ? Array.from(Array(3), () => (
+          <Grid item>
+            <PostSkeleton />
           </Grid>
-        )
-      })
-    )
+        ))
+      : forum.posts.map((post: PostData) => {
+          return (
+            <Grid item key={post.id}>
+              <Post post={post} user={user} />
+            </Grid>
+          )
+        })
   }
 
   return (
