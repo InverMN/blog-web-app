@@ -2,7 +2,7 @@ import React from 'react'
 import { Forum } from '../forum/index'
 import { ForumContext } from '../../contexts/index'
 import { useAPI } from '../../lib/index'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { UserContext } from '../../contexts/UserContext'
 
 interface RouteProps {
@@ -35,15 +35,25 @@ export const SinglePost: React.FC<Props> = ({ match }) => {
       })
   }, [user])
 
+  const [isInitialRender, setIsInitialRender] = React.useState(true)
+  const history = useHistory()
+
+  history.listen(() => {
+    setIsInitialRender(true)
+  })
+
   const scrollToTargetReply = () => {
-    setTimeout(() => {
-      //@ts-ignore
-      const replyId = match.params.replyId
-      if (replyId !== undefined) {
-        const targetReplyElement = document.querySelector(`#reply-${replyId}`)
-        targetReplyElement?.scrollIntoView({ behavior: 'smooth' })
-      }
-    }, 250)
+    if (isInitialRender) {
+      setTimeout(() => {
+        //@ts-ignore
+        const replyId = match.params.replyId
+        if (replyId !== undefined) {
+          const targetReplyElement = document.querySelector(`#reply-${replyId}`)
+          targetReplyElement?.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 250)
+      setIsInitialRender(false)
+    }
   }
 
   return (
