@@ -58,7 +58,7 @@ export const SinglePost: React.FC<Props> = ({ match }) => {
 
   return (
     <div>
-      <Forum />
+      <Forum skeletonsCount={1} />
       {scrollToTargetReply()}
     </div>
   )

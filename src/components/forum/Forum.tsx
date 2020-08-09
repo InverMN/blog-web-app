@@ -10,14 +10,18 @@ const useStyles = makeStyles({
   },
 })
 
-export const Forum: React.FC = () => {
+interface Props {
+  skeletonsCount?: number
+}
+
+export const Forum: React.FC<Props> = ({ skeletonsCount }) => {
   const { forum } = useContext(ForumContext)
   const { user } = useContext(UserContext)
   const classes = useStyles()
 
   const renderPosts = () => {
     return forum.posts.length === 0
-      ? Array.from(Array(3), () => (
+      ? Array.from(Array(skeletonsCount || 3), () => (
           <Grid item>
             <PostSkeleton />
           </Grid>
