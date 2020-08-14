@@ -1,9 +1,11 @@
 import React from 'react'
 
-const [open, setOpen] = React.useState(false)
-const initialState = { open, setOpen }
+interface ContextObject {
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export const AuthenticationContext = React.createContext(initialState)
+export const AuthenticationContext = React.createContext<ContextObject>(undefined!)
 
 export const AuthenticationContextProvider: React.FC = ({ children }) => {
   const [open, setOpen] = React.useState(false)
