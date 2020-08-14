@@ -1,8 +1,9 @@
 import React from 'react'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@material-ui/core'
+import { AuthenticationContext } from '../../contexts/AuthenticationContext'
 
 export const MustBeLogged: React.FC = () => {
-  const [open, setOpen] = React.useState(false)
+  const { open, setOpen } = React.useContext(AuthenticationContext)
 
   const handleClose = () => {
     setOpen(false)
