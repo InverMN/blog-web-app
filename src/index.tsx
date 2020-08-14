@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import { UserContextProvider, NotificationsContextProvider } from './contexts/index'
+import { UserContextProvider, NotificationsContextProvider, AuthenticationContextProvider } from './contexts/index'
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContextProvider>
       <NotificationsContextProvider>
-        <App />
+        <AuthenticationContextProvider>
+          <App />
+        </AuthenticationContextProvider>
       </NotificationsContextProvider>
     </UserContextProvider>
   </React.StrictMode>,
