@@ -73,14 +73,16 @@ export const Post: React.FC<Props> = ({ post, user }) => {
               </Button>
             </Grid>
             <Grid item>
-              <Button
-                disabled={user === null || openCommentEditor}
-                onClick={() => setOpenCommentEditor(true)}
-                style={{ color: '#999', margin: '4px 0' }}
-                startIcon={<ReplyIcon />}
-              >
-                Reply
-              </Button>
+              <AuthenticatedOnly>
+                <Button
+                  disabled={user === null || openCommentEditor}
+                  onClick={() => setOpenCommentEditor(true)}
+                  style={{ color: '#999', margin: '4px 0' }}
+                  startIcon={<ReplyIcon />}
+                >
+                  Reply
+                </Button>
+              </AuthenticatedOnly>
             </Grid>
             <Grid item>
               <Feedback popularity={popularity} target={id} userReaction={userReaction} />
