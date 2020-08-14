@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Popularity, FeedbackType } from '../../contexts/index'
 import { useAPI } from '../../lib/index'
 import { ForumContext } from '../../contexts/index'
+import { AuthenticatedOnly } from '../common/AuthenticatedOnly'
 
 const useStyles = makeStyles({
   actionButton: {
@@ -65,18 +66,20 @@ export const Feedback: React.FC<Props> = ({ popularity, target, userReaction, si
     <Box m={1}>
       <Grid container spacing={1}>
         <Grid item>
-          <Button
-            disableElevation
-            disabled={userReaction === undefined}
-            style={userReaction === 'positive' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
-            className={`${classes.actionButton} ${
-              size === 'medium' ? classes.mediumActionButton : classes.smallActionButton
-            }`}
-            variant={userReaction === 'positive' ? 'contained' : 'outlined'}
-            onClick={() => sendFeedback('positive')}
-          >
-            <Like style={size === 'small' ? { fontSize: '12px' } : {}} />
-          </Button>
+          <AuthenticatedOnly>
+            <Button
+              disableElevation
+              disabled={userReaction === undefined}
+              style={userReaction === 'positive' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
+              className={`${classes.actionButton} ${
+                size === 'medium' ? classes.mediumActionButton : classes.smallActionButton
+              }`}
+              variant={userReaction === 'positive' ? 'contained' : 'outlined'}
+              onClick={() => sendFeedback('positive')}
+            >
+              <Like style={size === 'small' ? { fontSize: '12px' } : {}} />
+            </Button>
+          </AuthenticatedOnly>
         </Grid>
         <Grid
           item
@@ -86,18 +89,20 @@ export const Feedback: React.FC<Props> = ({ popularity, target, userReaction, si
           {popularity.sum}
         </Grid>
         <Grid item>
-          <Button
-            disableElevation
-            disabled={userReaction === undefined}
-            style={userReaction === 'negative' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
-            className={`${classes.actionButton} ${
-              size === 'medium' ? classes.mediumActionButton : classes.smallActionButton
-            }`}
-            variant={userReaction === 'negative' ? 'contained' : 'outlined'}
-            onClick={() => sendFeedback('negative')}
-          >
-            <Dislike style={size === 'small' ? { fontSize: '12px' } : {}} />
-          </Button>
+          <AuthenticatedOnly>
+            <Button
+              disableElevation
+              disabled={userReaction === undefined}
+              style={userReaction === 'negative' ? { backgroundColor: '#D2D2D2', color: '#FFF' } : undefined}
+              className={`${classes.actionButton} ${
+                size === 'medium' ? classes.mediumActionButton : classes.smallActionButton
+              }`}
+              variant={userReaction === 'negative' ? 'contained' : 'outlined'}
+              onClick={() => sendFeedback('negative')}
+            >
+              <Dislike style={size === 'small' ? { fontSize: '12px' } : {}} />
+            </Button>
+          </AuthenticatedOnly>
         </Grid>
       </Grid>
     </Box>
