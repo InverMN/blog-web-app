@@ -42,7 +42,7 @@ export const AppNav: React.FC = () => {
                 Log in
               </Button>
               <Button variant="contained" disableElevation color="secondary" onClick={handleRegisterOpen}>
-                Sign in
+                Sign up
               </Button>
             </div>
           ) : (
