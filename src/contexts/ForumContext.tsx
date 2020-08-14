@@ -1,6 +1,4 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react'
-import { UserContext } from './index'
-import { useAPI } from '../lib/index'
+import React from 'react'
 import { ForumReducer, ForumActionTypes } from '../reducers/index'
 
 export interface Forum {
@@ -42,15 +40,11 @@ const initialState: Forum = {
   edited: undefined,
 }
 
-export const ForumContext = createContext<{ forum: Forum; dispatch: React.Dispatch<ForumActionTypes> }>({
-  forum: initialState,
-  dispatch: () => null,
-})
+export const ForumContext = React.createContext<{ forum: Forum; dispatch: React.Dispatch<ForumActionTypes> }>(
+  undefined!,
+)
 
 export const ForumContextProvider: React.FC = ({ children }) => {
-  const [forum, dispatch] = useReducer(ForumReducer, initialState)
-  const { user } = useContext(UserContext)
-  const api = useAPI()
-
+  const [forum, dispatch] = React.useReducer(ForumReducer, initialState)
   return <ForumContext.Provider value={{ forum, dispatch }}>{children}</ForumContext.Provider>
 }

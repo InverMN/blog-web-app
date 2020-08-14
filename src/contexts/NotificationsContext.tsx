@@ -21,15 +21,10 @@ export interface Notification {
   createdAt: number
 }
 
-const initialState = {
-  notifications: Array<Notification>(),
-  dispatch: () => null,
-}
-
 export const NotificationsContext = React.createContext<{
   notifications: Notification[]
   dispatch: React.Dispatch<NotificationsActionTypes>
-}>(initialState)
+}>(undefined!)
 
 export const NotificationsContextProvider: React.FC = ({ children }) => {
   const [notifications, dispatch] = React.useReducer(NotificationsReducer, [])

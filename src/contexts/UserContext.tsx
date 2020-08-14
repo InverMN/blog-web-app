@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react'
+import React from 'react'
 
 export interface User {
   id: string
@@ -6,13 +6,13 @@ export interface User {
   email: string
 }
 
-export const UserContext = createContext<{
+export const UserContext = React.createContext<{
   user: User | null
   setUser: React.Dispatch<React.SetStateAction<User | null>> | null
-}>({ user: null, setUser: null })
+}>(undefined!)
 
 export const UserContextProvider: React.FC = (props) => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = React.useState<User | null>(null)
 
   return <UserContext.Provider value={{ user, setUser }}>{props.children}</UserContext.Provider>
 }
