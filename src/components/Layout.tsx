@@ -3,6 +3,7 @@ import { AppNav } from './appbar/index'
 import { ForumContextProvider } from '../contexts/index'
 import { PageWrapper } from './pages/PageWrapper'
 import { BrowserRouter } from 'react-router-dom'
+import { GlobalDialogs } from './dialogs/GlobalDialogs'
 
 export const Layout: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ export const Layout: React.FC = () => {
       <ForumContextProvider>
         <PageWrapper />
       </ForumContextProvider>
+      <GlobalDialogs />
     </BrowserRouter>
   )
 }
