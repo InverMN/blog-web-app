@@ -56,7 +56,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
           }
           action={
             <div>
-              <IconButton aria-label="settings" onClick={handleMenuClick}>
+              <IconButton disabled={user === null} aria-label="settings" onClick={handleMenuClick}>
                 <MoreVertIcon />
               </IconButton>
               <PostMenu handleClose={handleMenuClose} anchorElement={anchorElement} post={post} user={user} />

@@ -3,7 +3,7 @@ import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/c
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { ReplyMenu, SubcommentsSection, CommentEditor } from './index'
-import { Comment as CommentData } from '../../../contexts/index'
+import { Comment as CommentData, UserContext } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
 import Moment from 'moment'
 
@@ -25,6 +25,7 @@ export const Comment: React.FC<Props> = ({ comment }) => {
   const classes = useStyles()
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
   const [openSubcommentEditor, setOpenSubcommentEditor] = useState(false)
+  const { user } = React.useContext(UserContext)
 
   const handleMenuClick = (event: any) => {
     setAnchorElement(event.currentTarget)
@@ -67,8 +68,8 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                   <Feedback popularity={popularity} userReaction={userReaction} target={id} size="small" />
                 </Grid>
                 <Grid item>
-                  <IconButton onClick={handleMenuClick}>
-                    <MoreVertIcon color="action" style={{ fontSize: '20px' }} />
+                  <IconButton disabled={user === null} onClick={handleMenuClick}>
+                    <MoreVertIcon style={{ fontSize: '20px' }} />
                   </IconButton>
                   <ReplyMenu
                     handleClose={handleMenuClose}

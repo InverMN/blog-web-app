@@ -3,7 +3,7 @@ import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/c
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { ReplyMenu, CommentEditor } from './index'
-import { Subcomment as SubcommentData } from '../../../contexts/index'
+import { Subcomment as SubcommentData, UserContext } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
 import Moment from 'moment'
 
@@ -22,9 +22,9 @@ interface Props {
 export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor }) => {
   const { body, author, createdAt, popularity, id, userReaction } = subcomment
   const [isEdited, setIsEdited] = useState(false)
-
   const classes = useStyles()
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
+  const { user } = React.useContext(UserContext)
 
   const handleMenuClick = (event: any) => {
     setAnchorElement(event.currentTarget)
@@ -63,8 +63,8 @@ export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor }) =>
                   <Feedback popularity={popularity} userReaction={userReaction} target={id} size="small" />
                 </Grid>
                 <Grid item>
-                  <IconButton onClick={handleMenuClick}>
-                    <MoreVertIcon color="action" style={{ fontSize: '20px' }} />
+                  <IconButton disabled={user === null} onClick={handleMenuClick}>
+                    <MoreVertIcon style={{ fontSize: '20px' }} />
                   </IconButton>
                   <ReplyMenu
                     handleClose={handleMenuClose}
