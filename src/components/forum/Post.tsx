@@ -15,6 +15,7 @@ import Moment from 'moment'
 import { PostMenu, Feedback } from './index'
 import { CommentsSection } from './comments/index'
 import { User, Post as PostData } from '../../contexts/index'
+import { AuthenticatedOnly } from '../common/AuthenticatedOnly'
 
 interface Props {
   post: PostData
@@ -55,12 +56,12 @@ export const Post: React.FC<Props> = ({ post, user }) => {
             </div>
           }
           action={
-            <div>
+            <AuthenticatedOnly>
               <IconButton disabled={user === null} aria-label="settings" onClick={handleMenuClick}>
                 <MoreVertIcon />
               </IconButton>
               <PostMenu handleClose={handleMenuClose} anchorElement={anchorElement} post={post} user={user} />
-            </div>
+            </AuthenticatedOnly>
           }
         />
         <CardContent dangerouslySetInnerHTML={{ __html: body }} />

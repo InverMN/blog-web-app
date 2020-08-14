@@ -5,6 +5,7 @@ import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { ReplyMenu, SubcommentsSection, CommentEditor } from './index'
 import { Comment as CommentData, UserContext } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
+import { AuthenticatedOnly } from '../../common/AuthenticatedOnly'
 import Moment from 'moment'
 
 const useStyles = makeStyles({
@@ -68,16 +69,18 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                   <Feedback popularity={popularity} userReaction={userReaction} target={id} size="small" />
                 </Grid>
                 <Grid item>
-                  <IconButton disabled={user === null} onClick={handleMenuClick}>
-                    <MoreVertIcon style={{ fontSize: '20px' }} />
-                  </IconButton>
-                  <ReplyMenu
-                    handleClose={handleMenuClose}
-                    anchorElement={anchorElement}
-                    comment={comment}
-                    handleBodyEditor={() => setIsEdited(true)}
-                    handleOpenEditor={() => setOpenSubcommentEditor(true)}
-                  />
+                  <AuthenticatedOnly>
+                    <IconButton disabled={user === null} onClick={handleMenuClick}>
+                      <MoreVertIcon style={{ fontSize: '20px' }} />
+                    </IconButton>
+                    <ReplyMenu
+                      handleClose={handleMenuClose}
+                      anchorElement={anchorElement}
+                      comment={comment}
+                      handleBodyEditor={() => setIsEdited(true)}
+                      handleOpenEditor={() => setOpenSubcommentEditor(true)}
+                    />
+                  </AuthenticatedOnly>
                 </Grid>
               </Grid>
               <Grid item>
