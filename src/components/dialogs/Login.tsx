@@ -14,6 +14,7 @@ import {
   CircularProgress,
   Typography,
   Grid,
+  BackdropProps,
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -22,6 +23,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export interface LoginDialogProps {
   open: boolean
   onClose: () => void
+  BackdropProps?: Partial<BackdropProps>
 }
 
 const LoginSchema = Yup.object().shape({
@@ -35,8 +37,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps) => {
-  const { open, onClose } = props
+export const LoginDialog: React.FC<LoginDialogProps> = ({ open, onClose, BackdropProps }) => {
   const theme = useTheme()
   const fullscreen = useMediaQuery(theme.breakpoints.down('xs'))
   const api = useAPI()
@@ -79,7 +80,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = (props: LoginDialogProps)
 
   return (
     <div>
-      <Dialog fullScreen={fullscreen} open={open} maxWidth="xs" fullWidth={true}>
+      <Dialog fullScreen={fullscreen} open={open} maxWidth="xs" fullWidth={true} BackdropProps={BackdropProps}>
         <Grid container direction="column" justify="center" alignItems="center" style={{ height: '100%' }}>
           <Grid item>
             <DialogTitle>Log in</DialogTitle>

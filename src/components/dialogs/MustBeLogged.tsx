@@ -10,14 +10,23 @@ import {
   Container,
   Divider,
   Typography,
+  Backdrop,
 } from '@material-ui/core'
 import { AuthenticationContext } from '../../contexts/AuthenticationContext'
 import { LoginDialog, RegisterDialog } from './index'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles({
+  noBackground: {
+    background: 'none',
+  },
+})
 
 export const MustBeLogged: React.FC = () => {
   const { open, setOpen } = React.useContext(AuthenticationContext)
   const [openLogin, setOpenLogin] = React.useState(false)
   const [openRegister, setOpenRegister] = React.useState(false)
+  const classes = useStyles()
 
   const handleClose = () => {
     setOpen(false)
@@ -43,9 +52,10 @@ export const MustBeLogged: React.FC = () => {
     setOpenRegister(false)
   }
 
+  const openBackdrop = open || openLogin || openRegister
   return (
-    <div>
-      <Dialog open={open} onClose={handleClose} maxWidth="xs">
+    <Backdrop open={openBackdrop} style={{ zIndex: 1299 }}>
+      <Dialog open={open} onClose={handleClose} maxWidth="xs" BackdropProps={{ className: classes.noBackground }}>
         <DialogTitle>Attempt to use only verified user feature</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -81,8 +91,16 @@ export const MustBeLogged: React.FC = () => {
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
-      {openLogin && <LoginDialog open={openLogin} onClose={handleCloseLogin} />}
-      {openRegister && <RegisterDialog open={openRegister} onClose={handleCloseRegister} />}
-    </div>
+      {openLogin && (
+        <LoginDialog open={openLogin} onClose={handleCloseLogin} BackdropProps={{ className: classes.noBackground }} />
+      )}
+      {openRegister && (
+        <RegisterDialog
+          open={openRegister}
+          onClose={handleCloseRegister}
+          BackdropProps={{ className: classes.noBackground }}
+        />
+      )}
+    </Backdrop>
   )
 }
