@@ -47,7 +47,7 @@ export const ShareDialog: React.FC<Props> = ({ open, onClose: handleClose, link 
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={copyToClipboard}>
-                    <CopyIcon />
+                    <CopyIcon color="secondary" />
                   </IconButton>
                 </InputAdornment>
               ),
