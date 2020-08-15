@@ -14,7 +14,7 @@ export const MustBeLogged: React.FC = () => {
       <DialogTitle>Attempt to use only verified user feature</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          To unlock many actions in this page you must be logged in. You can create new account on use existing one.
+          To unlock many actions in this page you must be logged in. You can create new account or use existing one.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
