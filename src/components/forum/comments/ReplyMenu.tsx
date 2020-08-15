@@ -6,9 +6,16 @@ import {
   Comment as CommentData,
   Subcomment as SubcommentData,
 } from '../../../contexts/index'
-import { Edit as EditIcon, Delete as DeleteIcon, Report as ReportIcon, Reply as ReplyIcon } from '@material-ui/icons'
+import {
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Report as ReportIcon,
+  Reply as ReplyIcon,
+  Share as ShareIcon,
+} from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAPI } from '../../../lib/index'
+import { ShareDialog } from '../../dialogs/Share'
 
 interface Props {
   comment: CommentData | SubcommentData
@@ -35,6 +42,16 @@ export const ReplyMenu: React.FC<Props> = ({
   const { user } = useContext(UserContext)
   const api = useAPI()
   const classes = useStyles()
+  const [openShare, setOpenShare] = React.useState(false)
+
+  const handleOpenShare = () => {
+    // handleClose()
+    setOpenShare(true)
+  }
+
+  const handleCloseShare = () => {
+    setOpenShare(false)
+  }
 
   const deleteComment = () => {
     handleClose()
@@ -68,6 +85,10 @@ export const ReplyMenu: React.FC<Props> = ({
             <ReplyIcon color="primary" className={classes.icon} />
             Reply
           </MenuItem>
+          <MenuItem onClick={handleOpenShare}>
+            <ShareIcon color="secondary" className={classes.icon} />
+            Share
+          </MenuItem>
         </div>
       )
     } else if (user !== null && user.id !== comment.author.id) {
@@ -81,27 +102,36 @@ export const ReplyMenu: React.FC<Props> = ({
             <ReplyIcon color="primary" className={classes.icon} />
             Reply
           </MenuItem>
+          <MenuItem onClick={handleOpenShare}>
+            <ShareIcon color="secondary" className={classes.icon} />
+            Share
+          </MenuItem>
         </div>
       )
     } else {
       return (
-        <MenuItem>
-          <ReportIcon color="error" className={classes.icon} />
-          Report
+        <MenuItem onClick={handleOpenShare}>
+          <ShareIcon color="secondary" className={classes.icon} />
+          Share
         </MenuItem>
       )
     }
   }
 
   return (
-    <Menu
-      id={`post-menu-${comment.id}`}
-      anchorEl={anchorElement}
-      keepMounted
-      open={Boolean(anchorElement)}
-      onClose={handleClose}
-    >
-      {renderOptions()}
-    </Menu>
+    <div>
+      <Menu
+        id={`post-menu-${comment.id}`}
+        anchorEl={anchorElement}
+        keepMounted
+        open={Boolean(anchorElement)}
+        onClose={handleClose}
+      >
+        {renderOptions()}
+      </Menu>
+      {openShare && (
+        <ShareDialog open={openShare} onClose={handleClose} link={`http://localhost:3000/comment/${comment.id}`} />
+      )}
+    </div>
   )
 }
