@@ -73,15 +73,13 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                     <IconButton disabled={user === null} onClick={handleMenuClick}>
                       <MoreVertIcon style={{ fontSize: '20px' }} />
                     </IconButton>
-                    {anchorElement && (
-                      <ReplyMenu
-                        handleClose={handleMenuClose}
-                        anchorElement={anchorElement}
-                        comment={comment}
-                        handleBodyEditor={() => setIsEdited(true)}
-                        handleOpenEditor={() => setOpenSubcommentEditor(true)}
-                      />
-                    )}
+                    <ReplyMenu
+                      handleClose={handleMenuClose}
+                      anchorElement={anchorElement}
+                      comment={comment}
+                      handleBodyEditor={() => setIsEdited(true)}
+                      handleOpenEditor={() => setOpenSubcommentEditor(true)}
+                    />
                   </AuthenticatedOnly>
                 </Grid>
               </Grid>

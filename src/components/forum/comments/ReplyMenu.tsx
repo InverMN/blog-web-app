@@ -45,7 +45,7 @@ export const ReplyMenu: React.FC<Props> = ({
   const [openShare, setOpenShare] = React.useState(false)
 
   const handleOpenShare = () => {
-    // handleClose()
+    handleClose()
     setOpenShare(true)
   }
 
@@ -120,17 +120,19 @@ export const ReplyMenu: React.FC<Props> = ({
 
   return (
     <div>
-      <Menu
-        id={`post-menu-${comment.id}`}
-        anchorEl={anchorElement}
-        keepMounted
-        open={Boolean(anchorElement)}
-        onClose={handleClose}
-      >
-        {renderOptions()}
-      </Menu>
+      {anchorElement !== null && (
+        <Menu
+          id={`post-menu-${comment.id}`}
+          anchorEl={anchorElement}
+          keepMounted
+          open={Boolean(anchorElement)}
+          onClose={handleClose}
+        >
+          {renderOptions()}
+        </Menu>
+      )}
       {openShare && (
-        <ShareDialog open={openShare} onClose={handleClose} link={`http://localhost:3000/comment/${comment.id}`} />
+        <ShareDialog open={openShare} onClose={handleCloseShare} link={`http://localhost:3000/comment/${comment.id}`} />
       )}
     </div>
   )
