@@ -14,20 +14,25 @@ import { FileCopy as CopyIcon } from '@material-ui/icons'
 interface Props {
   open: boolean
   onClose: () => void
+  link: string
 }
 
-export const ShareDialog: React.FC<Props> = ({ open, onClose: handleClose }) => {
+export const ShareDialog: React.FC<Props> = ({ open, onClose: handleClose, link }) => {
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(link)
+  }
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Share link with your friends</DialogTitle>
       <DialogContent>
         <TextField
           variant="outlined"
-          value="test test test"
+          value={link}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton>
+                <IconButton onClick={copyToClipboard}>
                   <CopyIcon />
                 </IconButton>
               </InputAdornment>
