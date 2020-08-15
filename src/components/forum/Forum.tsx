@@ -22,7 +22,7 @@ export const Forum: React.FC<Props> = ({ skeletonsCount }) => {
   const renderPosts = () => {
     return forum.posts.length === 0
       ? Array.from(Array(skeletonsCount || 3), () => (
-          <Grid item>
+          <Grid item key={Math.random().toString()}>
             <PostSkeleton />
           </Grid>
         ))
