@@ -16,6 +16,7 @@ import { PostMenu, Feedback } from './index'
 import { CommentsSection } from './comments/index'
 import { User, Post as PostData } from '../../contexts/index'
 import { AuthenticatedOnly } from '../common/AuthenticatedOnly'
+import { ShareDialog } from '../dialogs/index'
 
 interface Props {
   post: PostData
@@ -26,6 +27,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
   const { author, id, createdAt, body, editedAt, popularity, userReaction, replies } = post
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null)
   const [openCommentEditor, setOpenCommentEditor] = useState(false)
+  const [openShare, setOpenShare] = useState(false)
 
   const handleMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorElement(event.currentTarget)
@@ -33,6 +35,14 @@ export const Post: React.FC<Props> = ({ post, user }) => {
 
   const handleMenuClose = () => {
     setAnchorElement(null)
+  }
+
+  const handleOpenShare = () => {
+    setOpenShare(true)
+  }
+
+  const handleCloseShare = () => {
+    setOpenShare(false)
   }
 
   return (
@@ -70,7 +80,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
         <CardActions>
           <Grid container justify="space-around">
             <Grid item>
-              <Button style={{ color: '#999', margin: '4px 0' }} startIcon={<ShareIcon />}>
+              <Button style={{ color: '#999', margin: '4px 0' }} startIcon={<ShareIcon />} onClick={handleOpenShare}>
                 Share
               </Button>
             </Grid>
@@ -98,6 +108,9 @@ export const Post: React.FC<Props> = ({ post, user }) => {
           handleCloseTop={() => setOpenCommentEditor(false)}
         />
       </Card>
+      {openShare && (
+        <ShareDialog open={openShare} onClose={handleCloseShare} link={`http://localhost:3000/post/${id}`} />
+      )}
     </div>
   )
 }
