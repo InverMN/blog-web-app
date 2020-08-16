@@ -70,7 +70,7 @@ export const ReplyMenu: React.FC<Props> = ({
   }
 
   const renderOptions = () => {
-    if (user !== null && user.id === comment.author.id) {
+    if (user !== null && (user.id === comment.author.id || user.isModerator)) {
       return (
         <div>
           <MenuItem onClick={editComment}>

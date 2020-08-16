@@ -42,7 +42,7 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
       open={Boolean(anchorElement)}
       onClose={handleClose}
     >
-      {user !== null && user.id === post.author.id ? (
+      {user !== null && (user.id === post.author.id || user.isModerator) ? (
         <div>
           <MenuItem onClick={editPost}>
             <EditIcon style={{ color: '#4caf50' }} className={classes.icon} />

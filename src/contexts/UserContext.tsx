@@ -4,6 +4,7 @@ export interface User {
   id: string
   username: string
   email: string
+  isModerator: boolean
 }
 
 export const UserContext = React.createContext<{
