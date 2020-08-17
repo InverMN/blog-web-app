@@ -19,6 +19,7 @@ import {
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { makeStyles } from '@material-ui/core/styles'
+import { AuthenticationContext } from '../../contexts/AuthenticationContext'
 
 export interface LoginDialogProps {
   open: boolean
@@ -43,6 +44,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = ({ open, onClose, Backdro
   const api = useAPI()
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
+  const { setOpen: setOpenGlobalAuth } = React.useContext(AuthenticationContext)
 
   const initialValues = {
     email: '',
@@ -51,6 +53,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = ({ open, onClose, Backdro
 
   const handleClose = () => {
     onClose()
+    setOpenGlobalAuth(false)
   }
 
   const handleLogin = (
@@ -64,7 +67,7 @@ export const LoginDialog: React.FC<LoginDialogProps> = ({ open, onClose, Backdro
       .login(email, password)
       .then((res) => {
         if (res.accessToken) {
-          onClose()
+          handleClose()
           api.get('users/me').then((res) => {
             if (setUser !== null) setUser(res.data)
           })

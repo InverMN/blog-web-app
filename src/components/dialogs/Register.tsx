@@ -19,6 +19,7 @@ import {
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { makeStyles } from '@material-ui/core/styles'
+import { AuthenticationContext } from '../../contexts/AuthenticationContext'
 
 export interface RegisterDialogProps {
   open: boolean
@@ -45,6 +46,7 @@ export const RegisterDialog: React.FC<RegisterDialogProps> = ({ open, onClose, B
   const api = useAPI()
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
+  const { setOpen: setOpenGlobalAuth } = React.useContext(AuthenticationContext)
 
   const initialValues = {
     email: '',
@@ -55,6 +57,7 @@ export const RegisterDialog: React.FC<RegisterDialogProps> = ({ open, onClose, B
 
   const handleClose = () => {
     onClose()
+    setOpenGlobalAuth(false)
   }
 
   const handleRegister = (
@@ -74,7 +77,7 @@ export const RegisterDialog: React.FC<RegisterDialogProps> = ({ open, onClose, B
       .register(email, username, password)
       .then((res) => {
         if (res.accessToken) {
-          onClose()
+          handleClose()
           api
             .get('users/me')
             .then((res) => {
