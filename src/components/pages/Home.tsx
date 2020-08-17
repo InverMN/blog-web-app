@@ -11,6 +11,7 @@ export const Home: React.FC = () => {
 
   React.useEffect(() => {
     dispatch({ type: 'CLEAR_ALL_POSTS' })
+    window.scrollTo(0, 0)
   }, [])
 
   React.useEffect(() => {
