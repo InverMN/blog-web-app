@@ -16,13 +16,7 @@ export const NotificationsButton: React.FC = () => {
   const handleClose = () => setAnchorElement(null)
 
   React.useEffect(() => {
-    let counter = 0
-
-    notifications.forEach((singleNotification) => {
-      if (singleNotification.checked === false) counter++
-    })
-
-    setUncheckedNotificationsCount(counter)
+    setUncheckedNotificationsCount(notifications.filter((notification) => !notification.checked).length)
   }, [notifications])
 
   return (
