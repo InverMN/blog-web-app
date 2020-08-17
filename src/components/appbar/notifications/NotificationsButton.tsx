@@ -8,6 +8,7 @@ export const NotificationsButton: React.FC = () => {
   const [anchorElement, setAnchorElement] = React.useState<HTMLElement | null>(null)
   const [uncheckedNotificationsCount, setUncheckedNotificationsCount] = React.useState(0)
   const { notifications } = React.useContext(NotificationsContext)
+  const [defaultTitle] = React.useState(document.title)
 
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorElement(event.currentTarget)
@@ -18,6 +19,11 @@ export const NotificationsButton: React.FC = () => {
   React.useEffect(() => {
     setUncheckedNotificationsCount(notifications.filter((notification) => !notification.checked).length)
   }, [notifications])
+
+  React.useEffect(() => {
+    document.title =
+      uncheckedNotificationsCount === 0 ? defaultTitle : `(${uncheckedNotificationsCount}) ${defaultTitle}`
+  }, [uncheckedNotificationsCount])
 
   return (
     <div>
