@@ -38,10 +38,12 @@ export const NotificationsContextProvider: React.FC = ({ children }) => {
   }, [])
 
   React.useEffect(() => {
-    api
-      .get('notifications')
-      .then((res) => dispatch({ type: 'LOAD_NOTIFICATIONS', payload: res.data }))
-      .catch(() => dispatch({ type: 'CLEAR_ALL_NOTIFICATIONS' }))
+    if (user !== null) {
+      api
+        .get('notifications')
+        .then((res) => dispatch({ type: 'LOAD_NOTIFICATIONS', payload: res.data }))
+        .catch(() => dispatch({ type: 'CLEAR_ALL_NOTIFICATIONS' }))
+    }
   }, [user])
 
   return <NotificationsContext.Provider value={{ notifications, dispatch }}>{children}</NotificationsContext.Provider>
