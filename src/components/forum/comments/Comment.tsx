@@ -69,18 +69,16 @@ export const Comment: React.FC<Props> = ({ comment }) => {
                   <Feedback popularity={popularity} userReaction={userReaction} target={id} size="small" />
                 </Grid>
                 <Grid item>
-                  <AuthenticatedOnly>
-                    <IconButton disabled={user === null} onClick={handleMenuClick}>
-                      <MoreVertIcon style={{ fontSize: '20px' }} />
-                    </IconButton>
-                    <ReplyMenu
-                      handleClose={handleMenuClose}
-                      anchorElement={anchorElement}
-                      comment={comment}
-                      handleBodyEditor={() => setIsEdited(true)}
-                      handleOpenEditor={() => setOpenSubcommentEditor(true)}
-                    />
-                  </AuthenticatedOnly>
+                  <IconButton onClick={handleMenuClick}>
+                    <MoreVertIcon style={{ fontSize: '20px' }} />
+                  </IconButton>
+                  <ReplyMenu
+                    handleClose={handleMenuClose}
+                    anchorElement={anchorElement}
+                    comment={comment}
+                    handleBodyEditor={() => setIsEdited(true)}
+                    handleOpenEditor={() => setOpenSubcommentEditor(true)}
+                  />
                 </Grid>
               </Grid>
               <Grid item>

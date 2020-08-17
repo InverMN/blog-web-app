@@ -64,18 +64,16 @@ export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor }) =>
                   <Feedback popularity={popularity} userReaction={userReaction} target={id} size="small" />
                 </Grid>
                 <Grid item>
-                  <AuthenticatedOnly>
-                    <IconButton disabled={user === null} onClick={handleMenuClick}>
-                      <MoreVertIcon style={{ fontSize: '20px' }} />
-                    </IconButton>
-                    <ReplyMenu
-                      handleClose={handleMenuClose}
-                      anchorElement={anchorElement}
-                      comment={subcomment}
-                      handleBodyEditor={() => setIsEdited(true)}
-                      handleOpenEditor={handleOpenEditor}
-                    />
-                  </AuthenticatedOnly>
+                  <IconButton onClick={handleMenuClick}>
+                    <MoreVertIcon style={{ fontSize: '20px' }} />
+                  </IconButton>
+                  <ReplyMenu
+                    handleClose={handleMenuClose}
+                    anchorElement={anchorElement}
+                    comment={subcomment}
+                    handleBodyEditor={() => setIsEdited(true)}
+                    handleOpenEditor={handleOpenEditor}
+                  />
                 </Grid>
               </Grid>
               <Grid item>
