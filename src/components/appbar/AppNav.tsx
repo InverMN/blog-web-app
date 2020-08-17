@@ -5,6 +5,7 @@ import { UserContext } from '../../contexts/index'
 import { AccountMenu } from './index'
 import { NotificationsButton } from './notifications/NotificationsButton'
 import { NavLink } from 'react-router-dom'
+import { ReportsButton } from './reports/index'
 
 export const AppNav: React.FC = () => {
   const [loginOpen, setLoginOpen] = useState(false)
@@ -48,6 +49,11 @@ export const AppNav: React.FC = () => {
           ) : (
             <div>
               <Grid container alignItems="center" spacing={2}>
+                {user.isModerator && (
+                  <Grid item>
+                    <ReportsButton />
+                  </Grid>
+                )}
                 <Grid item>
                   <NotificationsButton />
                 </Grid>
