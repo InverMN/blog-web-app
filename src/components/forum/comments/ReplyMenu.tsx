@@ -69,6 +69,11 @@ export const ReplyMenu: React.FC<Props> = ({
     handleOpenEditor()
   }
 
+  const reportReply = () => {
+    handleClose()
+    api.post(`report/reply/${comment.id}`)
+  }
+
   const renderOptions = () => {
     if (user !== null && (user.id === comment.author.id || user.isModerator)) {
       return (
@@ -94,7 +99,7 @@ export const ReplyMenu: React.FC<Props> = ({
     } else if (user !== null && user.id !== comment.author.id) {
       return (
         <div>
-          <MenuItem>
+          <MenuItem onClick={reportReply}>
             <ReportIcon color="error" className={classes.icon} />
             Report
           </MenuItem>

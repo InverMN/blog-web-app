@@ -34,6 +34,11 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
     dispatch({ type: 'SET_EDITED', payload: { ...post } })
   }
 
+  const reportPost = () => {
+    handleClose()
+    api.post(`report/post/${post.id}`)
+  }
+
   return (
     <Menu
       id={`post-menu-${post.id}`}
@@ -54,7 +59,7 @@ export const PostMenu: React.FC<Props> = ({ anchorElement, handleClose, post, us
           </MenuItem>
         </div>
       ) : (
-        <MenuItem>
+        <MenuItem onClick={reportPost}>
           <ReportIcon color="error" className={classes.icon} />
           Report
         </MenuItem>
