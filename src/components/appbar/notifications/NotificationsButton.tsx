@@ -31,7 +31,7 @@ export const NotificationsButton: React.FC = () => {
         <Badge
           badgeContent={uncheckedNotificationsCount}
           invisible={uncheckedNotificationsCount === 0}
-          color="error"
+          color="secondary"
           max={99}
         >
           <NotificationsIcon style={{ color: 'white' }} />
