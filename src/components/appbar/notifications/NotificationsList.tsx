@@ -4,6 +4,7 @@ import { NotificationsContext } from '../../../contexts/NotificationsContext'
 import { NotificationsListTopBar, NotificationItem } from './index'
 import { useAPI } from '../../../lib/API'
 import { makeStyles } from '@material-ui/core/styles'
+import { EmptyList } from '../../common/index'
 
 interface Props {
   anchorElement: HTMLElement | null
@@ -64,7 +65,7 @@ export const NotificationsList: React.FC<Props> = ({ anchorElement, handleClose 
         className={classes.list}
         subheader={<NotificationsListTopBar isEmpty={notifications.length === 0} clearAll={clearAllNotifications} />}
       >
-        {generateNotificationItems()}
+        {notifications.length === 0 ? <EmptyList /> : generateNotificationItems()}
       </List>
     </Popover>
   )

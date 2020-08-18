@@ -4,6 +4,7 @@ import { ReportsListTopBar, ReportItem } from './index'
 import { makeStyles } from '@material-ui/core/styles'
 import { ReportsContext } from '../../../contexts/index'
 import { useAPI } from '../../../lib/index'
+import { EmptyList } from '../../common/index'
 
 interface Props {
   anchorElement: HTMLElement | null
@@ -50,7 +51,7 @@ export const ReportsList: React.FC<Props> = ({ anchorElement, handleClose }) => 
       onClose={handleClose}
     >
       <List className={classes.list} subheader={<ReportsListTopBar />}>
-        {generateNotificationItems()}
+        {reports.length === 0 ? <EmptyList /> : generateNotificationItems()}
       </List>
     </Popover>
   )
