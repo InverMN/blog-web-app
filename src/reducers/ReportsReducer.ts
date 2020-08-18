@@ -25,11 +25,11 @@ export type ReportsActionTypes = LoadReportsAction | DeleteReportAction | ClearA
 export const ReportsReducer = (reports: Report[], action: ReportsActionTypes): Report[] => {
   switch (action.type) {
     case LOAD_REPORTS:
-      return action.payload.sort((first, second) => first.times + second.times)
+      return action.payload.sort((first, second) => second.times - first.times)
     case DELETE_REPORT:
       return reports
         .filter((singleReport) => singleReport.id !== action.payload.id)
-        .sort((first, second) => first.times + second.times)
+        .sort((first, second) => second.times - first.times)
     case CLEAR_ALL_REPORTS:
       return []
   }
