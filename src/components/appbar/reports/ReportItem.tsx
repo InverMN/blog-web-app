@@ -26,12 +26,18 @@ export const ReportItem: React.FC<Props> = ({
     history.push(notificationLink)
   }
 
+  const [message, setMessage] = React.useState('')
+  React.useEffect(() => {
+    const message = replyId === undefined ? 'Post has been reported' : 'Reply has been reported'
+    setMessage(message)
+  }, [])
+
   return (
     <ListItem button onClick={handleClick}>
       <Typography variant="h4" color="error" style={{ minWidth: 50, textAlign: 'center', marginRight: '8px' }}>
         {times}
       </Typography>
-      <ListItemText primary={'Content has been reported'} secondary={Moment(createdAt).fromNow()} />
+      <ListItemText primary={message} secondary={Moment(createdAt).fromNow()} />
       <ListItemSecondaryAction>
         <IconButton edge="end" onClick={handleDelete}>
           <CancelIcon />
