@@ -51,7 +51,7 @@ export const SinglePost: React.FC<Props> = ({ match }) => {
           const targetReplyElement = document.querySelector(`#reply-${replyId}`)
           targetReplyElement?.scrollIntoView({ behavior: 'smooth' })
         }
-      }, 250)
+      }, 1250)
       setIsInitialRender(false)
     }
   }
