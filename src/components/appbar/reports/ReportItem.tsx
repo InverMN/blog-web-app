@@ -19,7 +19,7 @@ export const ReportItem: React.FC<Props> = ({
   const history = useHistory()
 
   const { replyId, postId } = data
-  const notificationLink = replyId && postId ? `/post/${postId}/${replyId}` : ''
+  const notificationLink = replyId === undefined ? `/post/${postId}` : `/post/${postId}/${replyId}`
 
   const handleClick = () => {
     handleReportsListClose()
