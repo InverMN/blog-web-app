@@ -106,6 +106,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
           showEditorTop={openCommentEditor}
           target={id}
           handleCloseTop={() => setOpenCommentEditor(false)}
+          post={post}
         />
       </Card>
       {openShare && (

@@ -2,20 +2,22 @@ import React from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { Comment, CommentEditor } from './index'
 import { Comment as CommentData } from '../../../contexts/index'
+import { Post } from '../../../contexts/index'
 
 interface Props {
   replies: CommentData[]
   showEditorTop: boolean
   handleCloseTop: () => void
   target: string
+  post: Post
 }
 
-export const CommentsSection: React.FC<Props> = ({ replies, showEditorTop, handleCloseTop, target }) => {
+export const CommentsSection: React.FC<Props> = ({ replies, showEditorTop, handleCloseTop, target, post }) => {
   const renderComments = () => {
     return replies.map((commentData) => {
       return (
         <Grid style={{ flexGrow: 1 }} item key={commentData.id}>
-          <Comment comment={commentData} />
+          <Comment comment={commentData} post={post} />
         </Grid>
       )
     })

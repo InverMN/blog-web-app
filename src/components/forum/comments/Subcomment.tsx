@@ -3,7 +3,7 @@ import { Grid, Avatar, Paper, Typography, Box, IconButton } from '@material-ui/c
 import { makeStyles } from '@material-ui/core/styles'
 import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { ReplyMenu, CommentEditor } from './index'
-import { Subcomment as SubcommentData, UserContext } from '../../../contexts/index'
+import { Subcomment as SubcommentData, UserContext, Post as PostData } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
 import { AuthenticatedOnly } from '../../common/AuthenticatedOnly'
 import Moment from 'moment'
@@ -18,9 +18,10 @@ const useStyles = makeStyles({
 interface Props {
   subcomment: SubcommentData
   handleOpenEditor: () => void
+  post: PostData
 }
 
-export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor }) => {
+export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor, post }) => {
   const { body, author, createdAt, popularity, id, userReaction } = subcomment
   const [isEdited, setIsEdited] = useState(false)
   const classes = useStyles()
@@ -73,6 +74,7 @@ export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor }) =>
                     comment={subcomment}
                     handleBodyEditor={() => setIsEdited(true)}
                     handleOpenEditor={handleOpenEditor}
+                    post={post}
                   />
                 </Grid>
               </Grid>

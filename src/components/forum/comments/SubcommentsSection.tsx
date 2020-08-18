@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { Subcomment, CommentEditor } from './index'
-import { Subcomment as SubcommentData } from '../../../contexts/index'
+import { Subcomment as SubcommentData, Post as PostData } from '../../../contexts/index'
 
 interface Props {
   subcomments: SubcommentData[]
@@ -9,6 +9,7 @@ interface Props {
   handleOpenEditor: () => void
   handleCloseEditor: () => void
   openEditor: boolean
+  post: PostData
 }
 
 export const SubcommentsSection: React.FC<Props> = ({
@@ -17,12 +18,13 @@ export const SubcommentsSection: React.FC<Props> = ({
   handleOpenEditor,
   handleCloseEditor,
   openEditor,
+  post,
 }) => {
   const renderSubcomments = () => {
     return subcomments.map((subcommentData) => {
       return (
         <Grid style={{ flexGrow: 1 }} item key={subcommentData.id}>
-          <Subcomment handleOpenEditor={handleOpenEditor} subcomment={subcommentData} />
+          <Subcomment handleOpenEditor={handleOpenEditor} subcomment={subcommentData} post={post} />
         </Grid>
       )
     })

@@ -5,6 +5,7 @@ import {
   UserContext,
   Comment as CommentData,
   Subcomment as SubcommentData,
+  Post as PostData,
 } from '../../../contexts/index'
 import {
   Edit as EditIcon,
@@ -23,6 +24,7 @@ interface Props {
   handleClose: () => void
   handleOpenEditor: () => void
   handleBodyEditor: () => void
+  post: PostData
 }
 
 const useStyles = makeStyles({
@@ -37,6 +39,7 @@ export const ReplyMenu: React.FC<Props> = ({
   comment,
   handleOpenEditor,
   handleBodyEditor,
+  post,
 }) => {
   const { dispatch } = useContext(ForumContext)
   const { user } = useContext(UserContext)
@@ -137,7 +140,11 @@ export const ReplyMenu: React.FC<Props> = ({
         </Menu>
       )}
       {openShare && (
-        <ShareDialog open={openShare} onClose={handleCloseShare} link={`http://localhost:3000/comment/${comment.id}`} />
+        <ShareDialog
+          open={openShare}
+          onClose={handleCloseShare}
+          link={`http://localhost:3000/post/${post.id}/reply/${comment.id}`}
+        />
       )}
     </div>
   )
