@@ -29,6 +29,10 @@ export const SinglePost: React.FC<Props> = ({ match }) => {
       .get(`posts/${match.params.postId}`)
       .then((res) => {
         dispatch({ type: 'LOAD_POSTS', payload: [res.data] })
+        // @ts-ignore
+        if (match.params.postId !== undefined)
+          // @ts-ignore
+          dispatch({ type: 'MOVE_REPLY_AT_TOP', payload: { id: match.params.replyId } })
       })
       .catch((error) => {
         console.log(error.response)
