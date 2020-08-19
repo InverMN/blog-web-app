@@ -15,6 +15,7 @@ import {
   Typography,
   Grid,
   BackdropProps,
+  DialogContentText,
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -47,6 +48,7 @@ export const RegisterDialog: React.FC<RegisterDialogProps> = ({ open, onClose, B
   const { user, setUser } = useContext(UserContext)
   const classes = useStyles()
   const { setOpen: setOpenGlobalAuth } = React.useContext(AuthenticationContext)
+  const [formStage, setFormStage] = React.useState(true)
 
   const initialValues = {
     email: '',
@@ -77,7 +79,7 @@ export const RegisterDialog: React.FC<RegisterDialogProps> = ({ open, onClose, B
       .register(email, username, password)
       .then((res) => {
         if (res.accessToken) {
-          handleClose()
+          setFormStage(false)
           api
             .get('users/me')
             .then((res) => {
@@ -102,114 +104,129 @@ export const RegisterDialog: React.FC<RegisterDialogProps> = ({ open, onClose, B
           <Grid item>
             <DialogTitle>Sign in</DialogTitle>
           </Grid>
-          <Grid item className={classes.fullWide}>
-            <Formik initialValues={initialValues} validationSchema={RegisterSchema} onSubmit={handleRegister}>
-              {({ values, errors, touched, dirty, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
-                <div>
-                  <DialogContent>
-                    <form noValidate>
-                      <Grid container direction="column" justify="center" alignItems="center">
-                        <Grid item className={classes.fullWide}>
-                          <TextField
-                            fullWidth
-                            name="email"
-                            type="email"
-                            id="email"
-                            label="E-mail"
-                            variant="outlined"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.email}
-                          ></TextField>
+          {formStage ? (
+            <Grid item className={classes.fullWide}>
+              <Formik initialValues={initialValues} validationSchema={RegisterSchema} onSubmit={handleRegister}>
+                {({ values, errors, touched, dirty, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+                  <div>
+                    <DialogContent>
+                      <form noValidate>
+                        <Grid container direction="column" justify="center" alignItems="center">
+                          <Grid item className={classes.fullWide}>
+                            <TextField
+                              fullWidth
+                              name="email"
+                              type="email"
+                              id="email"
+                              label="E-mail"
+                              variant="outlined"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.email}
+                            ></TextField>
+                          </Grid>
+                          <Grid item>
+                            <Typography color="error">{errors.email && touched.email ? errors.email : '⠀'}</Typography>
+                          </Grid>
+                          <Grid item className={classes.fullWide}>
+                            <TextField
+                              fullWidth
+                              name="username"
+                              type="text"
+                              id="username"
+                              label="Username"
+                              variant="outlined"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.username}
+                            ></TextField>
+                          </Grid>
+                          <Grid item>
+                            <Typography color="error">
+                              {errors.username && touched.username ? errors.username : '⠀'}
+                            </Typography>
+                          </Grid>
+                          <Grid item className={classes.fullWide}>
+                            <TextField
+                              fullWidth
+                              name="password"
+                              type="password"
+                              id="password"
+                              label="Password"
+                              variant="outlined"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.password}
+                            ></TextField>
+                          </Grid>
+                          <Grid item>
+                            <Typography color="error">
+                              {errors.password && touched.password ? errors.password : '⠀'}
+                            </Typography>
+                          </Grid>
+                          <Grid item className={classes.fullWide}>
+                            <TextField
+                              fullWidth
+                              name="retryPassword"
+                              type="password"
+                              id="retryPassword"
+                              label="Retry Password"
+                              variant="outlined"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.retryPassword}
+                            ></TextField>
+                          </Grid>
+                          <Grid item>
+                            <Typography color="error">
+                              {errors.retryPassword && touched.retryPassword ? errors.retryPassword : '⠀'}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <Typography color="error">{errors.email && touched.email ? errors.email : '⠀'}</Typography>
-                        </Grid>
-                        <Grid item className={classes.fullWide}>
-                          <TextField
-                            fullWidth
-                            name="username"
-                            type="text"
-                            id="username"
-                            label="Username"
-                            variant="outlined"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.username}
-                          ></TextField>
-                        </Grid>
-                        <Grid item>
-                          <Typography color="error">
-                            {errors.username && touched.username ? errors.username : '⠀'}
-                          </Typography>
-                        </Grid>
-                        <Grid item className={classes.fullWide}>
-                          <TextField
-                            fullWidth
-                            name="password"
-                            type="password"
-                            id="password"
-                            label="Password"
-                            variant="outlined"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                          ></TextField>
-                        </Grid>
-                        <Grid item>
-                          <Typography color="error">
-                            {errors.password && touched.password ? errors.password : '⠀'}
-                          </Typography>
-                        </Grid>
-                        <Grid item className={classes.fullWide}>
-                          <TextField
-                            fullWidth
-                            name="retryPassword"
-                            type="password"
-                            id="retryPassword"
-                            label="Retry Password"
-                            variant="outlined"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.retryPassword}
-                          ></TextField>
-                        </Grid>
-                        <Grid item>
-                          <Typography color="error">
-                            {errors.retryPassword && touched.retryPassword ? errors.retryPassword : '⠀'}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </form>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose} style={{ float: 'left' }} color="primary" autoFocus>
-                      Close
-                    </Button>
-                    <Button
-                      disableElevation
-                      onClick={() => {
-                        handleSubmit()
-                      }}
-                      color="primary"
-                      variant="contained"
-                      autoFocus
-                      disabled={
-                        !dirty ||
-                        isSubmitting ||
-                        Boolean(errors.email || errors.password || errors.username || errors.retryPassword)
-                      }
-                    >
-                      Register
-                    </Button>
-                  </DialogActions>
-                  <Backdrop style={{ zIndex: 1000000 }} open={isSubmitting}>
-                    <CircularProgress variant="indeterminate" color="primary" />
-                  </Backdrop>
-                </div>
-              )}
-            </Formik>
-          </Grid>
+                      </form>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} style={{ float: 'left' }} color="primary" autoFocus>
+                        Close
+                      </Button>
+                      <Button
+                        disableElevation
+                        onClick={() => {
+                          handleSubmit()
+                        }}
+                        color="primary"
+                        variant="contained"
+                        autoFocus
+                        disabled={
+                          !dirty ||
+                          isSubmitting ||
+                          Boolean(errors.email || errors.password || errors.username || errors.retryPassword)
+                        }
+                      >
+                        Register
+                      </Button>
+                    </DialogActions>
+                    <Backdrop style={{ zIndex: 1000000 }} open={isSubmitting}>
+                      <CircularProgress variant="indeterminate" color="primary" />
+                    </Backdrop>
+                  </div>
+                )}
+              </Formik>
+            </Grid>
+          ) : (
+            <div>
+              <DialogContent>
+                <DialogContentText>
+                  Now you have just got a verification message on your e-mail. Click the link and start using the page
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} style={{ float: 'left' }} color="primary" autoFocus>
+                  OK
+                </Button>
+              </DialogActions>
+            </div>
+          )}
         </Grid>
       </Dialog>
     </div>
