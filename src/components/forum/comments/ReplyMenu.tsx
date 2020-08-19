@@ -143,7 +143,7 @@ export const ReplyMenu: React.FC<Props> = ({
         <ShareDialog
           open={openShare}
           onClose={handleCloseShare}
-          link={`http://localhost:3000/post/${post.id}/reply/${comment.id}`}
+          link={`http://localhost:3000/post/${post.id}/${comment.id}`}
         />
       )}
     </div>
