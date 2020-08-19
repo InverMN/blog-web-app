@@ -1,4 +1,5 @@
 import { Forum, Post, FeedbackType, Comment } from '../contexts/index'
+import { act } from '@testing-library/react'
 
 export const LOAD_POSTS = 'LOAD_POSTS'
 
@@ -83,6 +84,13 @@ interface ClearAllPostsAction {
   type: typeof CLEAR_ALL_POSTS
 }
 
+export const MOVE_REPLY_AT_TOP = 'MOVE_REPLY_AT_TOP'
+
+interface MoveReplyAtTopAction {
+  type: typeof MOVE_REPLY_AT_TOP
+  payload: Pick<Post, 'id'>
+}
+
 export type ForumActionTypes =
   | LoadPostsAction
   | AddPostAction
@@ -95,6 +103,7 @@ export type ForumActionTypes =
   | DeleteReplyAction
   | EditReplyAction
   | ClearAllPostsAction
+  | MoveReplyAtTopAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -260,5 +269,25 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
         ...forum,
         posts: [],
       }
+    case MOVE_REPLY_AT_TOP: {
+      return {
+        ...forum,
+        posts: forum.posts.map((post) => {
+          const targetedComment: Comment | undefined = post.replies.find((comment) => {
+            return (
+              comment.id === action.payload.id ||
+              comment.replies.find((subcomment) => subcomment.id === action.payload.id)
+            )
+          })
+
+          if (targetedComment !== undefined) {
+            post.replies = post.replies.filter((comment) => comment.id !== targetedComment.id)
+            post.replies = [targetedComment, ...post.replies]
+          }
+
+          return post
+        }),
+      }
+    }
   }
 }
