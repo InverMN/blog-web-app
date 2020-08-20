@@ -64,7 +64,7 @@ export class API {
   async ensureCredentials(): Promise<boolean> {
     if (this.auth.expiresIn === undefined || !this.auth.isAuthenticated) return false
 
-    if (this.auth.expiresIn + minute > Date.now() && this.auth.isAuthenticated) return true
+    if (this.auth.expiresIn - minute > Date.now() && this.auth.isAuthenticated) return true
     else if (this.auth.isAuthenticated) {
       return await this.refresh()
     } else return false
