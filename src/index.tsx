@@ -29,15 +29,3 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
-
-declare global {
-  interface Window {
-    pageURL: string
-    serverURL: string
-  }
-}
-
-const url = window.location.href
-const arr = url.split('/')
-window.pageURL = arr[0] + '//' + arr[2]
-window.serverURL = 'http://localhost:5500'

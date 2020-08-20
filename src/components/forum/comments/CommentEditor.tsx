@@ -66,7 +66,7 @@ export const CommentEditor: React.FC<Props> = ({
               <Grid item>
                 <Avatar
                   alt={user!.username}
-                  src={`http://localhost:5500/static/avatars/${user!.id}.png`}
+                  src={`${window.serverURL}/static/avatars/${user!.id}.png`}
                   className={classes.mediumAvatar}
                 >
                   {user!.username}

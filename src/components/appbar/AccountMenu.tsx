@@ -70,7 +70,7 @@ export const AccountMenu: React.FC = () => {
       <Paper onClick={handleClick} className={classes.profileButton}>
         <Grid container spacing={1} direction="row" justify="center" alignItems="center">
           <Grid item>
-            <Avatar alt={user?.username} src={`http://localhost:5500/static/avatars/${user?.id}.png`} />
+            <Avatar alt={user?.username} src={`${window.serverURL}/static/avatars/${user?.id}.png`} />
           </Grid>
           <Grid item>
             <Typography>{user?.username}</Typography>
@@ -100,7 +100,7 @@ export const AccountMenu: React.FC = () => {
                     <Avatar
                       className={classes.changeAvatarButton}
                       alt={user?.username}
-                      src={`http://localhost:5500/static/avatars/${user?.id}.png`}
+                      src={`${window.serverURL}/static/avatars/${user?.id}.png`}
                     />
                     <CameraAltIcon className={classes.cameraIcon} />
                     <input

@@ -48,7 +48,7 @@ export const NotificationItem: React.FC<Props> = ({
   return (
     <ListItem button className={checked ? '' : classes.unchecked} onMouseEnter={setChecked} onClick={handleClick}>
       <ListItemAvatar>
-        <Avatar src={`http://localhost:5500/static/avatars/${sender.id}.png`} />
+        <Avatar src={`${window.serverURL}/static/avatars/${sender.id}.png`} />
       </ListItemAvatar>
       <ListItemText primary={message} secondary={Moment(createdAt).fromNow()} />
       <ListItemSecondaryAction>

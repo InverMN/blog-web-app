@@ -49,7 +49,7 @@ export const Comment: React.FC<Props> = ({ comment, post }) => {
             <Grid item>
               <Avatar
                 alt={author.username}
-                src={`http://localhost:5500/static/avatars/${author.id}.png`}
+                src={`${window.serverURL}/static/avatars/${author.id}.png`}
                 className={classes.mediumAvatar}
                 style={{ marginTop: '8px' }}
               >

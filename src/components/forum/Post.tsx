@@ -50,7 +50,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
       <Card variant="outlined">
         <CardHeader
           avatar={
-            <Avatar alt={author.username} src={`http://localhost:5500/static/avatars/${author.id}.png`}>
+            <Avatar alt={author.username} src={`${window.serverURL}/static/avatars/${author.id}.png`}>
               {author.username}
             </Avatar>
           }
@@ -109,9 +109,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
           post={post}
         />
       </Card>
-      {openShare && (
-        <ShareDialog open={openShare} onClose={handleCloseShare} link={`http://localhost:3000/post/${id}`} />
-      )}
+      {openShare && <ShareDialog open={openShare} onClose={handleCloseShare} link={`${window.pageURL}/post/${id}`} />}
     </div>
   )
 }

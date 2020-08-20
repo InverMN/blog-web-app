@@ -44,7 +44,7 @@ export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor, post
             <Grid item>
               <Avatar
                 alt={author.username}
-                src={`http://localhost:5500/static/avatars/${author.id}.png`}
+                src={`${window.serverURL}/static/avatars/${author.id}.png`}
                 className={classes.mediumAvatar}
                 style={{ marginTop: '8px' }}
               >

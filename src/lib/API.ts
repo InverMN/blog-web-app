@@ -3,7 +3,7 @@ import Axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import { connect as connectSocket, disconnect as disconnectSocket } from '../socket/index'
 
 const minute = 1000 * 60
-const APIURL = 'http://localhost:5500/api/v1'
+const APIURL = `${window.serverURL}/api/v1`
 
 export interface APIError {
   code: number
