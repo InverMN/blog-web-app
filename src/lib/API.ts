@@ -71,44 +71,44 @@ export class API {
     } else return false
   }
 
-  async get(path: string): Promise<AxiosResponse<any>> {
+  async get(path: string, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
     await this.ensureCredentials()
-    const config: AxiosRequestConfig = {
+    const defaultConfig: AxiosRequestConfig = {
       headers: {
         authorization: `Bearer ${this.auth.accessToken}`,
       },
     }
-    return await Axios.get(`${APIURL}/${path}`, config)
+    return await Axios.get(`${APIURL}/${path}`, { ...defaultConfig, ...config })
   }
 
-  async post(path: string, payload?: any): Promise<AxiosResponse<any>> {
+  async post(path: string, payload?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
     await this.ensureCredentials()
-    const config: AxiosRequestConfig = {
+    const defaultConfig: AxiosRequestConfig = {
       headers: {
         authorization: `Bearer ${this.auth.accessToken}`,
       },
     }
-    return await Axios.post(`${APIURL}/${path}`, payload, config)
+    return await Axios.post(`${APIURL}/${path}`, payload, { ...defaultConfig, ...config })
   }
 
-  async patch(path: string, payload?: any): Promise<AxiosResponse<any>> {
+  async patch(path: string, payload?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
     await this.ensureCredentials()
-    const config: AxiosRequestConfig = {
+    const defaultConfig: AxiosRequestConfig = {
       headers: {
         authorization: `Bearer ${this.auth.accessToken}`,
       },
     }
-    return await Axios.patch(`${APIURL}/${path}`, payload, config)
+    return await Axios.patch(`${APIURL}/${path}`, payload, { ...defaultConfig, ...config })
   }
 
-  async delete(path: string): Promise<AxiosResponse<any>> {
+  async delete(path: string, config?: AxiosRequestConfig): Promise<AxiosResponse<any>> {
     await this.ensureCredentials()
-    const config: AxiosRequestConfig = {
+    const defaultConfig: AxiosRequestConfig = {
       headers: {
         authorization: `Bearer ${this.auth.accessToken}`,
       },
     }
-    return await Axios.delete(`${APIURL}/${path}`, config)
+    return await Axios.delete(`${APIURL}/${path}`, { ...defaultConfig, ...config })
   }
 }
 
