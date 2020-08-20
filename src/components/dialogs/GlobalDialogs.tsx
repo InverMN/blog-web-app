@@ -1,10 +1,11 @@
 import React from 'react'
-import { MustBeLogged } from './MustBeLogged'
+import { MustBeLogged, OfflineServersDialog } from './index'
 
 export const GlobalDialogs: React.FC = () => {
   return (
     <div>
       <MustBeLogged />
+      <OfflineServersDialog />
     </div>
   )
 }
