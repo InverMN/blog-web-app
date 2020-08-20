@@ -8,6 +8,7 @@ import {
   NotificationsContextProvider,
   AuthenticationContextProvider,
   ReportsContextProvider,
+  OfflineServersContextProvider,
 } from './contexts/index'
 
 ReactDOM.render(
@@ -16,7 +17,9 @@ ReactDOM.render(
       <NotificationsContextProvider>
         <AuthenticationContextProvider>
           <ReportsContextProvider>
-            <App />
+            <OfflineServersContextProvider>
+              <App />
+            </OfflineServersContextProvider>
           </ReportsContextProvider>
         </AuthenticationContextProvider>
       </NotificationsContextProvider>
