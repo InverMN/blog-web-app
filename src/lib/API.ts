@@ -51,7 +51,6 @@ export class API {
       connectSocket(res.data.accessToken)
       return true
     } catch (err) {
-      console.log(err)
       return false
     }
   }
