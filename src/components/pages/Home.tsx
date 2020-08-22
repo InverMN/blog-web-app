@@ -4,7 +4,7 @@ import { ForumContext } from '../../contexts/index'
 import { useAPI } from '../../lib/API'
 import { UserContext } from '../../contexts/UserContext'
 import TrackVisibility from 'react-on-screen'
-import { Grid, Container } from '@material-ui/core'
+import { Grid, Container, Typography } from '@material-ui/core'
 import { PostSkeleton } from '../forum/index'
 
 export const Home: React.FC = () => {
@@ -64,13 +64,19 @@ export const Home: React.FC = () => {
     </Container>
   )
 
+  const renderNoMorePostsMessage = () => (
+    <Typography variant="h6" style={{ color: 'rgba(0, 0, 0, 0.54)', textAlign: 'center', padding: 40 }}>
+      No more posts to display
+    </Typography>
+  )
+
   return (
     <>
       <Forum />
       <TrackVisibility>
         {!loadingNewPage ? <LoadPostsTrigger /> : noMorePosts ? <div /> : renderPostSkeletons()}
       </TrackVisibility>
-      {noMorePosts && <div>Theres no more posts</div>}
+      {noMorePosts && renderNoMorePostsMessage()}
     </>
   )
 }
