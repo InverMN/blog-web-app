@@ -29,15 +29,11 @@ export const Home: React.FC = () => {
   const [loadingNewPage, setLoadingNewPage] = React.useState(false)
 
   const LoadPostsTrigger: React.FC<{ isVisible?: boolean }> = ({ isVisible }) => {
-    const style = {
-      background: isVisible ? 'red' : 'blue',
-    }
-
     React.useEffect(() => {
       if (isVisible === true) setLoadingNewPage(true)
     }, [isVisible])
 
-    return <div style={style}>Hello</div>
+    return <div style={{ height: 100 }} />
   }
 
   React.useEffect(() => {
