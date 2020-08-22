@@ -1,5 +1,4 @@
 import { Forum, Post, FeedbackType, Comment } from '../contexts/index'
-import { act } from '@testing-library/react'
 
 export const LOAD_POSTS = 'LOAD_POSTS'
 
@@ -91,6 +90,13 @@ interface MoveReplyAtTopAction {
   payload: Pick<Post, 'id'>
 }
 
+export const PUSH_POSTS = 'PUSH_POSTS'
+
+interface PushPostsAction {
+  type: typeof PUSH_POSTS
+  payload: Post[]
+}
+
 export type ForumActionTypes =
   | LoadPostsAction
   | AddPostAction
@@ -104,6 +110,7 @@ export type ForumActionTypes =
   | EditReplyAction
   | ClearAllPostsAction
   | MoveReplyAtTopAction
+  | PushPostsAction
 
 export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
   switch (action.type) {
@@ -289,5 +296,10 @@ export const ForumReducer = (forum: Forum, action: ForumActionTypes): Forum => {
         }),
       }
     }
+    case PUSH_POSTS:
+      return {
+        ...forum,
+        posts: [...forum.posts, ...action.payload],
+      }
   }
 }
