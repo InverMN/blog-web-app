@@ -4,6 +4,8 @@ import { ForumContext } from '../../contexts/index'
 import { useAPI } from '../../lib/API'
 import { UserContext } from '../../contexts/UserContext'
 import TrackVisibility from 'react-on-screen'
+import { Grid, Container } from '@material-ui/core'
+import { PostSkeleton } from '../forum/index'
 
 export const Home: React.FC = () => {
   const api = useAPI()
@@ -53,10 +55,23 @@ export const Home: React.FC = () => {
     }
   }, [loadingNewPage])
 
+  const renderPostSkeletons = () => (
+    <Container maxWidth="xs">
+      <Grid container direction="column" spacing={6}>
+        <div style={{ height: 24 }} />
+        {Array.from(Array(3), () => (
+          <Grid item key={Math.random().toString()}>
+            <PostSkeleton />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  )
+
   return (
     <>
       <Forum />
-      <TrackVisibility>{!loadingNewPage ? <LoadPostsTrigger /> : <div></div>}</TrackVisibility>
+      <TrackVisibility>{!loadingNewPage ? <LoadPostsTrigger /> : renderPostSkeletons()}</TrackVisibility>
       {noMorePosts && <div>Theres no more posts</div>}
     </>
   )
