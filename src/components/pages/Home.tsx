@@ -71,7 +71,9 @@ export const Home: React.FC = () => {
   return (
     <>
       <Forum />
-      <TrackVisibility>{!loadingNewPage ? <LoadPostsTrigger /> : renderPostSkeletons()}</TrackVisibility>
+      <TrackVisibility>
+        {!loadingNewPage ? <LoadPostsTrigger /> : noMorePosts ? <div /> : renderPostSkeletons()}
+      </TrackVisibility>
       {noMorePosts && <div>Theres no more posts</div>}
     </>
   )
