@@ -17,6 +17,7 @@ import { CommentsSection } from './comments/index'
 import { User, Post as PostData } from '../../contexts/index'
 import { AuthenticatedOnly } from '../common/AuthenticatedOnly'
 import { ShareDialog } from '../dialogs/index'
+import { injectIframe } from '../../lib/index'
 
 interface Props {
   post: PostData
@@ -76,7 +77,7 @@ export const Post: React.FC<Props> = ({ post, user }) => {
             </AuthenticatedOnly>
           }
         />
-        <CardContent dangerouslySetInnerHTML={{ __html: body }} />
+        <CardContent dangerouslySetInnerHTML={{ __html: injectIframe(body) }} />
         <CardActions>
           <Grid container justify="space-around">
             <Grid item>
