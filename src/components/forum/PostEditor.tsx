@@ -65,6 +65,10 @@ const editorConfig = {
     'undo',
     'redo',
   ],
+  cloudServices: {
+    tokenUrl: 'https://74266.cke-cs.com/token/dev/221fddabeae7ad21b0e36bee927763c84e63810127fadf40f9413f8ca2de',
+    uploadUrl: 'https://74266.cke-cs.com/easyimage/upload/',
+  },
 }
 
 export const PostEditor: React.FC = () => {
