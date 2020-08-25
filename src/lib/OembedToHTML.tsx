@@ -8,7 +8,6 @@ export function getID(url: string): string | null {
 export function injectIframe(html: string): string {
   const fragments = html.split(/<figure class="media">|<\/figure>/g)
   const modifiedFragments = fragments.map((fragment) => {
-    console.log(fragment)
     if (fragment.includes('<oembed')) {
       const youtubeID = getID(fragment.split('"')[1])
       if (youtubeID !== null)
