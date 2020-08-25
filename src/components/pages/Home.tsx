@@ -39,7 +39,6 @@ export const Home: React.FC = () => {
   React.useEffect(() => {
     if (loadingNewPage === true) {
       api.get(`posts/?page=${loadedPages}`).then((res) => {
-        console.log('posts:', res.data)
         if (res.data instanceof Array && res.data.length === 0) {
           setNoMorePosts(true)
         } else {
