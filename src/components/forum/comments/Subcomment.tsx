@@ -5,8 +5,8 @@ import { MoreVert as MoreVertIcon } from '@material-ui/icons'
 import { ReplyMenu, CommentEditor } from './index'
 import { Subcomment as SubcommentData, UserContext, Post as PostData } from '../../../contexts/index'
 import { Feedback } from '../Feedback'
-import { AuthenticatedOnly } from '../../common/AuthenticatedOnly'
 import Moment from 'moment'
+import { injectIframe } from '../../../lib/index'
 
 const useStyles = makeStyles({
   mediumAvatar: {
@@ -79,7 +79,7 @@ export const Subcomment: React.FC<Props> = ({ subcomment, handleOpenEditor, post
                 </Grid>
               </Grid>
               <Grid item>
-                <Box dangerouslySetInnerHTML={{ __html: body }} />
+                <Box dangerouslySetInnerHTML={{ __html: injectIframe(body) }} />
               </Grid>
             </Grid>
           </Grid>
