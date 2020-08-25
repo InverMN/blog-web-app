@@ -9,7 +9,7 @@ interface User {
   username: string
 }
 
-export type NotificationSubject = 'REPLIED_COMMENT' | 'REPLIED_POST'
+export type NotificationSubject = 'REPLIED_COMMENT' | 'REPLIED_POST' | 'MENTIONED'
 
 export interface Notification {
   id: string

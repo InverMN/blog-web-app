@@ -34,11 +34,13 @@ export const NotificationItem: React.FC<Props> = ({
         return `${sender.username} replied your post`
       case 'REPLIED_COMMENT':
         return `${sender.username} replied your comment`
+      case 'MENTIONED':
+        return `${sender.username} mentioned you`
     }
   })()
 
   const { replyId, postId } = data
-  const notificationLink = replyId && postId ? `/post/${postId}/${replyId}` : ''
+  const notificationLink = replyId ? `/post/${postId}/${replyId}` : `/post/${postId}`
 
   const handleClick = () => {
     handleNotificationsListClose()
